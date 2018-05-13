@@ -15,7 +15,7 @@
             <td class="nr"><h5 v-text="index.id"></h5></td>
             <td class="title"><h6 v-if="current.num == index.id" style="color:red" v-text="index.name"></h6><h6 v-else v-text="index.name"></h6></td>
             <td class="length"><h5></h5></td>
-            <td><input type="checkbox" :id="'heart' + id"/><label class="zmr" :for="'heart' + id"></label></td>
+            <td><input type="checkbox" :id="'heart' + index.id"/><label class="zmr" :for="'heart' + index.id"></label></td>
           </tr>
 
         </table>
@@ -139,7 +139,7 @@
       },
 
       close() {
-        var window = remote.getCurrentWindow();
+        let window = remote.getCurrentWindow();
         window.close();
       }
     },
