@@ -11,9 +11,9 @@
 
         <table class="list">
 
-          <tr v-for="index in pagination" :key="index.id" class="song" @click="change(index.id, index)">
+          <tr v-for="index in pagination" :key="index.id" class="song" @click="change(index)">
             <td class="nr"><h5 v-text="index.id"></h5></td>
-            <td class="title"><h6 v-if="current.num == index.id" style="color:red;" v-text="index.name"></h6><h6 v-else v-text="index.name"></h6></td>
+            <td class="title"><h6 v-if="current.num == index.id" style="color:red" v-text="index.name"></h6><h6 v-else v-text="index.name"></h6></td>
             <td class="length"><h5></h5></td>
             <td><input type="checkbox" :id="'heart' + id"/><label class="zmr" :for="'heart' + id"></label></td>
           </tr>
@@ -25,9 +25,9 @@
         <div class="bar"></div>
         <audio preload="auto" id="audio" autoplay controls :src="current.src"></audio>
         <table class="player">
-          <td><input type="checkbox" id="backward" @click="back(current.num)"/><label class="backward" for="backward"></label></td>
+          <td><input type="checkbox" id="backward" @click="move(current.num - 1)"/><label class="backward" for="backward"></label></td>
           <td><input type="checkbox" id="play" title="Play" @click="play()"/><label class="play" for="play"></label></td>
-          <td><input type="checkbox" id="forward" @click="next(current.num)"/><label class="forward" for="forward"></label></td>
+          <td><input type="checkbox" id="forward" @click="move(current.num + 1)"/><label class="forward" for="forward"></label></td>
         </table>
         
         <table class="footer">
@@ -113,32 +113,27 @@
         }
       },
 
-      change(id, index) {
-        this.current.num = id;
+      change(index) {
+        this.current.num = index.id;
         this.current.name = index.name;
         this.current.src = index.src;
         this.current.background = index.background;
         this.refresh();
       },
 
-      next(id) {
-          let test = id < this.source.length ? id + 1 : 1;
-          let co = Number(test);
-          this.current.num = co;
-          this.current.name = this.source[co].name;
-          this.current.src = this.source[co].src;
-          this.current.background = this.source[co].background;
-          this.refresh();
-      },
+      move(id) {
+        id = id > this.source.length ? Number(1) : Number(id);
+        id = id < 1 ? Number(this.source.length) : Number(id);
 
-      back(id) {
-          let test = id > 1 ? id - 1 : this.source.length;
-          let co = Number(test);
-          this.current.num = co;
-          this.current.name = this.source[co].name;
-          this.current.src = this.source[co].src;
-          this.current.background = this.source[co].background;
-          this.refresh();
+        for (var i = 0; i < this.source.length; i++) {
+          if (this.source[i].id == id) {
+            this.current.num = this.source[i].id;
+            this.current.name = this.source[i].name;
+            this.current.src = this.source[i].src;
+            this.current.background = this.source[i].background;
+            this.refresh();
+          }
+        }
       }
     },
     mounted() {
@@ -374,10 +369,6 @@ label.main:hover:before {
   text-align: center;
   background: #1d1d1d;
   text-indent: 8px;
-}
-
-.list .str {
-  background: #ff564c;
 }
 
 .list tr:hover {
