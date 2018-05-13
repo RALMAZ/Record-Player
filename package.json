@@ -1,5 +1,5 @@
 {
-  "name": "record-player",
+  "name": "Record Radio",
   "version": "0.0.0",
   "author": "Roman ALmazov <ralmaz@fex.net>",
   "description": "electron based record radio player",
@@ -17,8 +17,8 @@
     "postinstall": ""
   },
   "build": {
-    "productName": "record-player",
-    "appId": "org.simulatedgreg.electron-vue",
+    "productName": "Radio Record",
+    "appId": "org.ralmaz.electron-vue",
     "directories": {
       "output": "build"
     },
