@@ -32,9 +32,11 @@
         
         <table class="footer">
           <td><input type="checkbox" id="love" checked /><label class="love" for="love"></label></td>
-          <td><input type="checkbox" id="shuffle"/><label class="shuffle" for="shuffle"></label></td>
-          <td><input type="checkbox" id="repeat" checked /><label class="repeat" for="repeat"></label></td>
-          <td><input type="checkbox" id="options"/><label class="options" for="options"></label></td>
+          <td>
+            <div class="orange">
+              <input class="range" type="range" v-model="volume" @change="vol()" value="0" min="0" max="100" id="s1"></input>
+            </div>
+          </td>
         </table>
         
         <div class="current"><h2 v-text="current.name"></h2></div>
@@ -49,6 +51,7 @@
     name: 'Player',
     data() {
       return {
+        volume: 100,
         current: {
           num: 1,
           name: 'Radio Record',
@@ -85,6 +88,11 @@
       }
     },
     methods: {
+      vol() {
+        let current = this.volume / 100;
+        document.getElementById('audio').volume = current;
+      },
+
       refresh()  {
         document.getElementById('audio').play;
         var playpause = document.getElementById("play");
@@ -720,5 +728,108 @@ td > #repeat:checked ~ label.repeat:before {
 
 audio {
   visibility: hidden;
+}
+
+
+
+
+
+
+input[type="number"] {
+  min-width: 15%;
+  display: inline-block;
+  position: absolute;
+  top: 10px;
+  margin-left: 5%;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  font-size: 18px;
+  color: orange;
+  text-align: center;
+  &:focus, &:active {
+    outline: none;
+  }
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  margin-top: 20px;
+  width: 80%;
+  background: transparent;
+  
+  &:focus, &:active {
+    outline: none;
+  }
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+    background: linear-gradient(90deg, orange 0%, darkOrange 33%, orangeRed 66%);
+    height: 3px;
+    position: relative;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background: #ff564c;
+  outline: none;
+  height: 25px;
+  width: 25px;
+  position: relative;
+  top: -10px;
+  border-radius: 50%;
+}
+
+:active, :hover, :focus {
+    outline: 0;
+    outline-offset: 0;
+}
+
+.orange {
+  input[type="range"]::-webkit-slider-thumb {
+    border: 3px solid orange;
+  }
+  input[type="number"] {
+    color: orange;
+  }
+    input[type="number"]:hover {
+    border-bottom: 1px solid orange;
+  }
+  input[type="number"]:focus, input[type="number"]:active {
+    border-bottom: 3px solid orange;
+  }
+
+}
+
+.darkOrange {
+  input[type="range"]::-webkit-slider-thumb {
+    border: 3px solid darkOrange;
+  }
+  input[type="number"] {
+    color: darkOrange;
+  }
+    input[type="number"]:hover {
+    border-bottom: 1px solid darkOrange;
+  }
+  input[type="number"]:focus, input[type="number"]:active {
+    border-bottom: 3px solid darkOrange;
+  }
+
+}
+
+.orangeRed {
+  input[type="range"]::-webkit-slider-thumb {
+    border: 3px solid orangeRed;
+  }
+  input[type="number"] {
+    color: orangeRed;
+  }
+    input[type="number"]:hover {
+    border-bottom: 1px solid orangeRed;
+  }
+  input[type="number"]:focus, input[type="number"]:active {
+    border-bottom: 3px solid orangeRed;
+  }
 }
 </style>
