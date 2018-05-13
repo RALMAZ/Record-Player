@@ -5,7 +5,7 @@
       <input type="checkbox" value="None" id="magicButton" name="check" />
       <label class="main" for="magicButton"></label>
 
-        <div class="coverImage"><img :src="current.background" style="height:100%"></div>
+        <div class="coverImage"><img :src="source[current - 1].background" style="height:100%"></div>
         <div class="search" @click="close()"></div>
         <div class="bodyPlayer"></div>
 
@@ -13,9 +13,9 @@
 
           <tr v-for="index in pagination" :key="index.id" class="song" @click="change(index)">
             <td class="nr"><h5 v-text="index.id"></h5></td>
-            <td class="title"><h6 v-if="current.num == index.id" style="color:red" v-text="index.name"></h6><h6 v-else v-text="index.name"></h6></td>
+            <td class="title"><h6 v-if="current == index.id" style="color:red" v-text="index.name"></h6><h6 v-else v-text="index.name"></h6></td>
             <td class="length"><h5></h5></td>
-            <td><input type="checkbox" :id="'heart' + index.id"/><label class="zmr" :for="'heart' + index.id"></label></td>
+            <td><input type="checkbox" :id="'heart' + index.id" v-model="index.star" @change="starClick(index.num)"/><label class="zmr" :for="'heart' + index.id"></label></td>
           </tr>
 
         </table>
@@ -23,15 +23,15 @@
         <div class="shadow"></div>
         
         <div class="bar"></div>
-        <audio preload="auto" id="audio" autoplay controls :src="current.src"></audio>
+        <audio preload="auto" id="audio" autoplay controls :src="source[current - 1].src"></audio>
         <table class="player">
-          <td><input type="checkbox" id="backward" @click="move(current.num - 1)"/><label class="backward" for="backward"></label></td>
+          <td><input type="checkbox" id="backward" @click="move(current - 1)"/><label class="backward" for="backward"></label></td>
           <td><input type="checkbox" id="play" title="Play" @click="play()"/><label class="play" for="play"></label></td>
-          <td><input type="checkbox" id="forward" @click="move(current.num + 1)"/><label class="forward" for="forward"></label></td>
+          <td><input type="checkbox" id="forward" @click="move(current + 1)"/><label class="forward" for="forward"></label></td>
         </table>
         
         <table class="footer">
-          <td><input type="checkbox" id="love" checked /><label class="love" for="love"></label></td>
+          <td><input type="checkbox" id="love" v-model="source[current - 1].star" @change="starClick(source[current - 1].num)"/><label class="love" for="love"></label></td>
           <td>
             <div class="orange">
               <input class="range" type="range" v-model="volume" @change="vol()" value="0" min="0" max="100" id="s1"></input>
@@ -39,7 +39,7 @@
           </td>
         </table>
         
-        <div class="current"><h2 v-text="current.name"></h2></div>
+        <div class="current"><h2 v-text="source[current - 1].name"></h2></div>
     </article>
   </div>
 </template>
@@ -49,48 +49,53 @@
 
   export default {
     name: 'Player',
+
     data() {
       return {
         volume: 100,
-        current: {
-          num: 1,
-          name: 'Radio Record',
-          src: 'http://air2.radiorecord.ru:805/rr_320',
-          background: 'https://media.giphy.com/media/xXvIkTu08XQLC/giphy.gif'
-        },
+        current: 1,
         source: [
-          {id: 1, src: 'http://air2.radiorecord.ru:805/rr_320', name: 'Radio Record', background: 'https://media.giphy.com/media/xXvIkTu08XQLC/giphy.gif'},
-          {id: 2, src: 'http://air2.radiorecord.ru:805/mix_320', name: 'Mix', background: 'https://media.giphy.com/media/hkwe73GGVAsXm/giphy.gif'},
-          {id: 3, src: 'http://air2.radiorecord.ru:805/deep_320', name: 'Deep', background: 'https://media.giphy.com/media/aZmD30dCFaPXG/giphy.gif'},
-          {id: 4, src: 'http://air2.radiorecord.ru:805/club_320', name: 'Club', background: 'https://media.giphy.com/media/9ERBM1RrY9oUU/giphy.gif'},
-          {id: 5, src: 'http://air2.radiorecord.ru:805/fut_320', name: 'Fut', background: 'https://media.giphy.com/media/TlK63EMNzHXbNBF8g9y/giphy.gif'},
-          {id: 6, src: 'http://air2.radiorecord.ru:805/tm_320', name: 'Trancemission', background: 'https://media.giphy.com/media/l1J9z9csFxtbkGfXG/giphy.gif'},
-          {id: 7, src: 'http://air2.radiorecord.ru:805/chil_320', name: 'Chil', background: 'https://media.giphy.com/media/4cwy5tGfqUWFG/giphy.gif'},
-          {id: 8, src: 'http://air2.radiorecord.ru:805/mini_320', name: 'Mini', background: 'https://media.giphy.com/media/yzvVXSvrg7JxC/giphy.gif'},
-          {id: 9, src: 'http://air2.radiorecord.ru:805/ps_320', name: 'Ps', background: 'https://media.giphy.com/media/Ci8S8u9lifcTS/giphy.gif'},
-          {id: 10, src: 'http://air2.radiorecord.ru:805/rus_320', name: 'RUS', background: 'https://media.giphy.com/media/OB6PYJQmCMmJy/giphy.gif'},
-          {id: 11, src: 'http://air2.radiorecord.ru:805/vip_320', name: 'VIP', background: 'https://media.giphy.com/media/hl0eJ9GsoiFVu/giphy.gif'},
-          {id: 12, src: 'http://air2.radiorecord.ru:805/sd90_320', name: '90', background: 'https://media.giphy.com/media/xT77XKlezDkZXq7a2k/giphy.gif'},
-          {id: 13, src: 'http://air2.radiorecord.ru:805/brks_320', name: 'Brks', background: 'https://media.giphy.com/media/3o7aD04Qk69gc9sp3O/giphy-downsized-large.gif'},
-          {id: 14, src: 'http://air2.radiorecord.ru:805/dub_320', name: 'Dub', background: 'https://media.giphy.com/media/GRyUYyyBSNvs4/giphy.gif'},
-          {id: 15, src: 'http://air2.radiorecord.ru:805/dc_320', name: 'Dc', background: 'https://media.giphy.com/media/xUNd9HAossTNDyUUbS/giphy.gif'},
-          {id: 16, src: 'http://air2.radiorecord.ru:805/techno_320', name: 'Techno', background: 'https://media.giphy.com/media/3ornjVlWukY3BxZPAQ/giphy.gif'},
-          {id: 17, src: 'http://air2.radiorecord.ru:805/teo_320', name: 'Teo', background: 'https://media.giphy.com/media/4oMoIbIQrvCjm/giphy.gif'},
-          {id: 18, src: 'http://air2.radiorecord.ru:805/trap_320', name: 'Trap', background: 'https://media.giphy.com/media/3ohjV9q9FV8vnFQNe8/giphy.gif'},
-          {id: 19, src: 'http://air2.radiorecord.ru:805/pump_320', name: 'Pump', background: 'https://media.giphy.com/media/l0NgQgSHKlhCyQYDu/giphy.gif'},
-          {id: 20, src: 'http://air2.radiorecord.ru:805/rock_320', name: 'Rock', background: 'https://media.giphy.com/media/4ijoeaHXgLXlm/giphy.gif'},
-          {id: 21, src: 'http://air2.radiorecord.ru:805/mdl_320', name: 'Mdl', background: 'https://media.giphy.com/media/Wa5aiRZE8inZK/giphy.gif'},
-          {id: 22, src: 'http://air2.radiorecord.ru:805/gop_320', name: 'Gop', background: 'https://media.giphy.com/media/HBbA0gf8uemuQ/giphy.gif'},
-          {id: 23, src: 'http://air2.radiorecord.ru:805/yo_320', name: 'Yo', background: 'https://media.giphy.com/media/55rdoT1Cu2lsk/giphy.gif'},
-          {id: 24, src: 'http://air2.radiorecord.ru:805/rave_320', name: 'Rave', background: 'https://media.giphy.com/media/tx9xJgH0WbHhK/giphy.gif'}
+          {id: 1, star: false, src: 'http://air2.radiorecord.ru:805/rr_320', name: 'Radio Record', background: 'https://media.giphy.com/media/xXvIkTu08XQLC/giphy.gif'},
+          {id: 2, star: false, src: 'http://air2.radiorecord.ru:805/mix_320', name: 'Mix', background: 'https://media.giphy.com/media/hkwe73GGVAsXm/giphy.gif'},
+          {id: 3, star: false, src: 'http://air2.radiorecord.ru:805/deep_320', name: 'Deep', background: 'https://media.giphy.com/media/aZmD30dCFaPXG/giphy.gif'},
+          {id: 4, star: false, src: 'http://air2.radiorecord.ru:805/club_320', name: 'Club', background: 'https://media.giphy.com/media/9ERBM1RrY9oUU/giphy.gif'},
+          {id: 5, star: false, src: 'http://air2.radiorecord.ru:805/fut_320', name: 'Fut', background: 'https://media.giphy.com/media/TlK63EMNzHXbNBF8g9y/giphy.gif'},
+          {id: 6, star: false, src: 'http://air2.radiorecord.ru:805/tm_320', name: 'Trancemission', background: 'https://media.giphy.com/media/l1J9z9csFxtbkGfXG/giphy.gif'},
+          {id: 7, star: false, src: 'http://air2.radiorecord.ru:805/chil_320', name: 'Chil', background: 'https://media.giphy.com/media/4cwy5tGfqUWFG/giphy.gif'},
+          {id: 8, star: false, src: 'http://air2.radiorecord.ru:805/mini_320', name: 'Mini', background: 'https://media.giphy.com/media/yzvVXSvrg7JxC/giphy.gif'},
+          {id: 9, star: false, src: 'http://air2.radiorecord.ru:805/ps_320', name: 'Ps', background: 'https://media.giphy.com/media/Ci8S8u9lifcTS/giphy.gif'},
+          {id: 10, star: false, src: 'http://air2.radiorecord.ru:805/rus_320', name: 'RUS', background: 'https://media.giphy.com/media/OB6PYJQmCMmJy/giphy.gif'},
+          {id: 11, star: false, src: 'http://air2.radiorecord.ru:805/vip_320', name: 'VIP', background: 'https://media.giphy.com/media/hl0eJ9GsoiFVu/giphy.gif'},
+          {id: 12, star: false, src: 'http://air2.radiorecord.ru:805/sd90_320', name: '90', background: 'https://media.giphy.com/media/xT77XKlezDkZXq7a2k/giphy.gif'},
+          {id: 13, star: false, src: 'http://air2.radiorecord.ru:805/brks_320', name: 'Brks', background: 'https://media.giphy.com/media/3o7aD04Qk69gc9sp3O/giphy-downsized-large.gif'},
+          {id: 14, star: false, src: 'http://air2.radiorecord.ru:805/dub_320', name: 'Dub', background: 'https://media.giphy.com/media/GRyUYyyBSNvs4/giphy.gif'},
+          {id: 15, star: false, src: 'http://air2.radiorecord.ru:805/dc_320', name: 'Dc', background: 'https://media.giphy.com/media/xUNd9HAossTNDyUUbS/giphy.gif'},
+          {id: 16, star: false, src: 'http://air2.radiorecord.ru:805/techno_320', name: 'Techno', background: 'https://media.giphy.com/media/3ornjVlWukY3BxZPAQ/giphy.gif'},
+          {id: 17, star: false, src: 'http://air2.radiorecord.ru:805/teo_320', name: 'Teo', background: 'https://media.giphy.com/media/4oMoIbIQrvCjm/giphy.gif'},
+          {id: 18, star: false, src: 'http://air2.radiorecord.ru:805/trap_320', name: 'Trap', background: 'https://media.giphy.com/media/3ohjV9q9FV8vnFQNe8/giphy.gif'},
+          {id: 19, star: false, src: 'http://air2.radiorecord.ru:805/pump_320', name: 'Pump', background: 'https://media.giphy.com/media/l0NgQgSHKlhCyQYDu/giphy.gif'},
+          {id: 20, star: false, src: 'http://air2.radiorecord.ru:805/rock_320', name: 'Rock', background: 'https://media.giphy.com/media/4ijoeaHXgLXlm/giphy.gif'},
+          {id: 21, star: false, src: 'http://air2.radiorecord.ru:805/mdl_320', name: 'Mdl', background: 'https://media.giphy.com/media/Wa5aiRZE8inZK/giphy.gif'},
+          {id: 22, star: false, src: 'http://air2.radiorecord.ru:805/gop_320', name: 'Gop', background: 'https://media.giphy.com/media/HBbA0gf8uemuQ/giphy.gif'},
+          {id: 23, star: false, src: 'http://air2.radiorecord.ru:805/yo_320', name: 'Yo', background: 'https://media.giphy.com/media/55rdoT1Cu2lsk/giphy.gif'},
+          {id: 24, star: false, src: 'http://air2.radiorecord.ru:805/rave_320', name: 'Rave', background: 'https://media.giphy.com/media/tx9xJgH0WbHhK/giphy.gif'}
         ],
         pagination: []
       }
     },
+
     methods: {
+      starClick(id) {
+        for (let i = 0; i < this.source.length; i++) {
+          if (this.source[i].id == id) {
+            this.source[i].star = !this.source[i].star
+          }
+        }
+      },
+
       vol() {
-        let current = this.volume / 100;
-        document.getElementById('audio').volume = current;
+        let resize = this.volume / 100;
+        document.getElementById('audio').volume = resize;
       },
 
       refresh()  {
@@ -102,8 +107,8 @@
         this.pagination = [];
 
         for (var i = 0; i < this.source.length; i++) {
-          let testMinus = this.current.num - 3;
-          let testPlus = this.current.num + 3;
+          let testMinus = this.current - 3;
+          let testPlus = this.current + 3;
           if (i >= testMinus && i <= testPlus) {
             this.pagination.push(this.source[i]);
           }
@@ -124,10 +129,7 @@
       },
 
       change(index) {
-        this.current.num = index.id;
-        this.current.name = index.name;
-        this.current.src = index.src;
-        this.current.background = index.background;
+        this.current = index.id;
         this.refresh();
       },
 
@@ -137,10 +139,7 @@
 
         for (var i = 0; i < this.source.length; i++) {
           if (this.source[i].id == id) {
-            this.current.num = this.source[i].id;
-            this.current.name = this.source[i].name;
-            this.current.src = this.source[i].src;
-            this.current.background = this.source[i].background;
+            this.current = this.source[i].id;
             this.refresh();
           }
         }
@@ -151,6 +150,7 @@
         window.close();
       }
     },
+
     mounted() {
       this.refresh();
     }
@@ -712,6 +712,12 @@ td > #repeat:checked ~ label.repeat:before {
 .screen > #magicButton:checked ~ .footer {
   bottom: -60px;
   transition: all 0.3s ease-in;
+}
+
+#love2 ~ label.love:before {
+  content: "\f004";
+  color: #ff564c;
+  transition: all 0.15s linear;
 }
 
 .current {
