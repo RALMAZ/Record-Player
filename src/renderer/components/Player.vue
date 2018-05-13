@@ -5,7 +5,7 @@
       <input type="checkbox" value="None" id="magicButton" name="check" />
       <label class="main" for="magicButton"></label>
 
-        <div class="coverImage"><img :src="source[current - 1].background" style="height:100%"></div>
+        <div class="coverImage" :class="{ 'pauseImage': isPlay }" :style="{'background':`url('${source[current - 1].background}')`, backgroundSize:'cover', backgroundRepeat: 'no-repeat'}"></div>
         <div class="search" @click="close()"></div>
         <div class="bodyPlayer"></div>
 
@@ -15,7 +15,7 @@
             <td class="nr"><h5 v-text="index.id"></h5></td>
             <td class="title"><h6 v-if="current == index.id" style="color:red" v-text="index.name"></h6><h6 v-else v-text="index.name"></h6></td>
             <td class="length"><h5></h5></td>
-            <td><input type="checkbox" :id="'heart' + index.id" v-model="index.star" @change="starClick(index.num)"/><label class="zmr" :for="'heart' + index.id"></label></td>
+            <td><input type="checkbox" :id="'heart' + index.id" v-model="index.star"/><label class="zmr" :for="'heart' + index.id" @click="starClick(index.id)"></label></td>
           </tr>
 
         </table>
@@ -31,7 +31,7 @@
         </table>
         
         <table class="footer">
-          <td><input type="checkbox" id="love" v-model="source[current - 1].star" @change="starClick(source[current - 1].num)"/><label class="love" for="love"></label></td>
+          <td><input type="checkbox" id="love" v-model="source[current - 1].star" @click="starClick(source[current - 1].id)"/><label class="love" for="love"></label></td>
           <td>
             <div class="orange">
               <input class="range" type="range" v-model="volume" @change="vol()" value="0" min="0" max="100" id="s1"></input>
@@ -52,6 +52,7 @@
 
     data() {
       return {
+        isPlay: false,
         volume: 100,
         current: 1,
         source: [
@@ -95,14 +96,12 @@
 
       vol() {
         let resize = this.volume / 100;
-        document.getElementById('audio').volume = resize;
+        document.querySelector('#audio').volume = resize;
       },
 
       refresh()  {
-        document.getElementById('audio').play;
-        var playpause = document.getElementById("play");
-        playpause.title = "Play";
-        playpause.checked = true;
+        document.querySelector('#audio').play;
+        document.querySelector("#play").checked = true;
 
         this.pagination = [];
 
@@ -116,14 +115,12 @@
       },
 
       play() {
-        var audio = document.getElementById('audio');
-        var playpause = document.getElementById("play");
+        var audio = document.querySelector('#audio');
+        this.isPlay = !this.isPlay
 
         if (audio.paused || audio.ended) {
-          playpause.title = "Pause";
           audio.play();
         } else {
-          playpause.title = "Play";
           audio.pause();
         }
       },
@@ -312,6 +309,7 @@ label.main:hover:before {
 
 .coverImage {
   background-size:cover;
+  background-repeat: no-repeat;
   width: 366px;
   height: 366px;
   padding: 0;
@@ -323,9 +321,12 @@ label.main:hover:before {
   transition: all 0.3s ease-in;
 }
 
+.pauseImage {
+  background-image: black !important;
+}
+
 .screen > #magicButton:checked ~ .coverImage {
   transition: all 0.3s ease-in;
-  border-radius: 20px;
 }
 
 .search:before {
