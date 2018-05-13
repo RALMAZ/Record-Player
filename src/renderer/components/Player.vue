@@ -1,95 +1,33 @@
 <template>
   <div id="wrapper">
 
-<article class="screen">
-  <input type="checkbox" value="None" id="magicButton" name="check" />
-  <label class="main" for="magicButton"></label>
+    <article class="screen">
+      <input type="checkbox" value="None" id="magicButton" name="check" />
+      <label class="main" for="magicButton"></label>
 
-  <div class="coverImage"></div>
-  <div class="search"></div>
-  <div class="bodyPlayer"></div>
+        <div class="coverImage"><img :src="current.background" style="height:100%"></div>
+        <div class="search"></div>
+        <div class="bodyPlayer"></div>
 
         <table class="list">
-          <tr class="song">
-            <td class="nr"><h5>1</h5></td>
-            <td class="title"><h6>Heavydirtysoul</h6></td>
-            <td class="length"><h5>3:54</h5></td>
-            <td><input type="checkbox" id="heart"/><label class="zmr" for="heart"></label></td>
+
+          <tr v-for="index in pagination" :key="index.id" class="song" @click="change(index.id, index)">
+            <td class="nr"><h5 v-text="index.id"></h5></td>
+            <td class="title"><h6 v-if="current.num == index.id" style="color:red;" v-text="index.name"></h6><h6 v-else v-text="index.name"></h6></td>
+            <td class="length"><h5></h5></td>
+            <td><input type="checkbox" :id="'heart' + id"/><label class="zmr" :for="'heart' + id"></label></td>
           </tr>
-        
-          <tr class="song">
-            <td class="nr"><h5>2</h5></td>
-            <td class="title"><h6 style="color: #ff564c;">StressedOut</h6></td>
-            <td class="length"><h5>3:22</h5></td>
-            <td><input type="checkbox" id="heart1" checked /><label class="zmr" for="heart1"></label></td>
-          </tr>
-        
-          <tr class="song">
-            <td class="nr"><h5>3</h5></td>
-            <td class="title"><h6>Ride</h6></td>
-            <td class="length"><h5>3:34</h5></td>
-            <td><input type="checkbox" id="heart2"/><label class="zmr" for="heart2"></label></td>
-          </tr>
-        
-          <tr class="song">
-            <td class="nr"><h5>4</h5></td>
-            <td class="title"><h6>Fairy Local</h6></td>
-            <td class="length"><h5>3:27</h5></td>
-            <td><input type="checkbox" id="heart3" checked /><label class="zmr" for="heart3"></label></td>
-          </tr>
-          
-          <tr class="song">
-            <td class="nr"><h5>5</h5></td>
-            <td class="title"><h6>Tear in My Heart</h6></td>
-            <td class="length"><h5>3:08</h5></td>
-            <td><input type="checkbox" id="heart4"/><label class="zmr" for="heart4"></label></td>
-          </tr>
-          
-          <tr class="song">
-            <td class="nr"><h5>6</h5></td>
-            <td class="title"><h6>Lane Boy</h6></td>
-            <td class="length"><h5>4:13</h5></td>
-            <td><input type="checkbox" id="heart5"/><label class="zmr" for="heart5"></label></td>
-          </tr>
-          
-          <tr class="song">
-            <td class="nr"><h5>7</h5></td>
-            <td class="title"><h6>The Judge</h6></td>
-            <td class="length"><h5>4:57</h5></td>
-            <td><input type="checkbox" id="heart6"/><label class="zmr" for="heart6"></label></td>
-          </tr>
-          
-          <tr class="song">
-            <td class="nr"><h5>8</h5></td>
-            <td class="title"><h6>Doubt</h6></td>
-            <td class="length"><h5>3:11</h5></td>
-            <td><input type="checkbox" id="heart7"/><label class="zmr" for="heart7"></label></td>
-          </tr>
-          
-          <tr class="song">
-            <td class="nr"><h5>9</h5></td>
-            <td class="title"><h6>Polarize</h6></td>
-            <td class="length"><h5>3:46</h5></td>
-            <td><input type="checkbox" id="heart8"/><label class="zmr" for="heart8"></label></td>
-          </tr>
+
         </table>
         
         <div class="shadow"></div>
         
         <div class="bar"></div>
-        
-        <div class="info">
-          <h4>STRESSED OUT</h4>
-          <h3>twenty one pilots - Blurryface</h3>
-        </div>
-        <audio preload="auto" id="audio" controls>
-          <source src="http://www.jplayer.org/audio/mp3/Miaow-02-Hidden.mp3">
-          <source src="http://www.jplayer.org/audio/mp3/Miaow-02-Hidden.ogg">
-        </audio>
+        <audio preload="auto" id="audio" autoplay controls :src="current.src"></audio>
         <table class="player">
-          <td><input type="checkbox" id="backward"/><label class="backward" for="backward"></label></td>
-          <td><input type="checkbox" id="play" title="Play" onclick="togglePlayPause()"/><label class="play" for="play"></label></td>
-          <td><input type="checkbox" id="forward"/><label class="forward" for="forward"></label></td>
+          <td><input type="checkbox" id="backward" @click="back(current.num)"/><label class="backward" for="backward"></label></td>
+          <td><input type="checkbox" id="play" title="Play" @click="play()"/><label class="play" for="play"></label></td>
+          <td><input type="checkbox" id="forward" @click="next(current.num)"/><label class="forward" for="forward"></label></td>
         </table>
         
         <table class="footer">
@@ -99,9 +37,7 @@
           <td><input type="checkbox" id="options"/><label class="options" for="options"></label></td>
         </table>
         
-        <div class="current"><h2>STRESSED OUT</h2></div>
-        
-      
+        <div class="current"><h2 v-text="current.name"></h2></div>
     </article>
   </div>
 </template>
@@ -109,10 +45,104 @@
 <script>
   export default {
     name: 'Player',
-    methods: {
-      open (link) {
-        this.$electron.shell.openExternal(link)
+    data() {
+      return {
+        current: {
+          num: 1,
+          name: 'Radio Record',
+          src: 'http://air2.radiorecord.ru:805/rr_320',
+          background: 'https://media.giphy.com/media/xXvIkTu08XQLC/giphy.gif'
+        },
+        source: [
+          {id: 1, src: 'http://air2.radiorecord.ru:805/rr_320', name: 'Radio Record', background: 'https://media.giphy.com/media/xXvIkTu08XQLC/giphy.gif'},
+          {id: 2, src: 'http://air2.radiorecord.ru:805/mix_320', name: 'Mix', background: 'https://media.giphy.com/media/hkwe73GGVAsXm/giphy.gif'},
+          {id: 3, src: 'http://air2.radiorecord.ru:805/deep_320', name: 'Deep', background: 'https://media.giphy.com/media/aZmD30dCFaPXG/giphy.gif'},
+          {id: 4, src: 'http://air2.radiorecord.ru:805/club_320', name: 'Club', background: 'https://media.giphy.com/media/9ERBM1RrY9oUU/giphy.gif'},
+          {id: 5, src: 'http://air2.radiorecord.ru:805/fut_320', name: 'Fut', background: 'https://media.giphy.com/media/TlK63EMNzHXbNBF8g9y/giphy.gif'},
+          {id: 6, src: 'http://air2.radiorecord.ru:805/tm_320', name: 'Trancemission', background: ''},
+          {id: 7, src: 'http://air2.radiorecord.ru:805/chil_320', name: 'Chil', background: ''},
+          {id: 8, src: 'http://air2.radiorecord.ru:805/mini_320', name: 'Mini', background: ''},
+          {id: 9, src: 'http://air2.radiorecord.ru:805/ps_320', name: 'Ps', background: ''},
+          {id: 10, src: 'http://air2.radiorecord.ru:805/rus_320', name: 'RUS', background: ''},
+          {id: 11, src: 'http://air2.radiorecord.ru:805/vip_320', name: 'VIP', background: ''},
+          {id: 12, src: 'http://air2.radiorecord.ru:805/sd90_320', name: '90', background: 'https://media.giphy.com/media/xT77XKlezDkZXq7a2k/giphy.gif'},
+          {id: 13, src: 'http://air2.radiorecord.ru:805/brks_320', name: 'Brks', background: ''},
+          {id: 14, src: 'http://air2.radiorecord.ru:805/dub_320', name: 'Dub', background: ''},
+          {id: 15, src: 'http://air2.radiorecord.ru:805/dc_320', name: 'Dc', background: ''},
+          {id: 16, src: 'http://air2.radiorecord.ru:805/techno_320', name: 'Techno', background: ''},
+          {id: 17, src: 'http://air2.radiorecord.ru:805/teo_320', name: 'Teo', background: ''},
+          {id: 18, src: 'http://air2.radiorecord.ru:805/trap_320', name: 'Trap', background: ''},
+          {id: 19, src: 'http://air2.radiorecord.ru:805/pump_320', name: 'Pump', background: ''},
+          {id: 20, src: 'http://air2.radiorecord.ru:805/rock_320', name: 'Rock', background: ''},
+          {id: 21, src: 'http://air2.radiorecord.ru:805/mdl_320', name: 'Mdl', background: ''},
+          {id: 22, src: 'http://air2.radiorecord.ru:805/gop_320', name: 'Gop', background: ''},
+          {id: 23, src: 'http://air2.radiorecord.ru:805/yo_320', name: 'Yo', background: ''},
+          {id: 24, src: 'http://air2.radiorecord.ru:805/rave_320', name: 'Rave', background: ''}
+        ],
+        pagination: []
       }
+    },
+    methods: {
+      refresh()  {
+        document.getElementById('audio').play;
+        var playpause = document.getElementById("play");
+        playpause.title = "Play";
+        playpause.checked = true;
+
+        this.pagination = [];
+
+        for (var i = 0; i < this.source.length; i++) {
+          let testMinus = this.current.num - 3;
+          let testPlus = this.current.num + 3;
+          if (i >= testMinus && i <= testPlus) {
+            this.pagination.push(this.source[i]);
+          }
+        }
+      },
+
+      play() {
+        var audio = document.getElementById('audio');
+        var playpause = document.getElementById("play");
+
+        if (audio.paused || audio.ended) {
+          playpause.title = "Pause";
+          audio.play();
+        } else {
+          playpause.title = "Play";
+          audio.pause();
+        }
+      },
+
+      change(id, index) {
+        this.current.num = id;
+        this.current.name = index.name;
+        this.current.src = index.src;
+        this.current.background = index.background;
+        this.refresh();
+      },
+
+      next(id) {
+          let test = id < this.source.length ? id + 1 : 1;
+          let co = Number(test);
+          this.current.num = co;
+          this.current.name = this.source[co].name;
+          this.current.src = this.source[co].src;
+          this.current.background = this.source[co].background;
+          this.refresh();
+      },
+
+      back(id) {
+          let test = id > 1 ? id - 1 : this.source.length;
+          let co = Number(test);
+          this.current.num = co;
+          this.current.name = this.source[co].name;
+          this.current.src = this.source[co].src;
+          this.current.background = this.source[co].background;
+          this.refresh();
+      }
+    },
+    mounted() {
+      this.refresh();
     }
   }
 </script>
@@ -125,7 +155,7 @@ body {
   background: #ff564c;
   padding: 0;
   margin: 0;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 @keyframes harlem {
@@ -271,8 +301,7 @@ label.main:hover:before {
 }
 
 .coverImage {
-  background: url('https://angstyteenwatchingtoomuchtv.files.wordpress.com/2015/07/tumblr_nlhsir3adc1sk2qobo1_12801.gif') no-repeat;
-  background-size: cover;
+  background-size:cover;
   width: 366px;
   height: 366px;
   padding: 0;
@@ -285,9 +314,6 @@ label.main:hover:before {
 }
 
 .screen > #magicButton:checked ~ .coverImage {
-  transform: scale(0.251, 0.251);
-  left: 23px;
-  top: 60px;
   transition: all 0.3s ease-in;
   border-radius: 20px;
 }
@@ -348,6 +374,10 @@ label.main:hover:before {
   text-align: center;
   background: #1d1d1d;
   text-indent: 8px;
+}
+
+.list .str {
+  background: #ff564c;
 }
 
 .list tr:hover {
@@ -513,20 +543,11 @@ td > #heart8:checked ~ label.zmr:before {
   left: 104px;
   top: 440px;
   transition: all 0.3s ease-in;
+  display: block;
 }
 
 .screen > #magicButton:checked ~ .info {
-  top: 66px;
-  left: 126px;
-  text-align: left;
-  transition: all 0.3s ease-in;
-}
-
-.screen > #magicButton:checked ~ .info h4 {
-  margin-left: 0;
-  font-size: 16px;
-  color: #111111;
-  transition: all 0.3s ease-in;
+  display:none;
 }
 
 .player {
