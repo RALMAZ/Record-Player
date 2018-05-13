@@ -6,7 +6,7 @@
       <label class="main" for="magicButton"></label>
 
         <div class="coverImage"><img :src="current.background" style="height:100%"></div>
-        <div class="search"></div>
+        <div class="search" @click="close()"></div>
         <div class="bodyPlayer"></div>
 
         <table class="list">
@@ -43,6 +43,8 @@
 </template>
 
 <script>
+  const remote = require('electron').remote;
+
   export default {
     name: 'Player',
     data() {
@@ -134,6 +136,11 @@
             this.refresh();
           }
         }
+      },
+
+      close() {
+        var window = remote.getCurrentWindow();
+        window.close();
       }
     },
     mounted() {
@@ -318,7 +325,7 @@ label.main:hover:before {
   top: 23px;
   right: 23px;
   font-family: FontAwesome;
-  content: '\f002';
+  content: '\f00d';
   color: #959595;
   font-size: 16px;
   line-height: 16px;
