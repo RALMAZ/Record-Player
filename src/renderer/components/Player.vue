@@ -12,15 +12,16 @@
         <div v-if="isPlay" class="coverImage">
           <img
             :src="source[current - 1].background"
-            class="ra_image"
+            class="unimage"
           />
         </div>
         <div v-else class="coverImage">
           <img
             src="https://image.freepik.com/free-photo/3d-render-of-spotlights-on-a-grunge-brick-wall_1048-6284.jpg"
-            class="ra_image"
+            class="unimage"
           />
         </div>
+        <div class="drag"></div>
         <div class="search" @click="close()"></div>
         <div class="bodyPlayer"></div>
 
@@ -255,7 +256,7 @@ body {
   overflow: hidden;
 }
 
-.ra_image {
+.unimage {
   height: 100%;
 }
 
@@ -438,6 +439,28 @@ label.main:hover:before {
 }
 
 .search:hover:before {
+  color: #bbb;
+}
+
+.drag {
+  -webkit-app-region: drag;
+}
+
+.drag:before {
+  position: absolute;
+  top: 23px;
+  right: 23px;
+  font-family: FontAwesome;
+  content: '\f0b2';
+  color: #959595;
+  font-size: 16px;
+  line-height: 16px;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease-in;
+}
+
+.drag:hover:before {
   color: #bbb;
 }
 
