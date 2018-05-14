@@ -8,3 +8,10 @@
 
 
 ## Download for [Windows](https://github.com/RALMAZ/Record-Player/releases/download/0.0.1/Radio.Record.Setup.0.0.1.exe)
+
+=======
+
+## License
+
+[MIT](https://github.com/RALMAZ/Record-Player/blob/master/LICENSE)
+
