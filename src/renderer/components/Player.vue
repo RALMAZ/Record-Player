@@ -1,21 +1,63 @@
 <template>
   <div id="wrapper">
-
     <article class="screen">
-      <input type="checkbox" value="None" id="magicButton" name="check" />
+      <input
+        id="magicButton"
+        type="checkbox"
+        name="check"
+        value="None"
+      />
       <label class="main" for="magicButton"></label>
 
-        <div class="coverImage" :class="{ 'pauseImage': isPlay }" :style="{'background':`url('${source[current - 1].background}')`, backgroundSize:'cover', backgroundRepeat: 'no-repeat'}"></div>
+        <div v-if="isPlay" class="coverImage">
+          <img
+            :src="source[current - 1].background"
+            class="ra_image"
+          />
+        </div>
+        <div v-else class="coverImage">
+          <img
+            src="https://image.freepik.com/free-photo/3d-render-of-spotlights-on-a-grunge-brick-wall_1048-6284.jpg"
+            class="ra_image"
+          />
+        </div>
         <div class="search" @click="close()"></div>
         <div class="bodyPlayer"></div>
 
         <table class="list">
 
-          <tr v-for="index in pagination" :key="index.id" class="song" @click="change(index)">
-            <td class="nr"><h5 v-text="index.id"></h5></td>
-            <td class="title"><h6 v-if="current == index.id" style="color:red" v-text="index.name"></h6><h6 v-else v-text="index.name"></h6></td>
-            <td class="length"><h5></h5></td>
-            <td><input type="checkbox" :id="'heart' + index.id" v-model="index.star"/><label class="zmr" :for="'heart' + index.id" @click="starClick(index.id)"></label></td>
+          <tr
+            v-for="index in pagination"
+            @click="change(index)"
+            :key="index.id"
+            class="song"
+          >
+            <td class="nr">
+              <h5 v-text="index.id"></h5>
+            </td>
+            <td class="title">
+              <h6
+                v-if="current == index.id"
+                v-text="index.name"
+                style="color:red"
+              ></h6>
+              <h6 v-else v-text="index.name"></h6>
+            </td>
+            <td class="length">
+              <h5></h5>
+            </td>
+            <td>
+              <input
+                v-model="index.star"
+                :id="'heart' + index.id"
+                type="checkbox"
+              />
+              <label
+                @click="starClick(index.id)"
+                :for="'heart' + index.id"
+                class="zmr"
+              ></label>
+            </td>
           </tr>
 
         </table>
@@ -23,23 +65,69 @@
         <div class="shadow"></div>
         
         <div class="bar"></div>
-        <audio preload="auto" id="audio" autoplay controls :src="source[current - 1].src"></audio>
+        <audio
+          id="audio"
+          :src="source[current - 1].src"
+          preload="auto"
+          autoplay
+          controls
+        ></audio>
         <table class="player">
-          <td><input type="checkbox" id="backward" @click="move(current - 1)"/><label class="backward" for="backward"></label></td>
-          <td><input type="checkbox" id="play" title="Play" @click="play()"/><label class="play" for="play"></label></td>
-          <td><input type="checkbox" id="forward" @click="move(current + 1)"/><label class="forward" for="forward"></label></td>
-        </table>
-        
-        <table class="footer">
-          <td><input type="checkbox" id="love" v-model="source[current - 1].star" @click="starClick(source[current - 1].id)"/><label class="love" for="love"></label></td>
           <td>
-            <div class="orange">
-              <input class="range" type="range" v-model="volume" @change="vol()" value="0" min="0" max="100" id="s1"></input>
-            </div>
+            <input
+              id="backward"
+              @click="move(current - 1)"
+              type="checkbox"
+            />
+            <label class="backward" for="backward"></label>
+          </td>
+          <td>
+            <input
+              id="play"
+              @click="play()"
+              type="checkbox"
+              title="Play"
+            />
+            <label class="play" for="play"></label>
+          </td>
+          <td>
+            <input
+              id="forward"
+              @click="move(current + 1)"
+              type="checkbox"
+            />
+            <label class="forward" for="forward"></label>
           </td>
         </table>
         
-        <div class="current"><h2 v-text="source[current - 1].name"></h2></div>
+        <table class="footer">
+          <td>
+            <input
+              id="love"
+              v-model="source[current - 1].star"
+              @click="starClick(source[current - 1].id)"
+              type="checkbox"
+            />
+            <label class="love" for="love"></label>
+          </td>
+          <td>
+            <div class="orange">
+              <input
+                id="s1"
+                @input="vol($event)"
+                :value="volume"
+                type="range"
+                class="range"
+                step="1"
+                min="0"
+                max="100"
+              />
+            </div>
+          </td>
+        </table>
+        <div class="current">
+          <h2 v-text="source[current - 1].name"></h2>
+        </div>
     </article>
   </div>
 </template>
@@ -94,14 +182,16 @@
         }
       },
 
-      vol() {
-        let resize = this.volume / 100;
+      vol(e) {
+        this.volume = e.target.value;
+        let resize = e.target.value / 100;
         document.querySelector('#audio').volume = resize;
       },
 
       refresh()  {
         document.querySelector('#audio').play;
         document.querySelector("#play").checked = true;
+        this.isPlay = true;
 
         this.pagination = [];
 
@@ -116,7 +206,7 @@
 
       play() {
         var audio = document.querySelector('#audio');
-        this.isPlay = !this.isPlay
+        this.isPlay = !this.isPlay;
 
         if (audio.paused || audio.ended) {
           audio.play();
@@ -163,6 +253,10 @@ body {
   padding: 0;
   margin: 0;
   overflow: hidden;
+}
+
+.ra_image {
+  height: 100%;
 }
 
 @keyframes harlem {
@@ -754,20 +848,20 @@ input[type="number"] {
   font-size: 18px;
   color: orange;
   text-align: center;
-  &:focus, &:active {
+}
+input[type="number"] :focus, :active {
     outline: none;
   }
-}
 
 input[type="range"] {
   -webkit-appearance: none;
   margin-top: 20px;
   width: 80%;
   background: transparent;
-  
-  &:focus, &:active {
-    outline: none;
-  }
+}
+
+input[type="range"] :focus, :active {
+  outline: none;
 }
 
 input[type=range]::-webkit-slider-runnable-track {
@@ -791,52 +885,5 @@ input[type=range]::-webkit-slider-thumb {
 :active, :hover, :focus {
     outline: 0;
     outline-offset: 0;
-}
-
-.orange {
-  input[type="range"]::-webkit-slider-thumb {
-    border: 3px solid orange;
-  }
-  input[type="number"] {
-    color: orange;
-  }
-    input[type="number"]:hover {
-    border-bottom: 1px solid orange;
-  }
-  input[type="number"]:focus, input[type="number"]:active {
-    border-bottom: 3px solid orange;
-  }
-
-}
-
-.darkOrange {
-  input[type="range"]::-webkit-slider-thumb {
-    border: 3px solid darkOrange;
-  }
-  input[type="number"] {
-    color: darkOrange;
-  }
-    input[type="number"]:hover {
-    border-bottom: 1px solid darkOrange;
-  }
-  input[type="number"]:focus, input[type="number"]:active {
-    border-bottom: 3px solid darkOrange;
-  }
-
-}
-
-.orangeRed {
-  input[type="range"]::-webkit-slider-thumb {
-    border: 3px solid orangeRed;
-  }
-  input[type="number"] {
-    color: orangeRed;
-  }
-    input[type="number"]:hover {
-    border-bottom: 1px solid orangeRed;
-  }
-  input[type="number"]:focus, input[type="number"]:active {
-    border-bottom: 3px solid orangeRed;
-  }
 }
 </style>

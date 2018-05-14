@@ -14,7 +14,3 @@
     }
   }
 </script>
-
-<style>
-  /* CSS */
-</style>
