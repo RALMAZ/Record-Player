@@ -21,8 +21,8 @@
             class="unimage"
           />
         </div>
-        <div class="drag"></div>
         <div class="search" @click="close()"></div>
+        <div class="drag"></div>
         <div class="bodyPlayer"></div>
 
         <table class="list">
@@ -135,6 +135,7 @@
 
 <script>
   const remote = require('electron').remote;
+  const drag = require('electron-drag');
 
   export default {
     name: 'Player',
@@ -240,6 +241,7 @@
     },
 
     mounted() {
+      drag('.drag');
       this.refresh();
     }
   }
@@ -449,7 +451,7 @@ label.main:hover:before {
 .drag:before {
   position: absolute;
   top: 23px;
-  right: 23px;
+  right: 60px;
   font-family: FontAwesome;
   content: '\f0b2';
   color: #959595;

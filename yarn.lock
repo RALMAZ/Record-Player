@@ -1129,6 +1129,10 @@ binary-extensions@^1.0.0:
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-1.11.0.tgz#46aa1751fb6a2f93ee5e689bb1087d4b14c6c205"
 
+bindings@^1.2.1:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/bindings/-/bindings-1.3.0.tgz#b346f6ecf6a95f5a815c5839fc7cdb22502f1ed7"
+
 bluebird-lst@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/bluebird-lst/-/bluebird-lst-1.0.5.tgz#bebc83026b7e92a72871a3dc599e219cbfb002a9"
@@ -2259,6 +2263,10 @@ domain-browser@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-1.2.0.tgz#3d31f50191a6749dd1375a7f522e823d42e54eda"
 
+dombo@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/dombo/-/dombo-3.2.0.tgz#0be18a8f16de82770769bba53dfdad33d7d0de68"
+
 domelementtype@1:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/domelementtype/-/domelementtype-1.3.0.tgz#b17aed82e8ab59e52dd9c19b1756e0fc187204c2"
@@ -2424,6 +2432,16 @@ electron-download@^3.0.1:
     rc "^1.1.2"
     semver "^5.3.0"
     sumchecker "^1.2.0"
+
+electron-drag@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/electron-drag/-/electron-drag-1.2.0.tgz#b7d53e5922937a6d47f4b3d951dbc24b1168087e"
+  dependencies:
+    dombo "^3.2.0"
+    try-require "^1.2.1"
+  optionalDependencies:
+    osx-mouse "^1.2.0"
+    win-mouse "^1.1.0"
 
 electron-is-accelerator@^0.1.0:
   version "0.1.2"
@@ -4494,7 +4512,7 @@ multispinner@^0.2.1:
     lodash.merge "^3.3.2"
     log-update "^1.0.2"
 
-nan@^2.9.2:
+nan@^2.0.9, nan@^2.2.0, nan@^2.9.2:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.10.0.tgz#96d0cd610ebd58d4b4de9cc0c6828cda99c7548f"
 
@@ -4796,6 +4814,13 @@ osenv@^0.1.4:
   dependencies:
     os-homedir "^1.0.0"
     os-tmpdir "^1.0.0"
+
+osx-mouse@^1.2.0:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/osx-mouse/-/osx-mouse-1.2.1.tgz#ccdd4dbefd3293cbc4fb77301eab137cbe1ac85c"
+  dependencies:
+    bindings "^1.2.1"
+    nan "^2.2.0"
 
 p-finally@^1.0.0:
   version "1.0.0"
@@ -6449,6 +6474,10 @@ truncate-utf8-bytes@^1.0.0:
   dependencies:
     utf8-byte-length "^1.0.1"
 
+try-require@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/try-require/-/try-require-1.2.1.tgz#34489a2cac0c09c1cc10ed91ba011594d4333be2"
+
 tty-browserify@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/tty-browserify/-/tty-browserify-0.0.0.tgz#a157ba402da24e9bf957f9aa69d524eed42901a6"
@@ -6906,6 +6935,13 @@ widest-line@^2.0.0:
   resolved "https://registry.yarnpkg.com/widest-line/-/widest-line-2.0.0.tgz#0142a4e8a243f8882c0233aa0e0281aa76152273"
   dependencies:
     string-width "^2.1.1"
+
+win-mouse@^1.1.0:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/win-mouse/-/win-mouse-1.1.2.tgz#f83e38be7e7e2e9e7a286156e2767060f93125bd"
+  dependencies:
+    bindings "^1.2.1"
+    nan "^2.0.9"
 
 window-size@0.1.0:
   version "0.1.0"
