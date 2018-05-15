@@ -245,10 +245,10 @@
         window.minimize();
       },
 
-      move() {
+      /*move() {
         let window = remote.getCurrentWindow();
         window.move();
-      },
+      },*/
     },
 
     mounted() {

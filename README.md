@@ -1,7 +1,8 @@
 # Record Radio desktop player
 
 <p align="center">
-<img src="./Screenshot_40.png">
+<img src="./Radio Record_1.png">
+<img src="./Radio Record_2.png">
 </p>
 
 > Hearty welcome issue and contribution

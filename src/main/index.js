@@ -24,9 +24,9 @@ function createWindow () {
     useContentSize: true,
     width: 360,
     resizable: false,
-    webPreferences: {
+    /*webPreferences: {
       devTools: false
-    }
+    }*/
   })
 
   mainWindow.loadURL(winURL)
