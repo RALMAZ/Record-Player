@@ -22,7 +22,8 @@
           />
         </div>
         <div class="search" @click="close()"></div>
-        <div class="drag"></div>
+        <!--<div @click="move()" class="drag"></div>-->
+        <div @click="min()" class="min"></div>
         <div class="bodyPlayer"></div>
 
         <table class="list">
@@ -135,7 +136,7 @@
 
 <script>
   const remote = require('electron').remote;
-  const drag = require('electron-drag');
+  //const drag = require('electron-drag');
 
   export default {
     name: 'Player',
@@ -237,11 +238,21 @@
       close() {
         let window = remote.getCurrentWindow();
         window.close();
-      }
+      },
+
+      min() {
+        let window = remote.getCurrentWindow();
+        window.minimize();
+      },
+
+      move() {
+        let window = remote.getCurrentWindow();
+        window.move();
+      },
     },
 
     mounted() {
-      drag('.drag');
+      //drag('.drag');
       this.refresh();
     }
   }
@@ -260,6 +271,7 @@ body {
 
 .unimage {
   height: 100%;
+  -webkit-app-region: no-drag;
 }
 
 @keyframes harlem {
@@ -451,7 +463,7 @@ label.main:hover:before {
 .drag:before {
   position: absolute;
   top: 23px;
-  right: 60px;
+  right: 100px;
   font-family: FontAwesome;
   content: '\f0b2';
   color: #959595;
@@ -463,6 +475,24 @@ label.main:hover:before {
 }
 
 .drag:hover:before {
+  color: #bbb;
+}
+
+.min:before {
+  position: absolute;
+  top: 23px;
+  right: 60px;
+  font-family: FontAwesome;
+  content: '\f068';
+  color: #959595;
+  font-size: 16px;
+  line-height: 16px;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease-in;
+}
+
+.min:hover:before {
   color: #bbb;
 }
 
@@ -855,11 +885,6 @@ td > #repeat:checked ~ label.repeat:before {
 audio {
   visibility: hidden;
 }
-
-
-
-
-
 
 input[type="number"] {
   min-width: 15%;
