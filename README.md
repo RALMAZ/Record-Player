@@ -1,4 +1,9 @@
-<img align="center" width="403,643" height="84,887" src="https://user-images.githubusercontent.com/34600369/40258110-639f8f7c-5ae8-11e8-942f-1331f80c1615.png">  
+<p align="center">
+<img width="403,643" height="84,887" src="https://user-images.githubusercontent.com/34600369/40258110-639f8f7c-5ae8-11e8-942f-1331f80c1615.png">
+</p>
+<p align="center">
+Logo by <a href="https://github.com/nunojesus">@nunojesus</a>
+</p>
 
 # Record Radio desktop player
 
