@@ -143,6 +143,8 @@
         isPlay: false,
         volume: 100,
         current: 1,
+        // @TODO Add all actual channel and gifs in mp4
+        // after - rework play/pause gif to mp4
         source: [
           {id: 1, star: false, src: 'http://air2.radiorecord.ru:805/rr_320', name: 'Radio Record', background: 'https://media.giphy.com/media/xXvIkTu08XQLC/giphy.gif'},
           {id: 2, star: false, src: 'http://air2.radiorecord.ru:805/mix_320', name: 'Mix', background: 'https://media.giphy.com/media/hkwe73GGVAsXm/giphy.gif'},
@@ -225,10 +227,13 @@
       },
 
       close() {
+        // @TODO Need to save volume, localstorage cant work
         localStorage["volume"] = this.volume;
         let window = remote.getCurrentWindow();
         window.close();
       },
+      
+      // @TODO Add dragged window
 
       min() {
         let window = remote.getCurrentWindow();
@@ -250,6 +255,7 @@
 </script>
 
 <style>
+// @TODO Download
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
 
 body {
