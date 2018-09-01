@@ -141,7 +141,6 @@
         isPlay: false,
         volume: 100,
         current: 1,
-        // Rework play/pause gif to mp4
         source: [
         	{id: 1, star: false, src: 'http://air.radiorecord.ru:805/rr_320', name: 'Radio Record', background: 'https://media.giphy.com/media/xXvIkTu08XQLC/giphy.mp4'},
         	{id: 2, star: false, src: 'http://air.radiorecord.ru:805/trancehits_320', name: 'Trance Hits', background: 'https://media.giphy.com/media/l2SpSmDIXYH4ykEHS/giphy.mp4'},
@@ -251,6 +250,7 @@
 
       change(index) {
         this.current = index.id;
+        document.querySelector('#coverVideo').src = index.background;
         this.refresh();
       },
 
