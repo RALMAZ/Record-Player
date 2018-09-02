@@ -45,25 +45,18 @@
             <td class="length">
               <h5></h5>
             </td>
-            <td>
-              <input
-                v-model="index.star"
-                :id="'heart' + index.id"
-                class="favorite"
-                type="checkbox"
-              />
-              <label
-                :for="'heart' + index.id"
-                class="love"
-              ></label>
+            <td class="title">
+              <h5>Image</h5>
             </td>
           </tr>
 
         </table>
-        
-        <div class="shadow"></div>
-        
-        <div class="bar"></div>
+
+        <div class="info">
+					<h4>STRESSED OUT</h4>
+					<h3>twenty one pilots - Blurryface</h3>
+				</div>
+
         <audio
           id="audio"
           :src="source[current - 1].src"
@@ -101,14 +94,6 @@
         
         <table class="footer">
           <td>
-            <input
-              id="love"
-              v-model="source[current - 1].star"
-              type="checkbox"
-            />
-            <label class="love" for="love"></label>
-          </td>
-          <td>
             <div class="orange">
               <input
                 id="s1"
@@ -141,70 +126,72 @@
         isPlay: false,
         volume: 100,
         current: 1,
+        currentVoicer: '',
+        currentSong: '',
         source: [
-        	{id: 1, star: false, src: 'http://air.radiorecord.ru:805/rr_320', name: 'Radio Record', background: 'https://media.giphy.com/media/xXvIkTu08XQLC/giphy.mp4'},
-        	{id: 2, star: false, src: 'http://air.radiorecord.ru:805/trancehits_320', name: 'Trance Hits', background: 'https://media.giphy.com/media/l2SpSmDIXYH4ykEHS/giphy.mp4'},
-        	{id: 3, star: false, src: 'http://air.radiorecord.ru:805/2step_320', name: '2 step', background: 'https://media.giphy.com/media/AaOYWtozeBpAc/giphy.mp4'},
-        	{id: 4, star: false, src: 'http://air.radiorecord.ru:805/tecktonik_320', name: 'Tecktonik', background: 'https://media.giphy.com/media/xThta2TIEn7PXojyb6/giphy.mp4'},
-        	{id: 5, star: false, src: 'http://air.radiorecord.ru:805/neurofunk_320', name: 'Neurofunk', background: 'https://media.giphy.com/media/10kxE34bJPaUO4/giphy.mp4'},
-        	{id: 6, star: false, src: 'http://air.radiorecord.ru:805/edmhits_320', name: 'EDM Hits', background: 'https://media.giphy.com/media/XeJeluwfWWELe/giphy.mp4'},
-        	{id: 7, star: false, src: 'http://air.radiorecord.ru:805/houseclss_320', name: 'House Classics', background: 'https://media.giphy.com/media/tDgWEibPXFyzS/giphy.mp4'},
-        	{id: 8, star: false, src: 'http://air.radiorecord.ru:805/uplift_320', name: 'Upfliting', background: 'https://media.giphy.com/media/ByozcDGZsaKis/giphy.mp4'},
-        	{id: 9, star: false, src: 'http://air.radiorecord.ru:805/darkside_320', name: 'Darkside', background: 'https://media.giphy.com/media/F6ub4AQXz13xK/giphy.mp4'},
-        	{id: 10, star: false, src: 'http://air.radiorecord.ru:805/dream_320', name: 'Dream Dance', background: 'https://media.giphy.com/media/UGQopfLmrzNO8/giphy.mp4'},
-        	{id: 11, star: false, src: 'http://air.radiorecord.ru:805/bighits_320', name: 'Big Hits', background: 'https://media.giphy.com/media/vDQsziDhqRGQE/giphy.mp4'},
-        	{id: 12, star: false, src: 'http://air.radiorecord.ru:805/househits_320', name: 'House Hits', background: 'https://media.giphy.com/media/lLfNvNFUytmnu/giphy.mp4'},
-        	{id: 13, star: false, src: 'http://air.radiorecord.ru:805/synth_320', name: 'Synthwave', background: 'https://media.giphy.com/media/3q4Qqf7KlFSzGtRLQE/giphy.mp4'},
-        	{id: 14, star: false, src: 'http://air.radiorecord.ru:805/progr_320', name: 'Progressive', background: 'https://media.giphy.com/media/5m6umHTnh0UI8/giphy.mp4'},
-        	{id: 15, star: false, src: 'http://air.radiorecord.ru:805/mt_320', name: 'Midtempo', background: 'https://media.giphy.com/media/3V9cxzbZWALle/giphy.mp4'},
-        	{id: 16, star: false, src: 'http://air.radiorecord.ru:805/elect_320', name: 'Electro', background: 'https://media.giphy.com/media/Zuic5hGIA9SrC/giphy.mp4'},
-        	{id: 17, star: false, src: 'http://air.radiorecord.ru:805/ibiza_320', name: 'Innocence', background: 'https://media.giphy.com/media/3o7TKvkrbL9A3gXBK0/giphy.mp4'},
-        	{id: 18, star: false, src: 'http://air.radiorecord.ru:805/gold_320', name: 'Gold', background: 'https://media.giphy.com/media/olAik8MhYOB9K/giphy.mp4'},
-        	{id: 19, star: false, src: 'http://air.radiorecord.ru:805/groovetribal_320', name: 'Groove/Tribal', background: 'https://media.giphy.com/media/26Ff87zixpk2xxAFW/giphy.mp4'},
-        	{id: 20, star: false, src: 'http://air.radiorecord.ru:805/complextro_320', name: 'Complextro', background: 'https://media.giphy.com/media/7MdYyz8TqYKEU/giphy.mp4'},
-        	{id: 21, star: false, src: 'http://air.radiorecord.ru:805/1970_320', name: '1970s', background: 'https://media.giphy.com/media/ulZ6ST8hOiaZy/giphy.mp4'},
-        	{id: 22, star: false, src: 'http://air.radiorecord.ru:805/chillhouse_320', name: 'Chill House', background: 'https://media.giphy.com/media/FLZ610GPmjPdC/giphy.mp4'},
-        	{id: 23, star: false, src: 'http://air.radiorecord.ru:805/1980_320', name: '1980s', background: 'https://media.giphy.com/media/JRi5RF32hwXJu/giphy.mp4'},
-        	{id: 24, star: false, src: 'http://air.radiorecord.ru:805/cadillac_320', name: 'Cadillac FM', background: 'https://media.giphy.com/media/rfRC2uoC4vd16/giphy.mp4'},
-        	{id: 25, star: false, src: 'http://air.radiorecord.ru:805/rapclassics_320', name: 'Rap Classics', background: 'https://media.giphy.com/media/3oxHQvKp6L6P6cFJV6/giphy.mp4'},
-        	{id: 26, star: false, src: 'http://air.radiorecord.ru:805/rap_320', name: 'Rap Hits', background: 'https://media.giphy.com/media/aufd3EoUNlOfK/giphy.mp4'},
-        	{id: 27, star: false, src: 'http://air.radiorecord.ru:805/discofunk_320', name: 'Disco/Funk', background: 'https://media.giphy.com/media/oXHDN5mJTpVW8/giphy.mp4'},
-        	{id: 28, star: false, src: 'http://air.radiorecord.ru:805/technopop_320', name: 'Technopop', background: 'https://media.giphy.com/media/26lCNXMDLzg8baSOI/giphy.mp4'},
-        	{id: 29, star: false, src: 'http://air.radiorecord.ru:805/eurodance_320', name: 'Eurodance', background: 'https://media.giphy.com/media/BXt3LMsr8WSwo/giphy.mp4'},
-        	{id: 30, star: false, src: 'http://air.radiorecord.ru:805/drumhits_320', name: 'Drum`n`Bass Hits', background: 'https://media.giphy.com/media/cXjS6nMXNA0Ja/giphy.mp4'},
-        	{id: 31, star: false, src: 'http://air.radiorecord.ru:805/liquidfunk_320', name: 'Liquid Funk', background: 'https://media.giphy.com/media/10kxE34bJPaUO4/giphy.mp4'},
-        	{id: 32, star: false, src: 'http://air.radiorecord.ru:805/jungle_320', name: 'Jungle', background: 'https://media.giphy.com/media/xT77XFdtzxsOBsaKkw/giphy.mp4'},
-        	{id: 33, star: false, src: 'http://air.radiorecord.ru:805/mix_320', name: 'Megamix', background: 'https://media.giphy.com/media/mAyCkVztyedPy/giphy.mp4'},
-        	{id: 34, star: false, src: 'http://air.radiorecord.ru:805/deep_320', name: 'Deep', background: 'https://media.giphy.com/media/PYsOfmCLHEaAg/giphy.mp4'},
-        	{id: 35, star: false, src: 'http://air.radiorecord.ru:805/club_320', name: 'EDM', background: 'https://media.giphy.com/media/M3o6jPwh4jHGw/giphy.mp4'},
-        	{id: 36, star: false, src: 'http://air.radiorecord.ru:805/trop_320', name: 'Tropical', background: 'https://media.giphy.com/media/RJq0mpiVETuRa/giphy.mp4'},
-        	{id: 37, star: false, src: 'http://air.radiorecord.ru:805/goa_320', name: 'GOA/PSY', background: 'https://media.giphy.com/media/8hGRRN0hhN8B2/giphy.mp4'},
-        	{id: 38, star: false, src: 'http://air.radiorecord.ru:805/fut_320', name: 'Future House', background: 'https://media.giphy.com/media/NxWk4NY7C59Fm/giphy.mp4'},
-        	{id: 39, star: false, src: 'http://air.radiorecord.ru:805/tm_320', name: 'Trancemission', background: 'https://media.giphy.com/media/3ohfFDYgapOeekjXI4/giphy.mp4'},
-        	{id: 40, star: false, src: 'http://air.radiorecord.ru:805/chil_320', name: 'Chill-Out', background: 'https://media.giphy.com/media/26Ff6Mzngeac3NhJK/giphy.mp4'},
-        	{id: 41, star: false, src: 'http://air.radiorecord.ru:805/mini_320', name: 'Minimal/Tech', background: 'https://media.giphy.com/media/xULW8lKRBkg5qPABqg/giphy.mp4'},
-        	{id: 42, star: false, src: 'http://air.radiorecord.ru:805/ps_320', name: 'Pirate Station', background: 'https://media.giphy.com/media/PNwaNXiP6ubw4/giphy.mp4'},
-        	{id: 43, star: false, src: 'http://air.radiorecord.ru:805/vip_320', name: 'Vip House', background: 'https://media.giphy.com/media/10hO3rDNqqg2Xe/giphy.mp4'},
-        	{id: 44, star: false, src: 'http://air.radiorecord.ru:805/hypno_320', name: 'Hypnotic', background: 'https://media.giphy.com/media/kWADDWRWrieje/giphy.mp4'},
-        	{id: 45, star: false, src: 'http://air.radiorecord.ru:805/trancehouse_320', name: 'Trancehouse', background: 'https://media.giphy.com/media/xUOxflfjn4SmwWqWME/giphy.mp4'},
-        	{id: 46, star: false, src: 'http://air.radiorecord.ru:805/jackin_320', name: 'Jackin`/Garage', background: 'https://media.giphy.com/media/3oz8xEG72RGTQ5q3WE/giphy.mp4'},
-        	{id: 47, star: false, src: 'http://air.radiorecord.ru:805/mmbt_320', name: 'Moombahton', background: 'https://media.giphy.com/media/3o6wrweu5IuWEBD9WU/giphy.mp4'},
-        	{id: 48, star: false, src: 'http://air.radiorecord.ru:805/sd90_320', name: 'Superdisco 90s', background: 'https://media.giphy.com/media/3oKHWqBRAndWxStj9K/giphy.mp4'},
-        	{id: 49, star: false, src: 'http://air.radiorecord.ru:805/brks_320', name: 'Breaks', background: 'https://media.giphy.com/media/3o7aD04Qk69gc9sp3O/giphy.mp4'},
-        	{id: 50, star: false, src: 'http://air.radiorecord.ru:805/dub_320', name: 'Dubstep', background: 'https://media.giphy.com/media/50EVbvPHSPF2U/giphy.mp4'},
-        	{id: 51, star: false, src: 'http://air.radiorecord.ru:805/dc_320', name: 'Dancecore', background: 'https://media.giphy.com/media/RX7N03MEUafW8/giphy.mp4'},
-        	{id: 52, star: false, src: 'http://air.radiorecord.ru:805/fbass_320', name: 'Future Bass', background: 'https://media.giphy.com/media/3oD3YKQ0uEbe88fXgI/giphy.mp4'},
-        	{id: 53, star: false, src: 'http://air.radiorecord.ru:805/rmx_320', name: 'Remix', background: 'https://media.giphy.com/media/3oeSALGvQ6r8oTymnS/giphy.mp4'},
-        	{id: 54, star: false, src: 'http://air.radiorecord.ru:805/techno_320', name: 'Techno', background: 'https://media.giphy.com/media/b60d0PNX0NPdS/giphy.mp4'},
-        	{id: 55, star: false, src: 'http://air.radiorecord.ru:805/hbass_320', name: 'Hard Bass', background: 'https://media.giphy.com/media/uZXZhtpCPRc5i/giphy.mp4'},
-        	{id: 56, star: false, src: 'http://air.radiorecord.ru:805/teo_320', name: 'Hardstyle', background: 'https://media.giphy.com/media/l4FGDHTesA4v3XmtG/giphy.mp4'},
-        	{id: 57, star: false, src: 'http://air.radiorecord.ru:805/trap_320', name: 'Trap', background: 'https://media.giphy.com/media/l4FGvaVO8FvC1cevm/giphy.mp4'},
-        	{id: 58, star: false, src: 'http://air.radiorecord.ru:805/pump_320', name: 'Old School', background: 'https://media.giphy.com/media/CmRgHgPchrHbO/giphy.mp4'},
-        	{id: 59, star: false, src: 'http://air.radiorecord.ru:805/rock_320', name: 'Rock', background: 'https://media.giphy.com/media/LNAQUlfh94kh2/giphy.mp4'},
-        	{id: 60, star: false, src: 'http://air.radiorecord.ru:805/mdl_320', name: 'Slow FM', background: 'https://media.giphy.com/media/83QhSF6YdWGIM/giphy.mp4'},
-        	{id: 61, star: false, src: 'http://air.radiorecord.ru:805/symph_320', name: 'Symphony FM', background: 'https://media.giphy.com/media/l2JhGk8rR9WFLEDQY/giphy.mp4'},
-        	{id: 62, star: false, src: 'http://air.radiorecord.ru:805/yo_320', name: 'Black', background: 'https://media.giphy.com/media/xULW8qTe7yRirTPMUU/giphy.mp4'},
-        	{id: 63, star: false, src: 'http://air.radiorecord.ru:805/rave_320', name: 'Rave FM', background: 'https://media.giphy.com/media/TPHLeSRLGtxe/giphy.mp4'}
+        	{id: 1, song: 'https://www.radiorecord.ru/xml/rr_online_v8.txt', src: 'http://air.radiorecord.ru:805/rr_320', name: 'Radio Record', background: 'https://media.giphy.com/media/xXvIkTu08XQLC/giphy.mp4'},
+        	{id: 2, song: '', src: 'http://air.radiorecord.ru:805/trancehits_320', name: 'Trance Hits', background: 'https://media.giphy.com/media/l2SpSmDIXYH4ykEHS/giphy.mp4'},
+        	{id: 3, song: '', src: 'http://air.radiorecord.ru:805/2step_320', name: '2 step', background: 'https://media.giphy.com/media/AaOYWtozeBpAc/giphy.mp4'},
+        	{id: 4, song: '', src: 'http://air.radiorecord.ru:805/tecktonik_320', name: 'Tecktonik', background: 'https://media.giphy.com/media/xThta2TIEn7PXojyb6/giphy.mp4'},
+        	{id: 5, song: '', src: 'http://air.radiorecord.ru:805/neurofunk_320', name: 'Neurofunk', background: 'https://media.giphy.com/media/10kxE34bJPaUO4/giphy.mp4'},
+        	{id: 6, song: '', src: 'http://air.radiorecord.ru:805/edmhits_320', name: 'EDM Hits', background: 'https://media.giphy.com/media/XeJeluwfWWELe/giphy.mp4'},
+        	{id: 7, song: '', src: 'http://air.radiorecord.ru:805/houseclss_320', name: 'House Classics', background: 'https://media.giphy.com/media/tDgWEibPXFyzS/giphy.mp4'},
+        	{id: 8, song: '', src: 'http://air.radiorecord.ru:805/uplift_320', name: 'Upfliting', background: 'https://media.giphy.com/media/ByozcDGZsaKis/giphy.mp4'},
+        	{id: 9, song: '', src: 'http://air.radiorecord.ru:805/darkside_320', name: 'Darkside', background: 'https://media.giphy.com/media/F6ub4AQXz13xK/giphy.mp4'},
+        	{id: 10, song: '', src: 'http://air.radiorecord.ru:805/dream_320', name: 'Dream Dance', background: 'https://media.giphy.com/media/UGQopfLmrzNO8/giphy.mp4'},
+        	{id: 11, song: '', src: 'http://air.radiorecord.ru:805/bighits_320', name: 'Big Hits', background: 'https://media.giphy.com/media/vDQsziDhqRGQE/giphy.mp4'},
+        	{id: 12, song: '', src: 'http://air.radiorecord.ru:805/househits_320', name: 'House Hits', background: 'https://media.giphy.com/media/lLfNvNFUytmnu/giphy.mp4'},
+        	{id: 13, song: '', src: 'http://air.radiorecord.ru:805/synth_320', name: 'Synthwave', background: 'https://media.giphy.com/media/3q4Qqf7KlFSzGtRLQE/giphy.mp4'},
+        	{id: 14, song: '', src: 'http://air.radiorecord.ru:805/progr_320', name: 'Progressive', background: 'https://media.giphy.com/media/5m6umHTnh0UI8/giphy.mp4'},
+        	{id: 15, song: '', src: 'http://air.radiorecord.ru:805/mt_320', name: 'Midtempo', background: 'https://media.giphy.com/media/3V9cxzbZWALle/giphy.mp4'},
+        	{id: 16, song: '', src: 'http://air.radiorecord.ru:805/elect_320', name: 'Electro', background: 'https://media.giphy.com/media/Zuic5hGIA9SrC/giphy.mp4'},
+        	{id: 17, song: '', src: 'http://air.radiorecord.ru:805/ibiza_320', name: 'Innocence', background: 'https://media.giphy.com/media/3o7TKvkrbL9A3gXBK0/giphy.mp4'},
+        	{id: 18, song: '', src: 'http://air.radiorecord.ru:805/gold_320', name: 'Gold', background: 'https://media.giphy.com/media/olAik8MhYOB9K/giphy.mp4'},
+        	{id: 19, song: '', src: 'http://air.radiorecord.ru:805/groovetribal_320', name: 'Groove/Tribal', background: 'https://media.giphy.com/media/26Ff87zixpk2xxAFW/giphy.mp4'},
+        	{id: 20, song: '', src: 'http://air.radiorecord.ru:805/complextro_320', name: 'Complextro', background: 'https://media.giphy.com/media/7MdYyz8TqYKEU/giphy.mp4'},
+        	{id: 21, song: '', src: 'http://air.radiorecord.ru:805/1970_320', name: '1970s', background: 'https://media.giphy.com/media/ulZ6ST8hOiaZy/giphy.mp4'},
+        	{id: 22, song: '', src: 'http://air.radiorecord.ru:805/chillhouse_320', name: 'Chill House', background: 'https://media.giphy.com/media/FLZ610GPmjPdC/giphy.mp4'},
+        	{id: 23, song: '', src: 'http://air.radiorecord.ru:805/1980_320', name: '1980s', background: 'https://media.giphy.com/media/JRi5RF32hwXJu/giphy.mp4'},
+        	{id: 24, song: '', src: 'http://air.radiorecord.ru:805/cadillac_320', name: 'Cadillac FM', background: 'https://media.giphy.com/media/rfRC2uoC4vd16/giphy.mp4'},
+        	{id: 25, song: '', src: 'http://air.radiorecord.ru:805/rapclassics_320', name: 'Rap Classics', background: 'https://media.giphy.com/media/3oxHQvKp6L6P6cFJV6/giphy.mp4'},
+        	{id: 26, song: '', src: 'http://air.radiorecord.ru:805/rap_320', name: 'Rap Hits', background: 'https://media.giphy.com/media/aufd3EoUNlOfK/giphy.mp4'},
+        	{id: 27, song: '', src: 'http://air.radiorecord.ru:805/discofunk_320', name: 'Disco/Funk', background: 'https://media.giphy.com/media/oXHDN5mJTpVW8/giphy.mp4'},
+        	{id: 28, song: '', src: 'http://air.radiorecord.ru:805/technopop_320', name: 'Technopop', background: 'https://media.giphy.com/media/26lCNXMDLzg8baSOI/giphy.mp4'},
+        	{id: 29, song: '', src: 'http://air.radiorecord.ru:805/eurodance_320', name: 'Eurodance', background: 'https://media.giphy.com/media/BXt3LMsr8WSwo/giphy.mp4'},
+        	{id: 30, song: '', src: 'http://air.radiorecord.ru:805/drumhits_320', name: 'Drum`n`Bass Hits', background: 'https://media.giphy.com/media/cXjS6nMXNA0Ja/giphy.mp4'},
+        	{id: 31, song: '', src: 'http://air.radiorecord.ru:805/liquidfunk_320', name: 'Liquid Funk', background: 'https://media.giphy.com/media/10kxE34bJPaUO4/giphy.mp4'},
+        	{id: 32, song: '', src: 'http://air.radiorecord.ru:805/jungle_320', name: 'Jungle', background: 'https://media.giphy.com/media/xT77XFdtzxsOBsaKkw/giphy.mp4'},
+        	{id: 33, song: '', src: 'http://air.radiorecord.ru:805/mix_320', name: 'Megamix', background: 'https://media.giphy.com/media/mAyCkVztyedPy/giphy.mp4'},
+        	{id: 34, song: '', src: 'http://air.radiorecord.ru:805/deep_320', name: 'Deep', background: 'https://media.giphy.com/media/PYsOfmCLHEaAg/giphy.mp4'},
+        	{id: 35, song: '', src: 'http://air.radiorecord.ru:805/club_320', name: 'EDM', background: 'https://media.giphy.com/media/M3o6jPwh4jHGw/giphy.mp4'},
+        	{id: 36, song: '', src: 'http://air.radiorecord.ru:805/trop_320', name: 'Tropical', background: 'https://media.giphy.com/media/RJq0mpiVETuRa/giphy.mp4'},
+        	{id: 37, song: '', src: 'http://air.radiorecord.ru:805/goa_320', name: 'GOA/PSY', background: 'https://media.giphy.com/media/8hGRRN0hhN8B2/giphy.mp4'},
+        	{id: 38, song: '', src: 'http://air.radiorecord.ru:805/fut_320', name: 'Future House', background: 'https://media.giphy.com/media/NxWk4NY7C59Fm/giphy.mp4'},
+        	{id: 39, song: '', src: 'http://air.radiorecord.ru:805/tm_320', name: 'Trancemission', background: 'https://media.giphy.com/media/3ohfFDYgapOeekjXI4/giphy.mp4'},
+        	{id: 40, song: '', src: 'http://air.radiorecord.ru:805/chil_320', name: 'Chill-Out', background: 'https://media.giphy.com/media/26Ff6Mzngeac3NhJK/giphy.mp4'},
+        	{id: 41, song: '', src: 'http://air.radiorecord.ru:805/mini_320', name: 'Minimal/Tech', background: 'https://media.giphy.com/media/xULW8lKRBkg5qPABqg/giphy.mp4'},
+        	{id: 42, song: '', src: 'http://air.radiorecord.ru:805/ps_320', name: 'Pirate Station', background: 'https://media.giphy.com/media/PNwaNXiP6ubw4/giphy.mp4'},
+        	{id: 43, song: '', src: 'http://air.radiorecord.ru:805/vip_320', name: 'Vip House', background: 'https://media.giphy.com/media/10hO3rDNqqg2Xe/giphy.mp4'},
+        	{id: 44, song: '', src: 'http://air.radiorecord.ru:805/hypno_320', name: 'Hypnotic', background: 'https://media.giphy.com/media/kWADDWRWrieje/giphy.mp4'},
+        	{id: 45, song: '', src: 'http://air.radiorecord.ru:805/trancehouse_320', name: 'Trancehouse', background: 'https://media.giphy.com/media/xUOxflfjn4SmwWqWME/giphy.mp4'},
+        	{id: 46, song: '', src: 'http://air.radiorecord.ru:805/jackin_320', name: 'Jackin`/Garage', background: 'https://media.giphy.com/media/3oz8xEG72RGTQ5q3WE/giphy.mp4'},
+        	{id: 47, song: '', src: 'http://air.radiorecord.ru:805/mmbt_320', name: 'Moombahton', background: 'https://media.giphy.com/media/3o6wrweu5IuWEBD9WU/giphy.mp4'},
+        	{id: 48, song: '', src: 'http://air.radiorecord.ru:805/sd90_320', name: 'Superdisco 90s', background: 'https://media.giphy.com/media/3oKHWqBRAndWxStj9K/giphy.mp4'},
+        	{id: 49, song: '', src: 'http://air.radiorecord.ru:805/brks_320', name: 'Breaks', background: 'https://media.giphy.com/media/3o7aD04Qk69gc9sp3O/giphy.mp4'},
+        	{id: 50, song: '', src: 'http://air.radiorecord.ru:805/dub_320', name: 'Dubstep', background: 'https://media.giphy.com/media/50EVbvPHSPF2U/giphy.mp4'},
+        	{id: 51, song: '', src: 'http://air.radiorecord.ru:805/dc_320', name: 'Dancecore', background: 'https://media.giphy.com/media/RX7N03MEUafW8/giphy.mp4'},
+        	{id: 52, song: '', src: 'http://air.radiorecord.ru:805/fbass_320', name: 'Future Bass', background: 'https://media.giphy.com/media/3oD3YKQ0uEbe88fXgI/giphy.mp4'},
+        	{id: 53, song: '', src: 'http://air.radiorecord.ru:805/rmx_320', name: 'Remix', background: 'https://media.giphy.com/media/3oeSALGvQ6r8oTymnS/giphy.mp4'},
+        	{id: 54, song: '', src: 'http://air.radiorecord.ru:805/techno_320', name: 'Techno', background: 'https://media.giphy.com/media/b60d0PNX0NPdS/giphy.mp4'},
+        	{id: 55, song: '', src: 'http://air.radiorecord.ru:805/hbass_320', name: 'Hard Bass', background: 'https://media.giphy.com/media/uZXZhtpCPRc5i/giphy.mp4'},
+        	{id: 56, song: '', src: 'http://air.radiorecord.ru:805/teo_320', name: 'Hardstyle', background: 'https://media.giphy.com/media/l4FGDHTesA4v3XmtG/giphy.mp4'},
+        	{id: 57, song: '', src: 'http://air.radiorecord.ru:805/trap_320', name: 'Trap', background: 'https://media.giphy.com/media/l4FGvaVO8FvC1cevm/giphy.mp4'},
+        	{id: 58, song: '', src: 'http://air.radiorecord.ru:805/pump_320', name: 'Old School', background: 'https://media.giphy.com/media/CmRgHgPchrHbO/giphy.mp4'},
+        	{id: 59, song: '', src: 'http://air.radiorecord.ru:805/rock_320', name: 'Rock', background: 'https://media.giphy.com/media/LNAQUlfh94kh2/giphy.mp4'},
+        	{id: 60, song: '', src: 'http://air.radiorecord.ru:805/mdl_320', name: 'Slow FM', background: 'https://media.giphy.com/media/83QhSF6YdWGIM/giphy.mp4'},
+        	{id: 61, song: '', src: 'http://air.radiorecord.ru:805/symph_320', name: 'Symphony FM', background: 'https://media.giphy.com/media/l2JhGk8rR9WFLEDQY/giphy.mp4'},
+        	{id: 62, song: '', src: 'http://air.radiorecord.ru:805/yo_320', name: 'Black', background: 'https://media.giphy.com/media/xULW8qTe7yRirTPMUU/giphy.mp4'},
+        	{id: 63, song: '', src: 'http://air.radiorecord.ru:805/rave_320', name: 'Rave FM', background: 'https://media.giphy.com/media/TPHLeSRLGtxe/giphy.mp4'}
         ],
         pagination: []
       }
@@ -667,8 +654,8 @@ label.main:hover:before {
 .info {
   width: 157px;
   position: absolute;
-  left: 104px;
-  top: 440px;
+  left: 97px;
+  top: 400px;
   transition: all 0.3s ease-in;
   display: block;
 }
@@ -687,7 +674,7 @@ label.main:hover:before {
   width: 216px;
   height: 35px;
   position: absolute;
-  bottom: 100px;
+  bottom: 65px;
   left: 48%;
   transform: translate(-50%, 0);
   z-index: 10;
