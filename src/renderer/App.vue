@@ -395,7 +395,7 @@ h6 {
 }
 
 .screen {
-  background-color: #fff;
+  background-color: black;
   padding: 0;
   height: 100%;
   width: 100%;
