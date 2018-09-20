@@ -31,22 +31,13 @@
             :key="key"
             class="song"
           >
-            <td class="nr">
-              <h5 v-text="index.id"></h5>
-            </td>
             <td class="title">
               <h6
-                v-if="current == index.id"
                 v-text="index.name"
-                style="color:red"
+                :class="{'red': current == index.id}"
               ></h6>
-              <h6 v-else v-text="index.name"></h6>
-            </td>
-            <td class="length">
-              <h5></h5>
             </td>
             <td class="title">
-              <h5>Image</h5>
             </td>
           </tr>
 
@@ -215,7 +206,7 @@
 
         for (var i = 0; i < this.source.length; i++) {
           let testMinus = this.current - 3;
-          let testPlus = this.current + 3;
+          let testPlus = this.current + 2;
           if (i >= testMinus && i <= testPlus) {
             this.pagination.push(this.source[i]);
           }
@@ -245,8 +236,8 @@
       },
 
       move(id) {
-        id = id > this.source.length ? Number(1) : Number(id);
-        id = id < 1 ? Number(this.source.length) : Number(id);
+        id = Number(id) > Number(this.source.length) ? Number(1) : Number(id);
+        id = Number(id) < Number(1) ? Number(this.source.length) : Number(id);
 
         for (var i = 0; i < this.source.length; i++) {
           if (this.source[i].id == id) {
@@ -325,6 +316,14 @@ body {
 .unimage {
   height: 100%;
   -webkit-app-region: no-drag;
+}
+
+.red {
+  color:red;
+}
+
+.white {
+  color:white;
 }
 
 @keyframes harlem {
