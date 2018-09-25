@@ -251,22 +251,14 @@
 
       close() {
         // @TODO Need to save volume, localstorage cant work
-        localStorage["volume"] = this.volume;
         let window = remote.getCurrentWindow();
         window.close();
       },
       
       // @TODO Add dragged window
-
       min() {
         let window = remote.getCurrentWindow();
         window.minimize();
-      },
-
-      loadData() {
-        if (localStorage["volume"] != undefined && localStorage["volume"] != '') {
-          this.volume = localStorage["volume"];
-        }
       },
 
       loadSong() {
@@ -291,13 +283,18 @@
     },
 
     mounted() {
-      this.loadData();
       this.refresh();
       this.loadSong();
 
       setInterval(() => {
         this.loadSong();
       }, 1000);
+
+      setInterval(() => {
+        if (this.isPlay) {
+          this.refresh()
+        }
+      }, 50);
     }
   }
 </script>
