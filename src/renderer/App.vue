@@ -46,6 +46,7 @@
         <div class="info">
 					<h4 v-text="currentVoicer"></h4>
 					<h3 v-text="currentSong"></h3>
+          <img :src="currentImg" width="168" style="position:absolute; bottom:140px;left: 90px">
 				</div>
 
         <audio
@@ -108,7 +109,24 @@
 
 <script>
   const remote = require('electron').remote;
+  const path = require('path');
+  const url = require('url');
   import axios from 'axios';
+  const DiscordRPC = require('discord-rpc');
+
+  const clientId = '499605504813826053';
+  DiscordRPC.register(clientId);
+  const rpc = new DiscordRPC.Client({ transport: 'ipc' });
+
+  rpc.setActivity({
+    details: 'Search song',
+    state: 'Radio Record channels',
+    startTimestamp: new Date(),
+    largeImageKey: 'lips',
+    largeImageText: 'Radio Record Player',
+    instance: false,
+  });
+  rpc.login({ clientId }).catch(console.error);
 
   export default {
     name: 'Player',
@@ -120,6 +138,8 @@
         current: 1,
         currentVoicer: '',
         currentSong: '',
+        currentImg: '',
+        time: 0,
         source: [
         	{id: 1, song: 'https://www.radiorecord.ru/xml/rr_online_v8.txt', src: 'http://air.radiorecord.ru:805/rr_320', name: 'Radio Record', background: 'https://media.giphy.com/media/xXvIkTu08XQLC/giphy.mp4'},
         	{id: 2, song: 'https://www.radiorecord.ru/xml/trancehits_online_v8.txt', src: 'http://air.radiorecord.ru:805/trancehits_320', name: 'Trance Hits', background: 'https://media.giphy.com/media/l2SpSmDIXYH4ykEHS/giphy.mp4'},
@@ -264,10 +284,12 @@
       loadSong() {
         var id = this.current;
         var url = '';
+        var title = '';
 
         for (var i = 0; i < this.source.length; i++) {
           if (this.source[i].id == id) {
             url = this.source[i].song;
+            title = this.source[i].name;
           }
         }
 
@@ -275,26 +297,38 @@
           .then((response) => {
             this.currentVoicer = response.data.artist;
             this.currentSong = response.data.title;
+            this.currentImg = response.data.image600;
           })
           .catch(function (error) {
             console.log(error);
           });
+
+          
+            rpc.setActivity({
+              details: this.currentSong,
+              state: this.currentVoicer,
+              startTimestamp: this.time,
+              largeImageKey: 'lips',
+              largeImageText: title,
+              instance: false,
+            });
       }
     },
 
     mounted() {
       this.refresh();
       this.loadSong();
+      this.time = new Date();
 
       setInterval(() => {
         this.loadSong();
-      }, 1000);
+      }, 500);
 
-      setInterval(() => {
-        if (this.isPlay) {
-          this.refresh()
-        }
-      }, 50);
+      //setInterval(() => {
+      //  if (this.isPlay) {
+      //    this.refresh()
+      //  }
+      //}, 50);
     }
   }
 </script>
