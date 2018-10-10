@@ -122,7 +122,7 @@
     details: 'Search song',
     state: 'Radio Record channels',
     startTimestamp: new Date(),
-    largeImageKey: 'lips',
+    largeImageKey: 'record',
     largeImageText: 'Radio Record Player',
     instance: false,
   });
@@ -308,7 +308,7 @@
               details: this.currentSong,
               state: this.currentVoicer,
               startTimestamp: this.time,
-              largeImageKey: 'lips',
+              largeImageKey: 'record',
               largeImageText: title,
               instance: false,
             });
