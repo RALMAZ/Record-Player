@@ -46,7 +46,7 @@
         <div class="info">
 					<h4 v-text="currentVoicer"></h4>
 					<h3 v-text="currentSong"></h3>
-          <img :src="currentImg" width="168" style="position:absolute; bottom:140px;left: 90px">
+          <img :src="currentImg" width="250" style="position:absolute; bottom:100px;left: 50px">
 				</div>
 
         <audio
@@ -305,8 +305,8 @@
 
           
             rpc.setActivity({
-              details: this.currentSong,
-              state: this.currentVoicer,
+              details: this.currentVoicer,
+              state: this.currentSong,
               startTimestamp: this.time,
               largeImageKey: 'record',
               largeImageText: title,
