@@ -233,6 +233,13 @@
         }
       },
 
+      checkConnection() {
+        document.querySelector('#audio').play;
+        document.querySelector('#coverVideo').play();
+        document.querySelector("#play").checked = true;
+        this.isPlay = true;
+      },
+
       play() {
         var audio = document.querySelector('#audio');
         var cover = document.querySelector('#coverVideo');
@@ -295,6 +302,9 @@
 
         axios.get(url)
           .then((response) => {
+            if (this.currentVoicer != response.data.artist) {
+              this.time = new Date();
+            }
             this.currentVoicer = response.data.artist;
             this.currentSong = response.data.title;
             this.currentImg = response.data.image600;
@@ -324,11 +334,11 @@
         this.loadSong();
       }, 500);
 
-      //setInterval(() => {
-      //  if (this.isPlay) {
-      //    this.refresh()
-      //  }
-      //}, 50);
+      setInterval(() => {
+        if (this.isPlay) {
+          this.checkConnection()
+        }
+      }, 250);
     }
   }
 </script>
