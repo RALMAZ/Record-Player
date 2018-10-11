@@ -19,7 +19,7 @@ Logo by <a href="https://github.com/nunojesus">@nunojesus</a>
   
 ## Download for [Windows](https://github.com/RALMAZ/Record-Player/releases/download/0.0.2/Radio.Record.Setup.0.0.2.exe)
   
-## Download for [Mac](https://github.com/RALMAZ/Record-Player/releases/download/0.0.2/Radio.Record-0.0.2.dmg)
+## Download for Mac - `Disabled, build for Mac not updated to 0.0.2`
 
 
 ## License
