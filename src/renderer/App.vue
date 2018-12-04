@@ -224,13 +224,16 @@
 
         this.pagination = [];
 
-        for (var i = 0; i < this.source.length; i++) {
+        /*for (var i = 0; i < this.source.length; i++) {
           let testMinus = this.current - 3;
           let testPlus = this.current + 2;
           if (i >= testMinus && i <= testPlus) {
             this.pagination.push(this.source[i]);
           }
-        }
+        }*/
+
+        const paginationFilter = (_, i) => (i >= this.current - 3) && (i <= this.current + 2);
+        this.source.filter(paginationFilter).forEach((_, i) => this.pagination.push(this.source[i]));
       },
 
       checkConnection() {
@@ -266,14 +269,23 @@
         id = Number(id) > Number(this.source.length) ? Number(1) : Number(id);
         id = Number(id) < Number(1) ? Number(this.source.length) : Number(id);
 
-        for (var i = 0; i < this.source.length; i++) {
+        /*for (var i = 0; i < this.source.length; i++) {
           if (this.source[i].id == id) {
             this.current = this.source[i].id;
             document.querySelector('#coverVideo').src = this.source[i].background;
             this.refresh();
             this.loadSong();
           }
-        }
+        }*/
+
+        const moveFilter = (_, i) => (i == id);
+        this.source.filter(moveFilter).forEach((_, i) => {
+            this.current = this.source[i].id;
+            document.querySelector('#coverVideo').src = this.source[i].background;
+            this.refresh();
+            this.loadSong();
+          }
+        );
       },
 
       close() {
@@ -314,14 +326,14 @@
           });
 
           
-            rpc.setActivity({
-              details: this.currentVoicer,
-              state: this.currentSong,
-              startTimestamp: this.time,
-              largeImageKey: 'record',
-              largeImageText: title,
-              instance: false,
-            });
+        rpc.setActivity({
+          details: this.currentVoicer,
+          state: this.currentSong,
+          startTimestamp: this.time,
+          largeImageKey: 'record',
+          largeImageText: title,
+          instance: false,
+        });
       }
     },
 
