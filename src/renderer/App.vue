@@ -90,7 +90,6 @@
               <input
                 id="s1"
                 @input="vol($event)"
-                @change="saveVolume($event)"
                 :value="volume"
                 type="range"
                 class="range"
@@ -113,6 +112,8 @@
   const path = require('path');
   const url = require('url');
   import axios from 'axios';
+  const os = require('os');
+  const storage = require('electron-json-storage');
   const DiscordRPC = require('discord-rpc');
   import Stations from './data/stations.json';
 
@@ -128,7 +129,7 @@
     largeImageText: 'Radio Record Player',
     instance: false,
   });
-  rpc.login({ clientId }).catch(console.error);
+  rpc.login({ clientId }).catch();
 
   export default {
     name: 'Player',
@@ -136,7 +137,7 @@
     data() {
       return {
         isPlay: false,
-        volume: 100,
+        volume: 30,
         current: 1,
         currentVoicer: '',
         currentSong: '',
@@ -147,13 +148,15 @@
       }
     },
 
-    computed: {
-      savedVolume () {
-        return this.$store.savedVolume
-      }
-    },
-
     created() {
+      storage.setDataPath(os.tmpdir());
+      storage.has('setVolume', (error, hasKey) => {
+        if (hasKey) {
+          storage.get('setVolume', (error2, data) => {
+            this.volSet(data);
+          });
+        }
+      });
       this.source = Stations;
     },
 
@@ -161,22 +164,12 @@
       this.refresh();
       this.loadSong();
       this.time = new Date();
-      let online = document.navigator.onLine;
 
       document.addEventListener('keyup', this.keyBind);
 
       setInterval(() => {
-        if(!online) {
-          alert('Internet connection lost');
-        }
         this.loadSong();
       }, 500);
-
-      //setInterval(() => {
-      //  if (this.isPlay) {
-      //    this.checkConnection()
-      //  }
-      //}, 250);
     },
 
     methods: {
@@ -195,12 +188,13 @@
 
       vol(e) {
         this.volume = e.target.value;
-        let resize = e.target.value / 100;
-        document.querySelector('#audio').volume = resize;
+        document.querySelector('#audio').volume = e.target.value / 100;
+        storage.set('setVolume', e.target.value);
       },
 
-      saveVolume(e) {
-        this.$store.commit('saveVolume', e.target.value);
+      volSet(e) {
+        this.volume = e;
+        document.querySelector('#audio').volume = e / 100;
       },
 
       refresh()  {
@@ -218,13 +212,6 @@
             this.pagination.push(this.source[i]);
           }
         }
-      },
-
-      checkConnection() {
-        document.querySelector('#audio').play;
-        document.querySelector('#coverVideo').play();
-        document.querySelector("#play").checked = true;
-        this.isPlay = true;
       },
 
       play() {
