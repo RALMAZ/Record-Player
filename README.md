@@ -17,7 +17,7 @@ Logo by <a href="https://github.com/nunojesus">@nunojesus</a>
     
 ### Current v 0.0.3
   
-## Download for [Windows](https://github.com/RALMAZ/Record-Player/releases/download/0.0.3/Radio.Record.Setup.0.0.3.exe)
+## Download for [Windows](https://github.com/RALMAZ/Record-Player/releases/download/0.0.3/Record.Player.Setup.0.0.3.exe)
   
 ## Download for Mac - `Disabled, build for Mac not updated to 0.0.3`
 
