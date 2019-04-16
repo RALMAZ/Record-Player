@@ -161,7 +161,7 @@
     },
 
     mounted() {
-      this.refresh();
+      // this.refresh();
       this.loadSong();
       this.time = new Date();
 
@@ -206,7 +206,7 @@
         this.pagination = [];
 
         for (var i = 0; i < this.source.length; i++) {
-          let testMinus = this.current - 3;
+          let testMinus = this.current - 2;
           let testPlus = this.current + 2;
           if (i >= testMinus && i <= testPlus) {
             this.pagination.push(this.source[i]);
@@ -217,16 +217,7 @@
       play() {
         var audio = document.querySelector('#audio');
         var cover = document.querySelector('#coverVideo');
-        //this.isPlay = !this.isPlay;
         this.loadSong();
-
-        //if (!audio.paused || !audio.ended) {
-        //  audio.play();
-        //  cover.play();
-        //} else {
-        //  audio.pause();
-        //  cover.pause();
-        //}
 
         if(!this.isPlay) {
           audio.play();
