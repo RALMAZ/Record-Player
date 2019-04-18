@@ -46,15 +46,19 @@
         <div class="info">
 					<h4 v-text="currentVoicer"></h4>
 					<h3 v-text="currentSong"></h3>
-          <img :src="currentImg" width="250" style="position:absolute; bottom:100px;left: 50px">
+          <img
+            :src="currentImg"
+            class="ra-current-img"
+            width="250"
+          >
 				</div>
 
         <audio
           id="audio"
-          :src="source[current - 1].src"
           preload="auto"
-          autoplay
           controls
+          :autoplay="isPlay"
+          :src="source[current - 1].src"
         ></audio>
         <table class="player">
           <td>
@@ -116,20 +120,10 @@
   const storage = require('electron-json-storage');
   const DiscordRPC = require('discord-rpc');
   import Stations from './data/stations.json';
-
+  
   const clientId = '499605504813826053';
   DiscordRPC.register(clientId);
   const rpc = new DiscordRPC.Client({ transport: 'ipc' });
-
-  rpc.setActivity({
-    details: 'Search song',
-    state: 'Radio Record channels',
-    startTimestamp: new Date(),
-    largeImageKey: 'record',
-    largeImageText: 'Radio Record Player',
-    instance: false,
-  });
-  rpc.login({ clientId }).catch();
 
   export default {
     name: 'Player',
@@ -143,6 +137,7 @@
         currentSong: '',
         currentImg: '',
         time: 0,
+        discord: true,
         source: [],
         pagination: []
       }
@@ -161,7 +156,20 @@
     },
 
     mounted() {
-      // this.refresh();
+      rpc.setActivity({
+        details: 'Search song',
+        state: 'Radio Record channels',
+        startTimestamp: new Date(),
+        largeImageKey: 'record',
+        largeImageText: 'Radio Record Player',
+        instance: false,
+      });
+      rpc.login({ clientId }).catch(()=> {
+        this.discord = false;
+      });
+
+      this.paginateUpdate();
+      
       this.loadSong();
       this.time = new Date();
 
@@ -203,11 +211,15 @@
         document.querySelector("#play").checked = true;
         this.isPlay = true;
 
+        this.paginateUpdate();
+      },
+
+      paginateUpdate() {
         this.pagination = [];
 
         for (var i = 0; i < this.source.length; i++) {
-          let testMinus = this.current - 2;
-          let testPlus = this.current + 2;
+          let testMinus = this.current - 3;
+          let testPlus = this.current;
           if (i >= testMinus && i <= testPlus) {
             this.pagination.push(this.source[i]);
           }
@@ -288,15 +300,16 @@
             console.log(error);
           });
 
-          
-        rpc.setActivity({
-          details: this.currentVoicer,
-          state: this.currentSong,
-          startTimestamp: this.time,
-          largeImageKey: 'record',
-          largeImageText: title,
-          instance: false,
-        });
+        if(this.discord) {
+          rpc.setActivity({
+            details: this.currentVoicer,
+            state: this.currentSong,
+            startTimestamp: this.time,
+            largeImageKey: 'record',
+            largeImageText: title,
+            instance: false,
+          });
+        }
       }
     },
   }
