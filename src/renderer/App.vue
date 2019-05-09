@@ -152,6 +152,13 @@
           });
         }
       });
+      storage.has('setChannel', (error, hasKey) => {
+        if (hasKey) {
+          storage.get('setChannel', (error2, data) => {
+            this.channelSet(data);
+          });
+        }
+      });
       this.source = Stations;
     },
 
@@ -203,6 +210,10 @@
       volSet(e) {
         this.volume = e;
         document.querySelector('#audio').volume = e / 100;
+      },
+
+      channelSet(e) {
+        this.current = e;
       },
 
       refresh()  {
@@ -258,6 +269,7 @@
         for (var i = 0; i < this.source.length; i++) {
           if (this.source[i].id == id) {
             this.current = this.source[i].id;
+            storage.set('setChannel', this.source[i].id);
             document.querySelector('#coverVideo').src = this.source[i].background;
             this.refresh();
             this.loadSong();
