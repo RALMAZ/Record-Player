@@ -1,13 +1,47 @@
 <template>
   <div id="wrapper">
     <article class="screen">
-      <input
-        id="magicButton"
-        type="checkbox"
-        name="check"
-        value="None"
-      />
-      <label class="main" for="magicButton"></label>
+      <label class="main" for="modal-toggle"></label>
+
+      <div class="modal-container">
+        <input id="modal-toggle" type="checkbox">
+        <label class="modal-backdrop" for="modal-toggle"></label>
+        <div class="modal-content">
+
+          <input type="text" placeholder="Search">
+
+          <div id="scroll-container">
+            <div class="wrap-container" id="wrap-scroll">
+              <ul id="ul-scroll">
+                <li
+                  v-for="(index, key) in source"
+                  @click="change(index)"
+                  :key="key"
+                  :class="{'active': current == index.id}"
+                >
+                  <span
+                    v-text="index.name"
+                    class="item"
+                  ></span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <svg>
+            <defs>
+              <linearGradient id="gradient" x1="0" y1="0%" x2 ="0" y2="50%">
+                <stop stop-color="black" offset="0"/>
+                <stop stop-color="white" offset="1"/>
+              </linearGradient>
+
+              <mask id="masking" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
+                <rect y="0" width="1" height="1" fill="url(#gradient)" />
+              </mask>
+            </defs>
+          </svg>
+
+        </div>          
+      </div>  
 
         <div class="coverImage">
           <video id="coverVideo" height="100%" loop>
@@ -23,26 +57,6 @@
         <div @click="min()" class="min"></div>
         <div class="bodyPlayer"></div>
 
-        <table class="list">
-
-          <tr
-            v-for="(index, key) in pagination"
-            @click="change(index)"
-            :key="key"
-            class="song"
-          >
-            <td class="title">
-              <h6
-                v-text="index.name"
-                :class="{'red': current == index.id}"
-              ></h6>
-            </td>
-            <td class="title">
-            </td>
-          </tr>
-
-        </table>
-
         <div class="info">
 					<h4 v-text="currentVoicer"></h4>
 					<h3 v-text="currentSong"></h3>
@@ -51,6 +65,11 @@
             class="ra-current-img"
             width="250"
           >
+          <h2
+            v-if="currentImg"
+            v-text="source[current - 1].name"
+            class="ra-current-name"
+          ></h2>
 				</div>
 
         <audio
@@ -125,6 +144,13 @@
   DiscordRPC.register(clientId);
   const rpc = new DiscordRPC.Client({ transport: 'ipc' });
 
+
+
+
+
+
+  
+
   export default {
     name: 'Player',
 
@@ -139,7 +165,6 @@
         time: 0,
         discord: true,
         source: [],
-        pagination: []
       }
     },
 
@@ -174,8 +199,6 @@
       rpc.login({ clientId }).catch(()=> {
         this.discord = false;
       });
-
-      this.paginateUpdate();
       
       this.loadSong();
       this.time = new Date();
@@ -221,20 +244,6 @@
         document.querySelector('#coverVideo').play();
         document.querySelector("#play").checked = true;
         this.isPlay = true;
-
-        this.paginateUpdate();
-      },
-
-      paginateUpdate() {
-        this.pagination = [];
-
-        for (var i = 0; i < this.source.length; i++) {
-          let testMinus = this.current - 3;
-          let testPlus = this.current;
-          if (i >= testMinus && i <= testPlus) {
-            this.pagination.push(this.source[i]);
-          }
-        }
       },
 
       play() {
