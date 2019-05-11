@@ -139,6 +139,7 @@
   const storage = require('electron-json-storage');
   const DiscordRPC = require('discord-rpc');
   import Stations from './data/stations.json';
+import { log } from 'util';
   
   const clientId = '499605504813826053';
   DiscordRPC.register(clientId);
@@ -184,7 +185,11 @@
           });
         }
       });
-      this.source = Stations;
+      this.source = Stations.sort((a, b) => {
+        if (a.name.charAt(0) > b.name.charAt(0)) return 1;
+        if (a.name.charAt(0) < b.name.charAt(0)) return -1;
+        return 0;
+      });
     },
 
     mounted() {
@@ -237,6 +242,20 @@
 
       channelSet(e) {
         this.current = e;
+      },
+
+      sortOn(arr, prop) {
+          arr.sort(
+              function (a, b) {
+                  if (a.prop < b.prop) {
+                      return -1;
+                  } else if (a.prop > b.prop) {
+                      return 1;
+                  } else {
+                      return 0;   
+                  }
+              }
+          );
       },
 
       refresh()  {
