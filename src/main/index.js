@@ -25,7 +25,7 @@ function createWindow () {
     width: 340,
     resizable: false,
     webPreferences: {
-      devTools: false
+      devTools: true
     }
   })
 

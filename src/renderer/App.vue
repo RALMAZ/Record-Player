@@ -234,10 +234,10 @@
           this.play();
         }
         if(value == 39 || value == 38) {
-          this.move(Number(this.current) + 1)
+          this.move(Number(this.current), true)
         }
         if(value == 37 || value == 40) {
-          this.move(Number(this.current) - 1)
+          this.move(Number(this.current), false)
         }
       },
 
@@ -292,23 +292,29 @@
         for (var i = 0; i < this.source.length; i++) {
           if (this.source[i].id == id) {
             if (moveTo) {
-              var res = i + 1;
-              if (res > this.source.length) {
-                res = 0;
+              var res = Number(i) + 1;
+              if (res > (this.source.length - 1)) {
+                this.current = this.source[0].id;
+                storage.set('setChannel', this.source[0].id);
+                document.querySelector('#coverVideo').src = this.source[0].background;
+              } else {
+                this.current = this.source[res].id;
+                storage.set('setChannel', this.source[res].id);
+                document.querySelector('#coverVideo').src = this.source[res].background;
               }
-              this.current = this.source[res].id;
-              storage.set('setChannel', this.source[res].id);
-              document.querySelector('#coverVideo').src = this.source[res].background;
               this.refresh();
               this.loadSong();
             } else {
-              var res = i - 1;
+              var res = Number(i) - 1;
               if (res < 0) {
-                res = this.source.length;
+                this.current = this.source[Number(this.source.length) - 1].id;
+                storage.set('setChannel', this.source[Number(this.source.length) - 1].id);
+                document.querySelector('#coverVideo').src = this.source[Number(this.source.length) - 1].background;
+              } else {
+                this.current = this.source[res].id;
+                storage.set('setChannel', this.source[res].id);
+                document.querySelector('#coverVideo').src = this.source[res].background;
               }
-              this.current = this.source[res].id;
-              storage.set('setChannel', this.source[res].id);
-              document.querySelector('#coverVideo').src = this.source[res].background;
               this.refresh();
               this.loadSong();
             }
