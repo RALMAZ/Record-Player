@@ -194,13 +194,6 @@
           });
         }
       });
-      //storage.has('setChannel', (error, hasKey) => {
-      //  if (hasKey) {
-      //    storage.get('setChannel', (error2, data) => {
-      //      this.channelSet(data);
-      //    });
-      //  }
-      //});
       this.source = Stations.sort((a, b) => {
         if (a.name.charAt(0) > b.name.charAt(0)) return 1;
         if (a.name.charAt(0) < b.name.charAt(0)) return -1;
@@ -224,7 +217,7 @@
       this.loadSong();
       this.time = new Date();
 
-      document.addEventListener('keyup', this.keyBind);
+      // document.addEventListener('keyup', this.keyBind);
 
       setInterval(() => {
         this.loadSong();
@@ -232,18 +225,18 @@
     },
 
     methods: {
-      keyBind(e) {
-        let value = e.keyCode;
-        if(value == 32) {
-          this.play();
-        }
-        if(value == 39 || value == 38) {
-          this.move(Number(this.current), true)
-        }
-        if(value == 37 || value == 40) {
-          this.move(Number(this.current), false)
-        }
-      },
+      //keyBind(e) {
+      //  let value = e.keyCode;
+      //  if(value == 32) {
+      //    this.play();
+      //  }
+      //  if(value == 39 || value == 38) {
+      //    this.move(Number(this.current), true)
+      //  }
+      //  if(value == 37 || value == 40) {
+      //    this.move(Number(this.current), false)
+      //  }
+      //},
 
       vol(e) {
         this.volume = e.target.value;
@@ -254,10 +247,6 @@
       volSet(e) {
         this.volume = e;
         document.querySelector('#audio').volume = e / 100;
-      },
-
-      channelSet(e) {
-        this.current = e;
       },
 
       refresh()  {
@@ -299,11 +288,11 @@
               var res = Number(i) + 1;
               if (res > (this.source.length - 1)) {
                 this.current = this.source[0].id;
-                storage.set('setChannel', this.source[0].id);
+                storage.set('setChannel', this.source[0]);
                 document.querySelector('#coverVideo').src = this.source[0].background;
               } else {
                 this.current = this.source[res].id;
-                storage.set('setChannel', this.source[res].id);
+                storage.set('setChannel', this.source[res]);
                 document.querySelector('#coverVideo').src = this.source[res].background;
               }
               this.refresh();
@@ -312,11 +301,11 @@
               var res = Number(i) - 1;
               if (res < 0) {
                 this.current = this.source[Number(this.source.length) - 1].id;
-                storage.set('setChannel', this.source[Number(this.source.length) - 1].id);
+                storage.set('setChannel', this.source[Number(this.source.length) - 1]);
                 document.querySelector('#coverVideo').src = this.source[Number(this.source.length) - 1].background;
               } else {
                 this.current = this.source[res].id;
-                storage.set('setChannel', this.source[res].id);
+                storage.set('setChannel', this.source[res]);
                 document.querySelector('#coverVideo').src = this.source[res].background;
               }
               this.refresh();
