@@ -8,7 +8,16 @@
         <label class="modal-backdrop" for="modal-toggle"></label>
         <div class="modal-content">
 
-          <input type="text" placeholder="Search">
+          <div class="search-box">
+            <div class="searchform">
+                <input
+                  id="s"
+                  type="text"
+                  v-model="searchInput"
+                  placeholder="Search"
+                />
+            </div>
+          </div>
 
           <div id="scroll-container">
             <div class="wrap-container" id="wrap-scroll">
@@ -17,7 +26,10 @@
                   v-for="(index, key) in source"
                   @click="change(index)"
                   :key="key"
-                  :class="{'active': current == index.id}"
+                  :class="{
+                    'active': current == index.id,
+                    'ra-display-none': index.name.search(searchInput) == -1}
+                  "
                 >
                   <span
                     v-text="index.name"
@@ -159,6 +171,7 @@
         currentVoicer: '',
         currentSong: '',
         currentImg: '',
+        searchInput: '',
         time: 0,
         discord: true,
         source: [],
