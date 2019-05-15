@@ -5,7 +5,11 @@
 
       <div class="modal-container">
         <input id="modal-toggle" type="checkbox">
-        <label class="modal-backdrop" for="modal-toggle"></label>
+        <label
+          class="modal-backdrop"
+          for="modal-toggle"
+          @click="searchInput = ''"
+        ></label>
         <div class="modal-content">
 
           <div class="search-box">
@@ -28,7 +32,7 @@
                   :key="key"
                   :class="{
                     'active': current == index.id,
-                    'ra-display-none': index.name.search(searchInput) == -1
+                    'ra-display-none': index.name.toLowerCase().search(searchInput.toLowerCase()) == -1
                   }"
                 >
                   <span
