@@ -1,5 +1,6 @@
 /* @TODO Download */
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
+@import url(https://use.fontawesome.com/releases/v5.8.2/css/all.css);
 
 body {
   background: #ff564c;
@@ -160,7 +161,7 @@ label.main:before {
   line-height: 16px;
   cursor: pointer;
   z-index: 10;
-  transition: all 0.3s ease-in;
+  transition: all 0.1s ease-in;
   
   -webkit-user-select: auto;
   -webkit-app-region: no-drag;
@@ -170,9 +171,42 @@ label.main:hover:before {
   color: #bbb;
 }
 
+label.main2:before {
+  position: absolute;
+  top: 23px;
+  left: 56px;
+  font-family: FontAwesome;
+  content: '\f005';
+  color: #959595;
+  font-size: 16px;
+  line-height: 16px;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.1s ease-in;
+  
+  -webkit-user-select: auto;
+  -webkit-app-region: no-drag;
+}
+
+label.main2:hover:before {
+  color: #bbb;
+}
+
+label.activeLabel:before {
+  color: darkorange;
+}
+
+.spanLabel {
+  color: #959595;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.1s ease-in;
+  float: right;
+}
+
 .screen > #magicButton:checked ~ label.main:before {
   color: #ff564c;
-  transition: all 0.3s ease-in;
+  transition: all 0.1s ease-in;
 }
 
 .coverImage {
@@ -665,7 +699,7 @@ input[type=range]::-webkit-slider-thumb {
 
 
 
-/* MODAL TEST */
+/* MODAL LISTING */
 .modal-container {
   margin: 60px auto;
   padding-top: 0px;
@@ -776,7 +810,6 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 
-
 /* LIST TEST */
 
 
@@ -877,7 +910,26 @@ input#s {
   position: relative;
   z-index: 2;
   color: #fff;
-  width: 200px;
+  width: 210px;
   outline: none;
   margin-right: 30px;
+}
+
+.listing {
+  position: relative;
+}
+
+.listing span {
+  cursor: pointer;
+}
+
+.iconFavorite {
+  color: rgba(85, 71, 71, 0.829);
+  position: absolute;
+  right: 5px;
+  top: 16px;
+}
+
+.activeFavorite {
+  color: darkorange;
 }

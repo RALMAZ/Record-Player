@@ -1,10 +1,23 @@
 <template>
   <div id="wrapper">
     <article class="screen">
-      <label class="main" for="modal-toggle"></label>
+      <label
+        @click="changelisting('list')"
+        class="main"
+        :class="{'activeLabel': listing == 'list'}"
+      ></label>
+      <label
+        @click="changelisting('favorite')"
+        class="main2"
+        :class="{'activeLabel': listing == 'favorite'}"
+      ></label>
 
       <div class="modal-container">
-        <input id="modal-toggle" type="checkbox">
+        <input
+          id="modal-toggle"
+          type="checkbox"
+          v-model="modal"
+        >
         <label
           class="modal-backdrop"
           for="modal-toggle"
@@ -12,52 +25,95 @@
         ></label>
         <div class="modal-content">
 
-          <div class="search-box">
-            <div class="searchform">
+          <div v-if="listing == 'list'">
+            <div class="search-box">
+              <div class="searchform">
                 <input
                   id="s"
                   type="text"
                   v-model="searchInput"
                   placeholder="Search"
                 />
+              </div>
             </div>
-          </div>
 
-          <div id="scroll-container">
-            <div class="wrap-container" id="wrap-scroll">
-              <ul id="ul-scroll">
-                <li
-                  v-for="(index, key) in source"
-                  @click="change(index)"
-                  :key="key"
-                  :class="{
-                    'active': current == index.id,
-                    'ra-display-none': index.name.toLowerCase().search(searchInput.toLowerCase()) == -1
-                  }"
-                >
-                  <span
-                    v-text="index.name"
-                    class="item"
-                  ></span>
-                </li>
-              </ul>
+            <div id="scroll-container">
+              <div class="wrap-container" id="wrap-scroll">
+                <ul id="ul-scroll">
+                  <li
+                    v-for="(index, key) in source"
+                    @click="change(index)"
+                    :key="key"
+                    :class="{
+                      'active': current == index.id,
+                      'ra-display-none': index.name.toLowerCase().search(searchInput.toLowerCase()) == -1
+                    }"
+                    class="listing"
+                  >
+                    <span
+                      v-text="index.name"
+                      class="item"
+                    ></span>
+                    <i
+                      @click="madeFavorite(index.id)"
+                      class="fas fa-star iconFavorite"
+                      :class="{'activeFavorite': !index.favorite}"
+                    ></i>
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
-          <svg>
-            <defs>
-              <linearGradient id="gradient" x1="0" y1="0%" x2 ="0" y2="50%">
-                <stop stop-color="black" offset="0"/>
-                <stop stop-color="white" offset="1"/>
-              </linearGradient>
+            <svg>
+              <defs>
+                <linearGradient id="gradient" x1="0" y1="0%" x2 ="0" y2="50%">
+                  <stop stop-color="black" offset="0"/>
+                  <stop stop-color="white" offset="1"/>
+                </linearGradient>
 
-              <mask id="masking" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
-                <rect y="0" width="1" height="1" fill="url(#gradient)" />
-              </mask>
-            </defs>
-          </svg>
+                <mask id="masking" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
+                  <rect y="0" width="1" height="1" fill="url(#gradient)" />
+                </mask>
+              </defs>
+            </svg>
+          </div>
+          
+          <div v-if="listing == 'favorite'">
+            <div id="scroll-container">
+              <div class="wrap-container" id="wrap-scroll">
+                <ul id="ul-scroll">
+                  <li
+                    v-for="(index, key) in source"
+                    @click="change(index)"
+                    :key="key"
+                    :class="{
+                      'active': current == index.id,
+                      'ra-display-none': index.favorite
+                    }"
+                  >
+                    <span
+                      v-text="index.name"
+                      class="item"
+                    ></span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <svg>
+              <defs>
+                <linearGradient id="gradient" x1="0" y1="0%" x2 ="0" y2="50%">
+                  <stop stop-color="black" offset="0"/>
+                  <stop stop-color="white" offset="1"/>
+                </linearGradient>
+
+                <mask id="masking" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
+                  <rect y="0" width="1" height="1" fill="url(#gradient)" />
+                </mask>
+              </defs>
+            </svg>
+          </div>
 
         </div>          
-      </div>  
+      </div>
 
       <div class="coverImage">
         <video id="coverVideo" height="100%" loop>
@@ -179,6 +235,9 @@
         channelGif: '',
         channelUrl: '',
         searchInput: '',
+        modal: false,
+        listing: 'none',
+        favorite: [],
         time: 0,
         discord: true,
         source: [],
@@ -191,6 +250,13 @@
         if (hasKey) {
           storage.get('setVolume', (error2, data) => {
             this.volSet(data);
+          });
+        }
+      });
+      storage.has('setFavorite', (error, hasKey) => {
+        if (hasKey) {
+          storage.get('setFavorite', (error2, data) => {
+            this.favoriteSet(data);
           });
         }
       });
@@ -249,6 +315,14 @@
         document.querySelector('#audio').volume = e / 100;
       },
 
+      favoriteSet(e) {
+        this.source = e.sort((a, b) => {
+          if (a.name.charAt(0) > b.name.charAt(0)) return 1;
+          if (a.name.charAt(0) < b.name.charAt(0)) return -1;
+          return 0;
+        });
+      },
+
       refresh()  {
         document.querySelector('#audio').play;
         document.querySelector('#coverVideo').play();
@@ -281,6 +355,18 @@
         this.loadSong();
       },
 
+      changelisting(listType) {
+        if (this.modal && this.listing != listType) {
+          this.listing = listType;
+        } else if (this.modal && this.listing == listType) {
+          this.listing = 'none';
+          this.modal = false;
+        } else if (!this.modal) {
+          this.listing = listType;
+          this.modal = true;
+        }
+      },
+
       move(id, moveTo) {
         for (var i = 0; i < this.source.length; i++) {
           if (this.source[i].id == id) {
@@ -305,7 +391,7 @@
               var res = Number(i) - 1;
               if (res < 0) {
                 this.current = this.source[Number(this.source.length) - 1].id;
-                storage.set('setChannel', this.source[Number(this.source.length) - 1]);
+                // storage.set('setChannel', this.source[Number(this.source.length) - 1]);
                 document.querySelector('#coverVideo').src = this.source[Number(this.source.length) - 1].background;
                 
                 var uiScroll = document.getElementById('ul-scroll');
@@ -314,7 +400,7 @@
                 wrapScroll.scrollTop =  wrapScroll.scrollHeight;
               } else {
                 this.current = this.source[res].id;
-                storage.set('setChannel', this.source[res]);
+                // storage.set('setChannel', this.source[res]);
                 document.querySelector('#coverVideo').src = this.source[res].background;
               }
               this.refresh();
@@ -322,6 +408,19 @@
             }
           }
         }
+      },
+
+      madeFavorite(id) {
+        for (var i = 0; i < this.source.length; i++) {
+          if (this.source[i].id == id) {
+            if (Boolean(this.source[i].favorite)) {
+              this.source[i].favorite = Boolean(false);
+            } else {
+              this.source[i].favorite = Boolean(true);
+            }
+          }
+        }
+        storage.set('setFavorite', this.source);
       },
 
       close() {

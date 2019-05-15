@@ -1,6 +1,7 @@
 [
     {
        "id":"1",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/rr_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/rr_320",
        "name":"Radio Record",
@@ -8,6 +9,7 @@
     },
     {
        "id":"2",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/trancehits_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/trancehits_320",
        "name":"Trance Hits",
@@ -15,6 +17,7 @@
     },
     {
        "id":"3",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/2step_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/2step_320",
        "name":"2 step",
@@ -22,6 +25,7 @@
     },
     {
        "id":"4",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/tecktonik_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/tecktonik_320",
        "name":"Tecktonik",
@@ -29,6 +33,7 @@
     },
     {
        "id":"5",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/neurofunk_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/neurofunk_320",
        "name":"Neurofunk",
@@ -36,6 +41,7 @@
     },
     {
        "id":"6",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/edmhits_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/edmhits_320",
        "name":"EDM Hits",
@@ -43,6 +49,7 @@
     },
     {
        "id":"7",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/houseclss_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/houseclss_320",
        "name":"House Classics",
@@ -50,6 +57,7 @@
     },
     {
        "id":"8",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/uplift_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/uplift_320",
        "name":"Upfliting",
@@ -57,6 +65,7 @@
     },
     {
        "id":"9",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/darkside_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/darkside_320",
        "name":"Darkside",
@@ -64,6 +73,7 @@
     },
     {
        "id":"10",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/dream_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/dream_320",
        "name":"Dream Dance",
@@ -71,6 +81,7 @@
     },
     {
        "id":"11",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/bighits_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/bighits_320",
        "name":"Big Hits",
@@ -78,6 +89,7 @@
     },
     {
        "id":"12",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/househits_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/househits_320",
        "name":"House Hits",
@@ -85,6 +97,7 @@
     },
     {
        "id":"13",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/synth_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/synth_320",
        "name":"Synthwave",
@@ -92,6 +105,7 @@
     },
     {
        "id":"14",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/progr_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/progr_320",
        "name":"Progressive",
@@ -99,6 +113,7 @@
     },
     {
        "id":"15",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/mt_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/mt_320",
        "name":"Midtempo",
@@ -106,6 +121,7 @@
     },
     {
        "id":"16",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/elect_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/elect_320",
        "name":"Electro",
@@ -113,6 +129,7 @@
     },
     {
        "id":"17",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/ibiza_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/ibiza_320",
        "name":"Innocence",
@@ -120,6 +137,7 @@
     },
     {
        "id":"18",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/gold_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/gold_320",
        "name":"Gold",
@@ -127,6 +145,7 @@
     },
     {
        "id":"19",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/groovetribal_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/groovetribal_320",
        "name":"Groove/Tribal",
@@ -134,6 +153,7 @@
     },
     {
        "id":"20",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/complextro_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/complextro_320",
        "name":"Complextro",
@@ -141,6 +161,7 @@
     },
     {
        "id":"21",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/1970_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/1970_320",
        "name":"1970s",
@@ -148,6 +169,7 @@
     },
     {
        "id":"22",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/chillhouse_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/chillhouse_320",
        "name":"Chill House",
@@ -155,6 +177,7 @@
     },
     {
        "id":"23",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/1980_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/1980_320",
        "name":"1980s",
@@ -162,6 +185,7 @@
     },
     {
        "id":"24",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/cadillac_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/cadillac_320",
        "name":"Cadillac FM",
@@ -169,6 +193,7 @@
     },
     {
        "id":"25",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/rapclassics_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/rapclassics_320",
        "name":"Rap Classics",
@@ -176,6 +201,7 @@
     },
     {
        "id":"26",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/rap_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/rap_320",
        "name":"Rap Hits",
@@ -183,6 +209,7 @@
     },
     {
        "id":"27",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/discofunk_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/discofunk_320",
        "name":"Disco/Funk",
@@ -190,6 +217,7 @@
     },
     {
        "id":"28",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/technopop_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/technopop_320",
        "name":"Technopop",
@@ -197,6 +225,7 @@
     },
     {
        "id":"29",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/eurodance_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/eurodance_320",
        "name":"Eurodance",
@@ -204,6 +233,7 @@
     },
     {
        "id":"30",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/drumhits_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/drumhits_320",
        "name":"Drum`n`Bass Hits",
@@ -211,6 +241,7 @@
     },
     {
        "id":"31",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/liquidfunk_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/liquidfunk_320",
        "name":"Liquid Funk",
@@ -218,6 +249,7 @@
     },
     {
        "id":"32",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/jungle_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/jungle_320",
        "name":"Jungle",
@@ -225,6 +257,7 @@
     },
     {
        "id":"33",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/mix_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/mix_320",
        "name":"Megamix",
@@ -232,6 +265,7 @@
     },
     {
        "id":"34",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/deep_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/deep_320",
        "name":"Deep",
@@ -239,6 +273,7 @@
     },
     {
        "id":"35",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/club_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/club_320",
        "name":"EDM",
@@ -246,6 +281,7 @@
     },
     {
        "id":"36",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/trop_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/trop_320",
        "name":"Tropical",
@@ -253,6 +289,7 @@
     },
     {
        "id":"37",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/goa_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/goa_320",
        "name":"GOA/PSY",
@@ -260,6 +297,7 @@
     },
     {
        "id":"38",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/fut_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/fut_320",
        "name":"Future House",
@@ -267,6 +305,7 @@
     },
     {
        "id":"39",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/tm_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/tm_320",
        "name":"Trancemission",
@@ -274,6 +313,7 @@
     },
     {
        "id":"40",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/chil_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/chil_320",
        "name":"Chill-Out",
@@ -281,6 +321,7 @@
     },
     {
        "id":"41",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/mini_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/mini_320",
        "name":"Minimal/Tech",
@@ -288,6 +329,7 @@
     },
     {
        "id":"42",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/ps_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/ps_320",
        "name":"Pirate Station",
@@ -295,6 +337,7 @@
     },
     {
        "id":"43",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/vip_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/vip_320",
        "name":"Vip House",
@@ -302,6 +345,7 @@
     },
     {
        "id":"44",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/hypno_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/hypno_320",
        "name":"Hypnotic",
@@ -309,6 +353,7 @@
     },
     {
        "id":"45",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/trancehouse_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/trancehouse_320",
        "name":"Trancehouse",
@@ -316,6 +361,7 @@
     },
     {
        "id":"46",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/jackin_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/jackin_320",
        "name":"Jackin`/Garage",
@@ -323,6 +369,7 @@
     },
     {
        "id":"47",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/mmbt_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/mmbt_320",
        "name":"Moombahton",
@@ -330,6 +377,7 @@
     },
     {
        "id":"48",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/sd90_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/sd90_320",
        "name":"Superdisco 90s",
@@ -337,6 +385,7 @@
     },
     {
        "id":"49",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/brks_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/brks_320",
        "name":"Breaks",
@@ -344,6 +393,7 @@
     },
     {
        "id":"50",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/dub_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/dub_320",
        "name":"Dubstep",
@@ -351,6 +401,7 @@
     },
     {
        "id":"51",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/dc_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/dc_320",
        "name":"Dancecore",
@@ -358,6 +409,7 @@
     },
     {
        "id":"52",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/fbass_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/fbass_320",
        "name":"Future Bass",
@@ -365,6 +417,7 @@
     },
     {
        "id":"53",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/rmx_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/rmx_320",
        "name":"Remix",
@@ -372,6 +425,7 @@
     },
     {
        "id":"54",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/techno_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/techno_320",
        "name":"Techno",
@@ -379,6 +433,7 @@
     },
     {
        "id":"55",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/hbass_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/hbass_320",
        "name":"Hard Bass",
@@ -386,6 +441,7 @@
     },
     {
        "id":"56",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/teo_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/teo_320",
        "name":"Hardstyle",
@@ -393,6 +449,7 @@
     },
     {
        "id":"57",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/trap_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/trap_320",
        "name":"Trap",
@@ -400,6 +457,7 @@
     },
     {
        "id":"58",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/pump_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/pump_320",
        "name":"Old School",
@@ -407,6 +465,7 @@
     },
     {
        "id":"59",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/rock_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/rock_320",
        "name":"Rock",
@@ -414,6 +473,7 @@
     },
     {
        "id":"60",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/mdl_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/mdl_320",
        "name":"Slow FM",
@@ -421,6 +481,7 @@
     },
     {
        "id":"61",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/symph_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/symph_320",
        "name":"Symphony FM",
@@ -428,6 +489,7 @@
     },
     {
        "id":"62",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/yo_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/yo_320",
        "name":"Black",
@@ -435,6 +497,7 @@
     },
     {
        "id":"63",
+       "favorite":"false",
        "song":"https://www.radiorecord.ru/xml/rave_online_v8.txt",
        "src":"http://air.radiorecord.ru:805/rave_320",
        "name":"Rave FM",
