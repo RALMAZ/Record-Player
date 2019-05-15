@@ -290,6 +290,10 @@
                 this.current = this.source[0].id;
                 storage.set('setChannel', this.source[0]);
                 document.querySelector('#coverVideo').src = this.source[0].background;
+
+                var uiScroll = document.getElementById('ul-scroll');
+                var topPos = uiScroll.offsetTop;
+                document.getElementById('wrap-scroll').scrollTop = topPos;
               } else {
                 this.current = this.source[res].id;
                 storage.set('setChannel', this.source[res]);
@@ -303,6 +307,11 @@
                 this.current = this.source[Number(this.source.length) - 1].id;
                 storage.set('setChannel', this.source[Number(this.source.length) - 1]);
                 document.querySelector('#coverVideo').src = this.source[Number(this.source.length) - 1].background;
+                
+                var uiScroll = document.getElementById('ul-scroll');
+                var topPos = uiScroll.offsetTop;
+                var wrapScroll = document.getElementById('wrap-scroll');
+                wrapScroll.scrollTop =  wrapScroll.scrollHeight;
               } else {
                 this.current = this.source[res].id;
                 storage.set('setChannel', this.source[res]);
