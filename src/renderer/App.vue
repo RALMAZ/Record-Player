@@ -43,113 +43,109 @@
         </div>          
       </div>  
 
-        <div class="coverImage">
-          <video id="coverVideo" height="100%" loop>
-            <source
-              id="coverSource"
-              :src="source[current - 1].background"
-              type="video/mp4"
-            >
-          </video>
-        </div>
-
-        <div @click="close()" class="close"></div>
-        <div @click="min()" class="min"></div>
-        <div class="bodyPlayer"></div>
-
-        <div class="info">
-					<h4 v-text="currentVoicer"></h4>
-					<h3 v-text="currentSong"></h3>
-          <img
-            :src="currentImg"
-            class="ra-current-img"
-            width="250"
+      <div class="coverImage">
+        <video id="coverVideo" height="100%" loop>
+          <source
+            id="coverSource"
+            :src="source[current - 1].background"
+            type="video/mp4"
           >
-          <h2
-            v-if="currentImg"
-            v-text="source[current - 1].name"
-            class="ra-current-name"
-          ></h2>
-				</div>
+        </video>
+      </div>
 
-        <audio
-          id="audio"
-          preload="auto"
-          controls
-          :autoplay="isPlay"
-          :src="source[current - 1].src"
-        ></audio>
-        <table class="player">
-          <td>
-            <input
-              id="backward"
-              @click="move(Number(current) - 1)"
-              type="checkbox"
-            />
-            <label class="backward" for="backward"></label>
-          </td>
-          <td>
-            <input
-              id="play"
-              @click="play()"
-              type="checkbox"
-              title="Play"
-            />
-            <label class="play" for="play"></label>
-          </td>
-          <td>
-            <input
-              id="forward"
-              @click="move(Number(current) + 1)"
-              type="checkbox"
-            />
-            <label class="forward" for="forward"></label>
-          </td>
-        </table>
+      <div @click="close()" class="close"></div>
+      <div @click="min()" class="min"></div>
+      <div class="bodyPlayer"></div>
+
+      <div class="info">
+				<h4 v-text="currentVoicer"></h4>
+				<h3 v-text="currentSong"></h3>
+        <img
+          :src="currentImg"
+          class="ra-current-img"
+          width="250"
+        >
+        <h2
+          v-if="currentImg"
+          v-text="source[current - 1].name"
+          class="ra-current-name"
+        ></h2>
+			</div>
+
+      <audio
+        id="audio"
+        preload="auto"
+        controls
+        :autoplay="isPlay"
+        :src="source[current - 1].src"
+      ></audio>
+
+      <table class="player">
+        <td>
+          <input
+            id="backward"
+            @click="move(Number(current) - 1)"
+            type="checkbox"
+          />
+          <label class="backward" for="backward"></label>
+        </td>
+        <td>
+          <input
+            id="play"
+            @click="play()"
+            type="checkbox"
+            title="Play"
+          />
+          <label class="play" for="play"></label>
+        </td>
+        <td>
+          <input
+            id="forward"
+            @click="move(Number(current) + 1)"
+            type="checkbox"
+          />
+          <label class="forward" for="forward"></label>
+        </td>
+      </table>
         
-        <table class="footer">
-          <td>
-            <div class="orange">
-              <input
-                id="s1"
-                @input="vol($event)"
-                :value="volume"
-                type="range"
-                class="range"
-                step="1"
-                min="0"
-                max="100"
-              />
-            </div>
-          </td>
-        </table>
-        <div class="current">
-          <h2 v-text="source[current - 1].name"></h2>
-        </div>
+      <table class="footer">
+        <td>
+          <div class="orange">
+            <input
+              id="s1"
+              @input="vol($event)"
+              :value="volume"
+              type="range"
+              class="range"
+              step="1"
+              min="0"
+              max="100"
+            />
+          </div>
+        </td>
+      </table>
+
+      <div class="current">
+        <h2 v-text="source[current - 1].name"></h2>
+      </div>
     </article>
   </div>
 </template>
 
 <script>
+  import axios from 'axios';
+  import Stations from './data/stations.json';
+
   const remote = require('electron').remote;
   const path = require('path');
   const url = require('url');
-  import axios from 'axios';
   const os = require('os');
   const storage = require('electron-json-storage');
   const DiscordRPC = require('discord-rpc');
-  import Stations from './data/stations.json';
-import { log } from 'util';
   
   const clientId = '499605504813826053';
   DiscordRPC.register(clientId);
   const rpc = new DiscordRPC.Client({ transport: 'ipc' });
-
-
-
-
-
-
   
 
   export default {
@@ -242,20 +238,6 @@ import { log } from 'util';
 
       channelSet(e) {
         this.current = e;
-      },
-
-      sortOn(arr, prop) {
-          arr.sort(
-              function (a, b) {
-                  if (a.prop < b.prop) {
-                      return -1;
-                  } else if (a.prop > b.prop) {
-                      return 1;
-                  } else {
-                      return 0;   
-                  }
-              }
-          );
       },
 
       refresh()  {
