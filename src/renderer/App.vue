@@ -28,8 +28,8 @@
                   :key="key"
                   :class="{
                     'active': current == index.id,
-                    'ra-display-none': index.name.search(searchInput) == -1}
-                  "
+                    'ra-display-none': index.name.search(searchInput) == -1
+                  }"
                 >
                   <span
                     v-text="index.name"
@@ -59,7 +59,7 @@
         <video id="coverVideo" height="100%" loop>
           <source
             id="coverSource"
-            :src="source[current - 1].background"
+            :src="channelGif"
             type="video/mp4"
           >
         </video>
@@ -79,7 +79,7 @@
         >
         <h2
           v-if="currentImg"
-          v-text="source[current - 1].name"
+          v-text="channelName"
           class="ra-current-name"
         ></h2>
 			</div>
@@ -89,14 +89,14 @@
         preload="auto"
         controls
         :autoplay="isPlay"
-        :src="source[current - 1].src"
+        :src="channelUrl"
       ></audio>
 
       <table class="player">
         <td>
           <input
             id="backward"
-            @click="move(Number(current) - 1)"
+            @click="move(Number(current), false)"
             type="checkbox"
           />
           <label class="backward" for="backward"></label>
@@ -113,7 +113,7 @@
         <td>
           <input
             id="forward"
-            @click="move(Number(current) + 1)"
+            @click="move(Number(current), true)"
             type="checkbox"
           />
           <label class="forward" for="forward"></label>
@@ -138,7 +138,7 @@
       </table>
 
       <div class="current">
-        <h2 v-text="source[current - 1].name"></h2>
+        <h2 v-text="channelName"></h2>
       </div>
     </article>
   </div>
@@ -171,6 +171,9 @@
         currentVoicer: '',
         currentSong: '',
         currentImg: '',
+        channelName: '',
+        channelGif: '',
+        channelUrl: '',
         searchInput: '',
         time: 0,
         discord: true,
@@ -187,13 +190,13 @@
           });
         }
       });
-      storage.has('setChannel', (error, hasKey) => {
-        if (hasKey) {
-          storage.get('setChannel', (error2, data) => {
-            this.channelSet(data);
-          });
-        }
-      });
+      //storage.has('setChannel', (error, hasKey) => {
+      //  if (hasKey) {
+      //    storage.get('setChannel', (error2, data) => {
+      //      this.channelSet(data);
+      //    });
+      //  }
+      //});
       this.source = Stations.sort((a, b) => {
         if (a.name.charAt(0) > b.name.charAt(0)) return 1;
         if (a.name.charAt(0) < b.name.charAt(0)) return -1;
@@ -285,17 +288,30 @@
         this.loadSong();
       },
 
-      move(id) {
-        id = Number(id) > Number(this.source.length) ? Number(1) : Number(id);
-        id = Number(id) < Number(1) ? Number(this.source.length) : Number(id);
-
+      move(id, moveTo) {
         for (var i = 0; i < this.source.length; i++) {
           if (this.source[i].id == id) {
-            this.current = this.source[i].id;
-            storage.set('setChannel', this.source[i].id);
-            document.querySelector('#coverVideo').src = this.source[i].background;
-            this.refresh();
-            this.loadSong();
+            if (moveTo) {
+              var res = i + 1;
+              if (res > this.source.length) {
+                res = 0;
+              }
+              this.current = this.source[res].id;
+              storage.set('setChannel', this.source[res].id);
+              document.querySelector('#coverVideo').src = this.source[res].background;
+              this.refresh();
+              this.loadSong();
+            } else {
+              var res = i - 1;
+              if (res < 0) {
+                res = this.source.length;
+              }
+              this.current = this.source[res].id;
+              storage.set('setChannel', this.source[res].id);
+              document.querySelector('#coverVideo').src = this.source[res].background;
+              this.refresh();
+              this.loadSong();
+            }
           }
         }
       },
@@ -319,6 +335,10 @@
           if (this.source[i].id == id) {
             url = this.source[i].song;
             title = this.source[i].name;
+            this.channelName = this.source[i].name;
+            this.channelGif = this.source[i].background;
+            this.channelUrl = this.source[i].src;
+            break;
           }
         }
 

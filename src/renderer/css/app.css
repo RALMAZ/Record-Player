@@ -824,7 +824,6 @@ input[type=range]::-webkit-slider-thumb {
   list-style: none;
   position: relative;
   transition: transform .3s;
-  top: 50px;
 }
 .wrap-container ul, .wrap-container ul li {
   margin: 0;
@@ -836,9 +835,6 @@ input[type=range]::-webkit-slider-thumb {
   line-height: 50px;
   transition: transform .3s;
   overflow: hidden;
-}
-.wrap-container ul li:last-of-type {
-  padding-bottom: 50px;
 }
 .wrap-container ul li.active .item {
   transform: scale(1.9);
