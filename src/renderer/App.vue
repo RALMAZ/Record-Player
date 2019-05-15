@@ -6,10 +6,17 @@
         class="main"
         :class="{'activeLabel': listing == 'list'}"
       ></label>
+
       <label
         @click="changelisting('favorite')"
         class="main2"
         :class="{'activeLabel': listing == 'favorite'}"
+      ></label>
+
+      <label
+        @click="changelisting('history')"
+        class="main3"
+        :class="{'activeLabel': listing == 'history'}"
       ></label>
 
       <div class="modal-container">
@@ -79,8 +86,8 @@
           
           <div v-if="listing == 'favorite'">
             <div id="scroll-container">
-              <div class="wrap-container" id="wrap-scroll">
-                <ul id="ul-scroll">
+              <div class="wrap-container">
+                <ul>
                   <li
                     v-for="(index, key) in source"
                     @click="change(index)"
@@ -111,6 +118,42 @@
               </defs>
             </svg>
           </div>
+          
+          <div v-if="listing == 'history'">
+            <div id="scroll-container2">
+              <div class="wrap-container2" id="wrap-scroll2">
+                <ul id="ul-scroll2">
+                  <li
+                    v-for="(index, key) in history"
+                    :key="key"
+                    class="ra-bar"
+                  >
+                    <img
+                      v-if="index.image"
+                      :src="index.image"
+                      class="ra-bar-item ra-item-img"
+                    >
+                    <img
+                      v-else
+                      :src="'https://images.radiovolna.net/_files/uploads/posts/2017-02/1486218080_2756.jpg'"
+                      class="ra-bar-item ra-item-img"
+                    >
+                    <div class="ra-bar-item ra-item-text">
+                      <span
+                        v-text="index.artist"
+                        class="ra-item-artist"
+                      ></span>
+                      <br>
+                      <span
+                        v-text="index.title"
+                        class="ra-item-title"
+                      ></span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
         </div>          
       </div>
@@ -133,12 +176,18 @@
 				<h4 v-text="currentVoicer"></h4>
 				<h3 v-text="currentSong"></h3>
         <img
+          v-if="currentImg"
           :src="currentImg"
           class="ra-current-img"
           width="250"
         >
+        <img
+          v-else
+          :src="'https://images.radiovolna.net/_files/uploads/posts/2017-02/1486218080_2756.jpg'"
+          class="ra-current-img"
+          width="250"
+        >
         <h2
-          v-if="currentImg"
           v-text="channelName"
           class="ra-current-name"
         ></h2>
@@ -238,6 +287,7 @@
         modal: false,
         listing: 'none',
         favorite: [],
+        history: [],
         time: 0,
         discord: true,
         source: [],
@@ -457,6 +507,23 @@
             this.currentVoicer = response.data.artist;
             this.currentSong = response.data.title;
             this.currentImg = response.data.image600;
+
+            let newHistory = {
+              artist: response.data.artist,
+              title: response.data.title,
+              image: response.data.image600
+            }
+            
+            let beacon = false;
+            for (var i = 0; i < this.history.length; i++) {
+              if (this.history[i].title == newHistory.title) {
+                beacon = true;
+              }
+            }
+            if (!beacon) {
+              this.history.push(newHistory);
+            }
+
           })
           .catch(function (error) {
             console.log(error);
@@ -472,6 +539,11 @@
             instance: false,
           });
         }
+
+        var uiScroll = document.getElementById('ul-scroll2');
+        var topPos = uiScroll.offsetTop;
+        var wrapScroll = document.getElementById('wrap-scroll2');
+        wrapScroll.scrollTop =  wrapScroll.scrollHeight;
       }
     },
   }

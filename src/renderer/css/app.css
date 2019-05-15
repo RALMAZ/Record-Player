@@ -192,6 +192,27 @@ label.main2:hover:before {
   color: #bbb;
 }
 
+label.main3:before {
+  position: absolute;
+  top: 23px;
+  left: 89px;
+  font-family: FontAwesome;
+  content: '\f005';
+  color: #959595;
+  font-size: 16px;
+  line-height: 16px;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.1s ease-in;
+  
+  -webkit-user-select: auto;
+  -webkit-app-region: no-drag;
+}
+
+label.main3:hover:before {
+  color: #bbb;
+}
+
 label.activeLabel:before {
   color: darkorange;
 }
@@ -884,6 +905,72 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 
+/* LIST HISTORY */
+
+
+#scroll-container2 {
+  max-width: 100%;
+  margin: auto;
+  height: 75vh;
+  top: 5vh;
+  position: relative;
+  max-height: 270px;
+  min-height: 270px;
+  color: white;
+  margin-right: 10px;
+}
+
+.wrap-container2 {
+  position: relative;
+  min-height: 270px;
+  max-height: 270px;
+  width: 100%;
+  max-width: 100%;
+  margin: auto;
+  overflow: auto;
+  padding-right: 20px;
+  mask: url(#masking);
+}
+
+.wrap-container2::-webkit-scrollbar {
+  width: 7px;
+}
+
+.wrap-container2::-webkit-scrollbar-track {
+  background:rgba(85, 71, 71, 0.829); 
+  border-radius: 5px;
+}
+
+.wrap-container2::-webkit-scrollbar-thumb {
+  -webkit-appearance: none;
+  background: darkorange;
+  border-radius: 5px;
+}
+
+.wrap-container2 ul {
+  list-style: none;
+  position: relative;
+  transition: transform .3s;
+}
+.wrap-container2 ul, .wrap-container ul li {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+.wrap-container2 ul li {
+  transition: transform .3s;
+  overflow: hidden;
+}
+.wrap-container2 ul li.active .item {
+  transform: scale(1.9);
+  color: darkOrange;
+}
+.wrap-container2 ul li .item {
+  position: relative;
+  transition: transform 200ms;
+  display: inline-block;
+}
+
 
 .ra-display-none {
   display: none;
@@ -932,4 +1019,71 @@ input#s {
 
 .activeFavorite {
   color: darkorange;
+}
+
+.historyItem {
+  position: relative;
+  height: 70px;
+  line-height: 70px;
+}
+
+
+.ra-bar {
+  width:100%;
+  overflow:hidden
+}
+.ra-center .w3-bar {
+  display:inline-block;
+  width:auto
+}
+.ra-bar .ra-bar-item {
+  padding:8px 16px;
+  float:left;
+  width:auto;
+  border:none;
+  display:block;
+  outline:0
+}
+.ra-bar .ra-dropdown-hover,.ra-bar .ra-dropdown-click {
+  position:static;
+  float:left
+}
+.ra-bar .ra-button {
+  white-space:normal
+}
+.ra-bar-block .ra-bar-item {
+  display:block;
+  padding:8px 16px;
+  text-align:left;
+  border:none;
+  white-space:normal;
+  float:none;
+  outline:0;
+  color:white;
+  
+  -webkit-user-select: auto;
+  -webkit-app-region: no-drag;
+}
+.ra-item-text {
+  width: 90px;
+  max-width: 90px;
+  height: 90px;
+  -webkit-user-select: auto;
+  -webkit-app-region: no-drag;
+}
+.ra-item-img {
+  width: 90px;
+  height: 90px;
+}
+.ra-item-artist {
+  font-size: 10px;
+  word-wrap: break-word;
+  -webkit-user-select: auto;
+  -webkit-app-region: no-drag;
+}
+.ra-item-title {
+  font-size: 8px;
+  word-wrap: break-word;
+  -webkit-user-select: auto;
+  -webkit-app-region: no-drag;
 }
