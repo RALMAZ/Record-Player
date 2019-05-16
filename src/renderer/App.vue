@@ -96,11 +96,16 @@
                       'active': current == index.id,
                       'ra-display-none': index.favorite
                     }"
+                    class="listing"
                   >
                     <span
                       v-text="index.name"
                       class="item"
                     ></span>
+                    <i
+                      @click="madeFavorite(index.id)"
+                      class="fas fa-trash iconFavorite"
+                    ></i>
                   </li>
                 </ul>
               </div>
@@ -121,10 +126,14 @@
           
           <div v-if="listing == 'history'">
             <div id="scroll-container2">
-              <div class="wrap-container2" id="wrap-scroll2">
-                <ul id="ul-scroll2">
+              <div
+                id="wrap-scroll2"
+                class="wrap-container2"
+              >
+                <ul v-if="history.length > 0">
                   <li
-                    v-for="(index, key) in history"
+                    v-for="(index, key) in history.slice().reverse()"
+                    track-by="id"
                     :key="key"
                     class="ra-bar"
                   >
@@ -151,6 +160,10 @@
                     </div>
                   </li>
                 </ul>
+                <h1
+                  v-else
+                  v-text="'No one song played'"
+                ></h1>
               </div>
             </div>
           </div>
@@ -447,7 +460,7 @@
                 var uiScroll = document.getElementById('ul-scroll');
                 var topPos = uiScroll.offsetTop;
                 var wrapScroll = document.getElementById('wrap-scroll');
-                wrapScroll.scrollTop =  wrapScroll.scrollHeight;
+                wrapScroll.scrollTop = wrapScroll.scrollHeight;
               } else {
                 this.current = this.source[res].id;
                 // storage.set('setChannel', this.source[res]);
@@ -509,6 +522,7 @@
             this.currentImg = response.data.image600;
 
             let newHistory = {
+              id: this.history.length,
               artist: response.data.artist,
               title: response.data.title,
               image: response.data.image600
@@ -539,11 +553,6 @@
             instance: false,
           });
         }
-
-        var uiScroll = document.getElementById('ul-scroll2');
-        var topPos = uiScroll.offsetTop;
-        var wrapScroll = document.getElementById('wrap-scroll2');
-        wrapScroll.scrollTop =  wrapScroll.scrollHeight;
       }
     },
   }

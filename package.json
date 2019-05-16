@@ -51,16 +51,16 @@
     }
   },
   "dependencies": {
-    "vue": "^2.5.16",
     "axios": "^0.18.0",
+    "discord-rpc": "^3.0.1",
+    "electron-dl": "^1.14.0",
+    "electron-json-storage": "^4.1.6",
+    "sass-loader": "^7.1.0",
+    "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
-    "vuex-electron": "^1.0.0",
-    "sass-loader": "^7.1.0",
-    "discord-rpc": "^3.0.1",
-    "electron-dl": "^1.14.0",
-    "electron-json-storage": "^4.1.6"
+    "vuex-electron": "^1.0.0"
   },
   "devDependencies": {
     "ajv": "^6.5.0",
