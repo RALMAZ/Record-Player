@@ -1,7 +1,7 @@
 const storage = require('electron-json-storage');
 const os = require('os');
 
-export const storage = {
+export const store = {
   created() {
     storage.setDataPath(os.tmpdir());
   },

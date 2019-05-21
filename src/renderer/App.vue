@@ -272,7 +272,7 @@
 
   import { window } from './mixins/window';
   import { discord } from './mixins/discord';
-  import { storage } from './mixins/storage';
+  import { store } from './mixins/store';
   import { selector } from './mixins/selector';
 
   export default {
@@ -280,7 +280,7 @@
     mixins: [
       window,
       discord,
-      storage,
+      store,
       selector
     ],
 
