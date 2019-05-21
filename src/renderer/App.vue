@@ -270,20 +270,19 @@
   import axios from 'axios';
   import Stations from './data/stations.json';
 
-  const remote = require('electron').remote;
-  const path = require('path');
-  const url = require('url');
-  const os = require('os');
-  const storage = require('electron-json-storage');
-  const DiscordRPC = require('discord-rpc');
-  
-  const clientId = '499605504813826053';
-  DiscordRPC.register(clientId);
-  const rpc = new DiscordRPC.Client({ transport: 'ipc' });
-  
+  import { window } from './mixins/window';
+  import { discord } from './mixins/discord';
+  import { storage } from './mixins/storage';
+  import { selector } from './mixins/selector';
 
   export default {
     name: 'Player',
+    mixins: [
+      window,
+      discord,
+      storage,
+      selector
+    ],
 
     data() {
       return {
@@ -302,27 +301,21 @@
         favorite: [],
         history: [],
         time: 0,
-        discord: true,
         source: [],
       }
     },
 
     created() {
-      storage.setDataPath(os.tmpdir());
-      storage.has('setVolume', (error, hasKey) => {
-        if (hasKey) {
-          storage.get('setVolume', (error2, data) => {
-            this.volSet(data);
-          });
-        }
-      });
-      storage.has('setFavorite', (error, hasKey) => {
-        if (hasKey) {
-          storage.get('setFavorite', (error2, data) => {
-            this.favoriteSet(data);
-          });
-        }
-      });
+      let setVolume = this.storageHas('setVolume');
+      if (setVolume) {
+        this.volSet(setVolume);
+      }
+
+      let setFavorite = this.storageHas('setFavorite');
+      if (setFavorite) {
+        this.favoriteSet(setFavorite);
+      }
+
       this.source = Stations.sort((a, b) => {
         if (a.name.charAt(0) > b.name.charAt(0)) return 1;
         if (a.name.charAt(0) < b.name.charAt(0)) return -1;
@@ -331,18 +324,6 @@
     },
 
     mounted() {
-      rpc.setActivity({
-        details: 'Search song',
-        state: 'Radio Record channels',
-        startTimestamp: new Date(),
-        largeImageKey: 'record',
-        largeImageText: 'Radio Record Player',
-        instance: false,
-      });
-      rpc.login({ clientId }).catch(()=> {
-        this.discord = false;
-      });
-      
       this.loadSong();
       this.time = new Date();
 
@@ -369,13 +350,13 @@
 
       vol(e) {
         this.volume = e.target.value;
-        document.querySelector('#audio').volume = e.target.value / 100;
-        storage.set('setVolume', e.target.value);
+        this.selector('audio').volume = e.target.value / 100;
+        this.storageSet('setVolume', e.target.value);
       },
 
       volSet(e) {
         this.volume = e;
-        document.querySelector('#audio').volume = e / 100;
+        this.selector('audio').volume = e / 100;
       },
 
       favoriteSet(e) {
@@ -387,33 +368,33 @@
       },
 
       refresh()  {
-        document.querySelector('#audio').play;
-        document.querySelector('#coverVideo').play();
-        document.querySelector("#play").checked = true;
+        this.selector('audio').play;
+        this.selector('coverVideo').play();
+        this.selector("play").checked = true;
         this.isPlay = true;
       },
 
       play() {
-        var audio = document.querySelector('#audio');
-        var cover = document.querySelector('#coverVideo');
+        var audio = this.selector('audio');
+        var cover = this.selector('coverVideo');
         this.loadSong();
 
         if(!this.isPlay) {
           audio.play();
           cover.play();
-          document.querySelector("#play").checked = true;
+          this.selector("play").checked = true;
           this.isPlay = true;
         } else {
           audio.pause();
           cover.pause();
-          document.querySelector("#play").checked = false;
+          this.selector("play").checked = false;
           this.isPlay = false;
         }
       },
 
       change(index) {
         this.current = index.id;
-        document.querySelector('#coverVideo').src = index.background;
+        this.selector('coverVideo').src = index.background;
         this.refresh();
         this.loadSong();
       },
@@ -437,16 +418,17 @@
               var res = Number(i) + 1;
               if (res > (this.source.length - 1)) {
                 this.current = this.source[0].id;
-                storage.set('setChannel', this.source[0]);
-                document.querySelector('#coverVideo').src = this.source[0].background;
+                // this.storageSet('setChannel', this.source[0]);
 
-                var uiScroll = document.getElementById('ul-scroll');
+                this.selector('coverVideo').src = this.source[0].background;
+
+                var uiScroll = this.selector('ul-scroll');
                 var topPos = uiScroll.offsetTop;
-                document.getElementById('wrap-scroll').scrollTop = topPos;
+                this.selector('wrap-scroll').scrollTop = topPos;
               } else {
                 this.current = this.source[res].id;
                 storage.set('setChannel', this.source[res]);
-                document.querySelector('#coverVideo').src = this.source[res].background;
+                this.selector('coverVideo').src = this.source[res].background;
               }
               this.refresh();
               this.loadSong();
@@ -454,8 +436,8 @@
               var res = Number(i) - 1;
               if (res < 0) {
                 this.current = this.source[Number(this.source.length) - 1].id;
-                // storage.set('setChannel', this.source[Number(this.source.length) - 1]);
-                document.querySelector('#coverVideo').src = this.source[Number(this.source.length) - 1].background;
+                // this.storageSet('setChannel', this.source[Number(this.source.length) - 1]);
+                this.selector('coverVideo').src = this.source[Number(this.source.length) - 1].background;
                 
                 var uiScroll = document.getElementById('ul-scroll');
                 var topPos = uiScroll.offsetTop;
@@ -463,8 +445,8 @@
                 wrapScroll.scrollTop = wrapScroll.scrollHeight;
               } else {
                 this.current = this.source[res].id;
-                // storage.set('setChannel', this.source[res]);
-                document.querySelector('#coverVideo').src = this.source[res].background;
+                // this.storageSet('setChannel', this.source[res]);
+                this.selector('coverVideo').src = this.source[res].background;
               }
               this.refresh();
               this.loadSong();
@@ -483,17 +465,7 @@
             }
           }
         }
-        storage.set('setFavorite', this.source);
-      },
-
-      close() {
-        let window = remote.getCurrentWindow();
-        window.close();
-      },
-      
-      min() {
-        let window = remote.getCurrentWindow();
-        window.minimize();
+        this.storageSet('setFavorite', this.source);
       },
 
       loadSong() {
@@ -544,14 +516,11 @@
           });
 
         if(this.discord) {
-          rpc.setActivity({
-            details: this.currentVoicer,
-            state: this.currentSong,
-            startTimestamp: this.time,
-            largeImageKey: 'record',
-            largeImageText: title,
-            instance: false,
-          });
+          this.setActivity(
+            this.currentVoicer,
+            this.currentSong,
+            this.time
+          );
         }
       }
     },
