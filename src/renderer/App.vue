@@ -72,13 +72,28 @@
             </div>
             <svg>
               <defs>
-                <linearGradient id="gradient" x1="0" y1="0%" x2 ="0" y2="50%">
+                <linearGradient
+                  id="gradient"
+                  x1="0"
+                  y1="0%"
+                  x2="0"
+                  y2="50%"
+                >
                   <stop stop-color="black" offset="0"/>
                   <stop stop-color="white" offset="1"/>
                 </linearGradient>
 
-                <mask id="masking" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
-                  <rect y="0" width="1" height="1" fill="url(#gradient)" />
+                <mask
+                  id="masking"
+                  maskUnits="objectBoundingBox"
+                  maskContentUnits="objectBoundingBox"
+                >
+                  <rect
+                    y="0"
+                    width="1"
+                    height="1"
+                    fill="url(#gradient)"
+                  />
                 </mask>
               </defs>
             </svg>
@@ -105,6 +120,7 @@
                     <i
                       @click="madeFavorite(index.id)"
                       class="fas fa-trash iconFavorite"
+                      style="font-size: 15px;"
                     ></i>
                   </li>
                 </ul>
@@ -267,20 +283,26 @@
 </template>
 
 <script>
+  // Import rq
   import axios from 'axios';
   import Stations from './data/stations.json';
 
+  // Storage
+  const os = require('os');
+  const storage = require('electron-json-storage');
+  storage.setDataPath(os.tmpdir());
+
+  // Mixins
   import { window } from './mixins/window';
   import { discord } from './mixins/discord';
-  import { store } from './mixins/store';
   import { selector } from './mixins/selector';
 
+  // Vue
   export default {
     name: 'Player',
     mixins: [
       window,
       discord,
-      store,
       selector
     ],
 
@@ -288,38 +310,50 @@
       return {
         isPlay: false,
         volume: 30,
+
         current: 1,
         currentVoicer: '',
         currentSong: '',
         currentImg: '',
+
         channelName: '',
         channelGif: '',
         channelUrl: '',
+
         searchInput: '',
         modal: false,
         listing: 'none',
+
         favorite: [],
         history: [],
-        time: 0,
         source: [],
+        time: 0,
       }
     },
 
     created() {
-      let setVolume = this.storageHas('setVolume');
-      if (setVolume) {
-        this.volSet(setVolume);
-      }
+      // Storage data extract
 
-      let setFavorite = this.storageHas('setFavorite');
-      if (setFavorite) {
-        this.favoriteSet(setFavorite);
-      }
+      storage.has('setVolume', (error, hasKey) => {
+        if (hasKey) {
+          storage.get('setVolume', (error2, data) => {
+            this.setVolume(data);
+          });
+        }
+      });
 
-      this.source = Stations.sort((a, b) => {
-        if (a.name.charAt(0) > b.name.charAt(0)) return 1;
-        if (a.name.charAt(0) < b.name.charAt(0)) return -1;
-        return 0;
+      storage.has('setFavorite', (error, hasKey) => {
+        if (hasKey) {
+          storage.get('setFavorite', (error2, data) => {
+            this.setFavorite(data);
+          });
+        } else {
+          this.source = Stations.sort((a, b) => {
+            if (a.name.charAt(0) > b.name.charAt(0)) return 1;
+            if (a.name.charAt(0) < b.name.charAt(0)) return -1;
+            return 0;
+          });
+        }
       });
     },
 
@@ -351,15 +385,15 @@
       vol(e) {
         this.volume = e.target.value;
         this.selector('audio').volume = e.target.value / 100;
-        this.storageSet('setVolume', e.target.value);
+        storage.set('setVolume', e.target.value);
       },
 
-      volSet(e) {
+      setVolume(e) {
         this.volume = e;
         this.selector('audio').volume = e / 100;
       },
 
-      favoriteSet(e) {
+      setFavorite(e) {
         this.source = e.sort((a, b) => {
           if (a.name.charAt(0) > b.name.charAt(0)) return 1;
           if (a.name.charAt(0) < b.name.charAt(0)) return -1;
@@ -418,7 +452,7 @@
               var res = Number(i) + 1;
               if (res > (this.source.length - 1)) {
                 this.current = this.source[0].id;
-                // this.storageSet('setChannel', this.source[0]);
+                // storage.set('setChannel', this.source[0]);
 
                 this.selector('coverVideo').src = this.source[0].background;
 
@@ -436,7 +470,7 @@
               var res = Number(i) - 1;
               if (res < 0) {
                 this.current = this.source[Number(this.source.length) - 1].id;
-                // this.storageSet('setChannel', this.source[Number(this.source.length) - 1]);
+                // storage.set('setChannel', this.source[Number(this.source.length) - 1]);
                 this.selector('coverVideo').src = this.source[Number(this.source.length) - 1].background;
                 
                 var uiScroll = document.getElementById('ul-scroll');
@@ -445,7 +479,7 @@
                 wrapScroll.scrollTop = wrapScroll.scrollHeight;
               } else {
                 this.current = this.source[res].id;
-                // this.storageSet('setChannel', this.source[res]);
+                // storage.set('setChannel', this.source[res]);
                 this.selector('coverVideo').src = this.source[res].background;
               }
               this.refresh();
@@ -465,7 +499,7 @@
             }
           }
         }
-        this.storageSet('setFavorite', this.source);
+        storage.set('setFavorite', this.source);
       },
 
       loadSong() {
@@ -519,7 +553,8 @@
           this.setActivity(
             this.currentVoicer,
             this.currentSong,
-            this.time
+            this.time,
+            this.channelName
           );
         }
       }
