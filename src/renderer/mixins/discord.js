@@ -23,17 +23,12 @@ export const discord = {
       time,
       channel
     ) {
-      if (
-        this.discord
-        &&
-        details != ''
-        &&
-        stateTest != ''
-        &&
-        time
-        &&
-        channel != ''
-      ) {
+      if (this.discord) {
+        details = details != '' ? details : 'Record Radio';
+        stateTest = stateTest != '' ? stateTest : 'Music';
+        time = time != '' ? time : new Date();
+        channel = channel != '' ? channel : 'Record Radio';
+
         rpc.setActivity({
           details: details,
           state: stateTest,

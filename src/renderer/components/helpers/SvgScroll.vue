@@ -1,0 +1,40 @@
+<template>
+  <svg>
+    <defs>
+      <linearGradient
+        id="gradient"
+        x1="0"
+        y1="0%"
+        x2="0"
+        y2="50%"
+      >
+        <stop
+          stop-color="black"
+          offset="0"
+        />
+        <stop
+          stop-color="white"
+          offset="1"
+        />
+      </linearGradient>
+      <mask
+        id="masking"
+        maskUnits="objectBoundingBox"
+        maskContentUnits="objectBoundingBox"
+      >
+        <rect
+          y="0"
+          width="1"
+          height="1"
+          fill="url(#gradient)"
+        />
+      </mask>
+    </defs>
+  </svg>
+</template>
+
+<script>
+  export default {
+    name: 'SvgScroll'
+  }
+</script>

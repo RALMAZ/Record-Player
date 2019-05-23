@@ -20,12 +20,12 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     frame: false,
     toolbar: false,
-    height: 950,
+    height: 550,
     useContentSize: true,
     width: 340,
     resizable: false,
     webPreferences: {
-      devTools: true
+      devTools: false
     }
   })
 

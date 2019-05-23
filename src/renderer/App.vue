@@ -70,33 +70,7 @@
                 </ul>
               </div>
             </div>
-            <svg>
-              <defs>
-                <linearGradient
-                  id="gradient"
-                  x1="0"
-                  y1="0%"
-                  x2="0"
-                  y2="50%"
-                >
-                  <stop stop-color="black" offset="0"/>
-                  <stop stop-color="white" offset="1"/>
-                </linearGradient>
-
-                <mask
-                  id="masking"
-                  maskUnits="objectBoundingBox"
-                  maskContentUnits="objectBoundingBox"
-                >
-                  <rect
-                    y="0"
-                    width="1"
-                    height="1"
-                    fill="url(#gradient)"
-                  />
-                </mask>
-              </defs>
-            </svg>
+            <svg-scroll/>
           </div>
           
           <div v-if="listing == 'favorite'">
@@ -126,18 +100,7 @@
                 </ul>
               </div>
             </div>
-            <svg>
-              <defs>
-                <linearGradient id="gradient" x1="0" y1="0%" x2 ="0" y2="50%">
-                  <stop stop-color="black" offset="0"/>
-                  <stop stop-color="white" offset="1"/>
-                </linearGradient>
-
-                <mask id="masking" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
-                  <rect y="0" width="1" height="1" fill="url(#gradient)" />
-                </mask>
-              </defs>
-            </svg>
+            <svg-scroll/>
           </div>
           
           <div v-if="listing == 'history'">
@@ -188,7 +151,11 @@
       </div>
 
       <div class="coverImage">
-        <video id="coverVideo" height="100%" loop>
+        <video
+          id="coverVideo"
+          height="100%"
+          loop
+        >
           <source
             id="coverSource"
             :src="channelGif"
@@ -197,8 +164,16 @@
         </video>
       </div>
 
-      <div @click="close()" class="close"></div>
-      <div @click="min()" class="min"></div>
+      <div
+        @click="close()"
+        class="close"
+      ></div>
+
+      <div
+        @click="min()"
+        class="min"
+      ></div>
+
       <div class="bodyPlayer"></div>
 
       <div class="info">
@@ -297,6 +272,9 @@
   import { discord } from './mixins/discord';
   import { selector } from './mixins/selector';
 
+  // Componenets
+  import SvgScroll from './components/helpers/SvgScroll';
+
   // Vue
   export default {
     name: 'Player',
@@ -304,6 +282,10 @@
       window,
       discord,
       selector
+    ],
+
+    components: [
+      SvgScroll
     ],
 
     data() {
@@ -404,7 +386,7 @@
       refresh()  {
         this.selector('audio').play;
         this.selector('coverVideo').play();
-        this.selector("play").checked = true;
+        this.selector('play').checked = true;
         this.isPlay = true;
       },
 
@@ -452,7 +434,6 @@
               var res = Number(i) + 1;
               if (res > (this.source.length - 1)) {
                 this.current = this.source[0].id;
-                // storage.set('setChannel', this.source[0]);
 
                 this.selector('coverVideo').src = this.source[0].background;
 
@@ -461,7 +442,6 @@
                 this.selector('wrap-scroll').scrollTop = topPos;
               } else {
                 this.current = this.source[res].id;
-                storage.set('setChannel', this.source[res]);
                 this.selector('coverVideo').src = this.source[res].background;
               }
               this.refresh();
@@ -470,16 +450,14 @@
               var res = Number(i) - 1;
               if (res < 0) {
                 this.current = this.source[Number(this.source.length) - 1].id;
-                // storage.set('setChannel', this.source[Number(this.source.length) - 1]);
                 this.selector('coverVideo').src = this.source[Number(this.source.length) - 1].background;
                 
-                var uiScroll = document.getElementById('ul-scroll');
+                var uiScroll = this.selector('ul-scroll');
                 var topPos = uiScroll.offsetTop;
-                var wrapScroll = document.getElementById('wrap-scroll');
+                var wrapScroll = this.selector('wrap-scroll');
                 wrapScroll.scrollTop = wrapScroll.scrollHeight;
               } else {
                 this.current = this.source[res].id;
-                // storage.set('setChannel', this.source[res]);
                 this.selector('coverVideo').src = this.source[res].background;
               }
               this.refresh();
@@ -490,15 +468,19 @@
       },
 
       madeFavorite(id) {
-        for (var i = 0; i < this.source.length; i++) {
-          if (this.source[i].id == id) {
-            if (Boolean(this.source[i].favorite)) {
-              this.source[i].favorite = Boolean(false);
+        this.source.find((element, index, array) => {
+          if (this.source[index].id == id) {
+            if (Boolean(this.source[index].favorite)) {
+              this.source[index].favorite = Boolean(false);
+              return true;
             } else {
-              this.source[i].favorite = Boolean(true);
+              this.source[index].favorite = Boolean(true);
+              return true;
             }
           }
-        }
+          return false;
+        });
+
         storage.set('setFavorite', this.source);
       },
 
@@ -507,16 +489,17 @@
         var url = '';
         var title = '';
 
-        for (var i = 0; i < this.source.length; i++) {
-          if (this.source[i].id == id) {
-            url = this.source[i].song;
-            title = this.source[i].name;
-            this.channelName = this.source[i].name;
-            this.channelGif = this.source[i].background;
-            this.channelUrl = this.source[i].src;
-            break;
+        this.source.find((element, index, array) => {
+          if (this.source[index].id == id) {
+            url = this.source[index].song;
+            title = this.source[index].name;
+            this.channelName = this.source[index].name;
+            this.channelGif = this.source[index].background;
+            this.channelUrl = this.source[index].src;
+            return true;
           }
-        }
+          return false;
+        });
 
         axios.get(url)
           .then((response) => {
@@ -534,19 +517,16 @@
               image: response.data.image600
             }
             
-            let beacon = false;
-            for (var i = 0; i < this.history.length; i++) {
-              if (this.history[i].title == newHistory.title) {
-                beacon = true;
+            let beacon = this.history.find((element, index, array) => {
+              if (this.history[index].title == newHistory.title) {
+                return true;
               }
-            }
+              return false;
+            });
+
             if (!beacon) {
               this.history.push(newHistory);
             }
-
-          })
-          .catch(function (error) {
-            console.log(error);
           });
 
         if(this.discord) {
