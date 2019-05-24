@@ -153,15 +153,12 @@
       <div class="coverImage">
         <video
           id="coverVideo"
+          :src="channelGif"
+          :autoplay="isPlay"
           height="100%"
+          type="video/mp4"
           loop
-        >
-          <source
-            id="coverSource"
-            :src="channelGif"
-            type="video/mp4"
-          >
-        </video>
+        ></video>
       </div>
 
       <div
@@ -284,9 +281,9 @@
       selector
     ],
 
-    components: [
+    components: {
       SvgScroll
-    ],
+    },
 
     data() {
       return {
@@ -343,27 +340,12 @@
       this.loadSong();
       this.time = new Date();
 
-      // document.addEventListener('keyup', this.keyBind);
-
       setInterval(() => {
         this.loadSong();
       }, 500);
     },
 
     methods: {
-      //keyBind(e) {
-      //  let value = e.keyCode;
-      //  if(value == 32) {
-      //    this.play();
-      //  }
-      //  if(value == 39 || value == 38) {
-      //    this.move(Number(this.current), true)
-      //  }
-      //  if(value == 37 || value == 40) {
-      //    this.move(Number(this.current), false)
-      //  }
-      //},
-
       vol(e) {
         this.volume = e.target.value;
         this.selector('audio').volume = e.target.value / 100;
@@ -410,7 +392,7 @@
 
       change(index) {
         this.current = index.id;
-        this.selector('coverVideo').src = index.background;
+        this.channelGif = index.background;
         this.refresh();
         this.loadSong();
       },
@@ -434,23 +416,20 @@
               var res = Number(i) + 1;
               if (res > (this.source.length - 1)) {
                 this.current = this.source[0].id;
-
-                this.selector('coverVideo').src = this.source[0].background;
+                this.channelGif = this.source[0].background;
 
                 var uiScroll = this.selector('ul-scroll');
                 var topPos = uiScroll.offsetTop;
                 this.selector('wrap-scroll').scrollTop = topPos;
               } else {
                 this.current = this.source[res].id;
-                this.selector('coverVideo').src = this.source[res].background;
+                this.channelGif = this.source[res].background;
               }
-              this.refresh();
-              this.loadSong();
             } else {
               var res = Number(i) - 1;
               if (res < 0) {
                 this.current = this.source[Number(this.source.length) - 1].id;
-                this.selector('coverVideo').src = this.source[Number(this.source.length) - 1].background;
+                this.channelGif = this.source[Number(this.source.length) - 1].background;
                 
                 var uiScroll = this.selector('ul-scroll');
                 var topPos = uiScroll.offsetTop;
@@ -458,11 +437,11 @@
                 wrapScroll.scrollTop = wrapScroll.scrollHeight;
               } else {
                 this.current = this.source[res].id;
-                this.selector('coverVideo').src = this.source[res].background;
+                this.channelGif = this.source[res].background;
               }
-              this.refresh();
-              this.loadSong();
             }
+            this.refresh();
+            this.loadSong();
           }
         }
       },
