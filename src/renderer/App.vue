@@ -488,23 +488,26 @@
             this.currentVoicer = response.data.artist;
             this.currentSong = response.data.title;
             this.currentImg = response.data.image600;
-
-            let newHistory = {
-              id: this.history.length,
-              artist: response.data.artist,
-              title: response.data.title,
-              image: response.data.image600
-            }
             
-            let beacon = this.history.find((element, index, array) => {
-              if (this.history[index].title == newHistory.title) {
-                return true;
-              }
-              return false;
-            });
 
-            if (!beacon) {
-              this.history.push(newHistory);
+            if (response.data.artist && response.data.title && this.isPlay) {
+              let newHistory = {
+                id: this.history.length,
+                artist: response.data.artist,
+                title: response.data.title,
+                image: response.data.image600
+              }
+
+              let beacon = this.history.find((element, index, array) => {
+                if (this.history[index].title == newHistory.title) {
+                  return true;
+                }
+                return false;
+              });
+
+              if (!beacon) {
+                this.history.push(newHistory);
+              }
             }
           });
 
