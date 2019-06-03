@@ -312,7 +312,6 @@
 
     created() {
       // Storage data extract
-
       storage.has('setVolume', (error, hasKey) => {
         if (hasKey) {
           storage.get('setVolume', (error2, data) => {
@@ -508,6 +507,8 @@
               if (!beacon) {
                 this.history.push(newHistory);
               }
+            } else {
+              this.$bug.notify('Axios have wrong response: ' + String(response.data));
             }
           });
 

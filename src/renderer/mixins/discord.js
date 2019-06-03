@@ -13,6 +13,7 @@ export const discord = {
   created() {
     rpc.login({ clientId }).catch(()=> {
       this.discord = false;
+      this.$bug.notify('Discord login false');
     });
   },
 

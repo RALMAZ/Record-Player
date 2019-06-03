@@ -51,7 +51,9 @@
     }
   },
   "dependencies": {
+    "@bugsnag/plugin-vue": "^6.3.0",
     "axios": "^0.18.0",
+    "bugsnag-js": "^4.7.3",
     "discord-rpc": "^3.0.1",
     "electron-dl": "^1.14.0",
     "electron-json-storage": "^4.1.6",
