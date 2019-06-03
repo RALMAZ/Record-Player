@@ -508,7 +508,7 @@
                 this.history.push(newHistory);
               }
             } else {
-              this.$bug.notify('Axios have wrong response: ' + String(response.data));
+              // this.$bug.notify('Axios have wrong response: ' + String(response.data));
             }
           });
 

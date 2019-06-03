@@ -51,6 +51,7 @@
     }
   },
   "dependencies": {
+    "@bugsnag/js": "^6.3.0",
     "@bugsnag/plugin-vue": "^6.3.0",
     "axios": "^0.18.0",
     "bugsnag-js": "^4.7.3",
