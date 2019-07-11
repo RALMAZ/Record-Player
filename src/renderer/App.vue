@@ -28,7 +28,7 @@
         <label
           class="modal-backdrop"
           for="modal-toggle"
-          @click="searchInput = ''"
+          @click="search = ''"
         ></label>
         <div class="modal-content">
 
@@ -38,7 +38,7 @@
                 <input
                   id="s"
                   type="text"
-                  v-model="searchInput"
+                  v-model="search"
                   placeholder="Search"
                 />
               </div>
@@ -53,7 +53,7 @@
                     :key="key"
                     :class="{
                       'active': current == index.id,
-                      'ra-display-none': index.name.toLowerCase().search(searchInput.toLowerCase()) == -1
+                      'ra-display-none': index.name.toLowerCase().search(search.toLowerCase()) == -1
                     }"
                     class="listing"
                   >
@@ -265,7 +265,7 @@
   storage.setDataPath(os.tmpdir());
 
   // Mixins
-  import { window } from './mixins/window';
+  import { windowInstanse } from './mixins/windowInstanse';
   import { discord } from './mixins/discord';
   import { selector } from './mixins/selector';
 
@@ -276,7 +276,7 @@
   export default {
     name: 'Player',
     mixins: [
-      window,
+      windowInstanse,
       discord,
       selector
     ],
@@ -299,7 +299,7 @@
         channelGif: '',
         channelUrl: '',
 
-        searchInput: '',
+        search: '',
         modal: false,
         listing: 'none',
 
@@ -314,7 +314,7 @@
       // Storage data extract
       storage.has('setVolume', (error, hasKey) => {
         if (hasKey) {
-          storage.get('setVolume', (error2, data) => {
+          storage.get('setVolume', (e, data) => {
             this.setVolume(data);
           });
         }
@@ -322,7 +322,7 @@
 
       storage.has('setFavorite', (error, hasKey) => {
         if (hasKey) {
-          storage.get('setFavorite', (error2, data) => {
+          storage.get('setFavorite', (e, data) => {
             this.setFavorite(data);
           });
         } else {
@@ -341,7 +341,7 @@
 
       setInterval(() => {
         this.loadSong();
-      }, 500);
+      }, 1000);
     },
 
     methods: {
@@ -409,11 +409,11 @@
       },
 
       move(id, moveTo) {
-        for (var i = 0; i < this.source.length; i++) {
+        for (let i = 0; i < this.source.length; i++) {
           if (this.source[i].id == id) {
             if (moveTo) {
-              var res = Number(i) + 1;
-              if (res > (this.source.length - 1)) {
+              let res = Number(i) + 1;
+              if (res > this.source.length - 1) {
                 this.current = this.source[0].id;
                 this.channelGif = this.source[0].background;
 
@@ -425,14 +425,14 @@
                 this.channelGif = this.source[res].background;
               }
             } else {
-              var res = Number(i) - 1;
+              let res = Number(i) - 1;
               if (res < 0) {
                 this.current = this.source[Number(this.source.length) - 1].id;
                 this.channelGif = this.source[Number(this.source.length) - 1].background;
                 
-                var uiScroll = this.selector('ul-scroll');
-                var topPos = uiScroll.offsetTop;
-                var wrapScroll = this.selector('wrap-scroll');
+                let uiScroll = this.selector('ul-scroll');
+                let topPos = uiScroll.offsetTop;
+                let wrapScroll = this.selector('wrap-scroll');
                 wrapScroll.scrollTop = wrapScroll.scrollHeight;
               } else {
                 this.current = this.source[res].id;
@@ -481,9 +481,7 @@
 
         axios.get(url)
           .then((response) => {
-            if (this.currentVoicer != response.data.artist) {
-              this.time = new Date();
-            }
+            if (this.currentVoicer != response.data.artist) this.time = new Date();
             this.currentVoicer = response.data.artist;
             this.currentSong = response.data.title;
             this.currentImg = response.data.image600;
@@ -498,15 +496,11 @@
               }
 
               let beacon = this.history.find((element, index, array) => {
-                if (this.history[index].title == newHistory.title) {
-                  return true;
-                }
+                if (this.history[index].title == newHistory.title) return true;
                 return false;
               });
 
-              if (!beacon) {
-                this.history.push(newHistory);
-              }
+              if (!beacon) this.history.push(newHistory);
             } else {
               // this.$bug.notify('Axios have wrong response: ' + String(response.data));
             }

@@ -1,6 +1,6 @@
 const remote = require('electron').remote;
 
-export const window = {
+export const windowInstanse = {
   methods: {
     close() {
       remote.getCurrentWindow().close();
