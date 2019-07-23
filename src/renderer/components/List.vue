@@ -6,9 +6,9 @@
     >
       <div class="searchform">
         <input
+          v-model="search"
           id="s"
           type="text"
-          v-model="search"
           placeholder="Search"
         />
       </div>
@@ -38,8 +38,8 @@
             ></span>
             <i
               @click="madeFavorite(index.id)"
-              class="fas fa-star iconFavorite"
               :class="{'activeFavorite': !index.favorite}"
+              class="fas fa-star iconFavorite"
             ></i>
           </li>
         </ul>
@@ -70,8 +70,8 @@
         <ul v-if="listing == 'history'">
           <li
             v-for="(index, key) in history.slice().reverse()"
-            track-by="id"
             :key="key"
+            track-by="id"
             class="ra-bar"
           >
             <img

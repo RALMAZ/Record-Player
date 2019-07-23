@@ -3,42 +3,42 @@
     <article class="screen">
       <label
         @click="changelisting('list')"
-        class="main"
         :class="{'activeLabel': listing == 'list'}"
-      ></label>
+        class="main"
+      />
 
       <label
         @click="changelisting('favorite')"
-        class="main2"
         :class="{'activeLabel': listing == 'favorite'}"
-      ></label>
+        class="main2"
+      />
 
       <label
         @click="changelisting('history')"
-        class="main3"
         :class="{'activeLabel': listing == 'history'}"
-      ></label>
+        class="main3"
+      />
 
       <div class="modal-container">
         <input
+          v-model="modal"
           id="modal-toggle"
           type="checkbox"
-          v-model="modal"
         >
         <label
-          class="modal-backdrop"
-          for="modal-toggle"
           @click="search = ''"
-        ></label>
+          for="modal-toggle"
+          class="modal-backdrop"
+        />
         <div class="modal-content">
 
           <div v-if="listing == 'list'">
             <div class="search-box">
               <div class="searchform">
                 <input
+                  v-model="search"
                   id="s"
                   type="text"
-                  v-model="search"
                   placeholder="Search"
                 />
               </div>
@@ -60,12 +60,12 @@
                     <span
                       v-text="index.name"
                       class="item"
-                    ></span>
+                    />
                     <i
                       @click="madeFavorite(index.id)"
-                      class="fas fa-star iconFavorite"
                       :class="{'activeFavorite': !index.favorite}"
-                    ></i>
+                      class="fas fa-star iconFavorite"
+                    />
                   </li>
                 </ul>
               </div>
@@ -90,12 +90,12 @@
                     <span
                       v-text="index.name"
                       class="item"
-                    ></span>
+                    />
                     <i
                       @click="madeFavorite(index.id)"
                       class="fas fa-trash iconFavorite"
                       style="font-size: 15px;"
-                    ></i>
+                    />
                   </li>
                 </ul>
               </div>
@@ -112,8 +112,8 @@
                 <ul v-if="history.length > 0">
                   <li
                     v-for="(index, key) in history.slice().reverse()"
-                    track-by="id"
                     :key="key"
+                    track-by="id"
                     class="ra-bar"
                   >
                     <img
@@ -130,19 +130,19 @@
                       <span
                         v-text="index.artist"
                         class="ra-item-artist"
-                      ></span>
+                      />
                       <br>
                       <span
                         v-text="index.title"
                         class="ra-item-title"
-                      ></span>
+                      />
                     </div>
                   </li>
                 </ul>
                 <h1
                   v-else
                   v-text="'No one song played'"
-                ></h1>
+                />
               </div>
             </div>
           </div>
@@ -152,30 +152,30 @@
 
       <div class="coverImage">
         <video
-          id="coverVideo"
           :src="channelGif"
           :autoplay="isPlay"
+          id="coverVideo"
           height="100%"
           type="video/mp4"
           loop
-        ></video>
+        />
       </div>
 
       <div
         @click="close()"
         class="close"
-      ></div>
+      />
 
       <div
         @click="min()"
         class="min"
-      ></div>
+      />
 
-      <div class="bodyPlayer"></div>
+      <div class="bodyPlayer"/>
 
       <div class="info">
-				<h4 v-text="currentVoicer"></h4>
-				<h3 v-text="currentSong"></h3>
+				<h4 v-text="currentVoicer"/>
+				<h3 v-text="currentSong"/>
         <img
           v-if="currentImg"
           :src="currentImg"
@@ -191,42 +191,42 @@
         <h2
           v-text="channelName"
           class="ra-current-name"
-        ></h2>
+        />
 			</div>
 
       <audio
+        :autoplay="isPlay"
+        :src="channelUrl"
         id="audio"
         preload="auto"
         controls
-        :autoplay="isPlay"
-        :src="channelUrl"
-      ></audio>
+      />
 
       <table class="player">
         <td>
           <input
-            id="backward"
             @click="move(Number(current), false)"
+            id="backward"
             type="checkbox"
           />
-          <label class="backward" for="backward"></label>
+          <label class="backward" for="backward"/>
         </td>
         <td>
           <input
-            id="play"
             @click="play()"
+            id="play"
             type="checkbox"
             title="Play"
           />
-          <label class="play" for="play"></label>
+          <label class="play" for="play"/>
         </td>
         <td>
           <input
-            id="forward"
             @click="move(Number(current), true)"
+            id="forward"
             type="checkbox"
           />
-          <label class="forward" for="forward"></label>
+          <label class="forward" for="forward"/>
         </td>
       </table>
         
@@ -234,9 +234,9 @@
         <td>
           <div class="orange">
             <input
-              id="s1"
               @input="vol($event)"
               :value="volume"
+              id="s1"
               type="range"
               class="range"
               step="1"
@@ -248,7 +248,7 @@
       </table>
 
       <div class="current">
-        <h2 v-text="channelName"></h2>
+        <h2 v-text="channelName"/>
       </div>
     </article>
   </div>
@@ -311,20 +311,13 @@
     },
 
     created() {
-      // Storage data extract
       storage.has('setVolume', (error, hasKey) => {
-        if (hasKey) {
-          storage.get('setVolume', (e, data) => {
-            this.setVolume(data);
-          });
-        }
+        if (hasKey) storage.get('setVolume', (e, data) => this.setVolume(data));
       });
 
       storage.has('setFavorite', (error, hasKey) => {
         if (hasKey) {
-          storage.get('setFavorite', (e, data) => {
-            this.setFavorite(data);
-          });
+          storage.get('setFavorite', (e, data) => this.setFavorite(data));
         } else {
           this.source = Stations.sort((a, b) => {
             if (a.name.charAt(0) > b.name.charAt(0)) return 1;
@@ -338,10 +331,7 @@
     mounted() {
       this.loadSong();
       this.time = new Date();
-
-      setInterval(() => {
-        this.loadSong();
-      }, 1000);
+      setInterval(() => this.loadSong(), 1000);
     },
 
     methods: {
@@ -372,8 +362,8 @@
       },
 
       play() {
-        var audio = this.selector('audio');
-        var cover = this.selector('coverVideo');
+        let audio = this.selector('audio');
+        let cover = this.selector('coverVideo');
         this.loadSong();
 
         if(!this.isPlay) {
@@ -417,8 +407,8 @@
                 this.current = this.source[0].id;
                 this.channelGif = this.source[0].background;
 
-                var uiScroll = this.selector('ul-scroll');
-                var topPos = uiScroll.offsetTop;
+                let uiScroll = this.selector('ul-scroll');
+                let topPos = uiScroll.offsetTop;
                 this.selector('wrap-scroll').scrollTop = topPos;
               } else {
                 this.current = this.source[res].id;
@@ -463,9 +453,9 @@
       },
 
       loadSong() {
-        var id = this.current;
-        var url = '';
-        var title = '';
+        let id = this.current;
+        let url = '';
+        let title = '';
 
         this.source.find((element, index, array) => {
           if (this.source[index].id == id) {
@@ -485,8 +475,7 @@
             this.currentVoicer = response.data.artist;
             this.currentSong = response.data.title;
             this.currentImg = response.data.image600;
-            
-
+          
             if (response.data.artist && response.data.title && this.isPlay) {
               let newHistory = {
                 id: this.history.length,
