@@ -331,6 +331,7 @@
     mounted() {
       this.loadSong();
       this.time = new Date();
+      // @TODO add if network error clearInterval and handle it
       setInterval(() => this.loadSong(), 1000);
     },
 
@@ -433,6 +434,39 @@
             this.loadSong();
           }
         }
+/*
+        let elmIndex;
+        let elm = this.source.find((element, index, array) => element.id == id);
+        if (moveTo) {
+          let res = Number(i) + 1;
+          if (res > this.source.length - 1) {
+            this.current = this.source[0].id;
+            this.channelGif = this.source[0].background;
+            let uiScroll = this.selector('ul-scroll');
+            let topPos = uiScroll.offsetTop;
+            this.selector('wrap-scroll').scrollTop = topPos;
+          } else {
+            this.current = this.source[res].id;
+            this.channelGif = this.source[res].background;
+          }
+        } else {
+          let res = Number(i) - 1;
+          if (res < 0) {
+            this.current = this.source[Number(this.source.length) - 1].id;
+            this.channelGif = this.source[Number(this.source.length) - 1].background;
+            
+            let uiScroll = this.selector('ul-scroll');
+            let topPos = uiScroll.offsetTop;
+            let wrapScroll = this.selector('wrap-scroll');
+            wrapScroll.scrollTop = wrapScroll.scrollHeight;
+          } else {
+            this.current = this.source[res].id;
+            this.channelGif = this.source[res].background;
+          }
+        }
+        this.refresh();
+        this.loadSong();
+        */
       },
 
       madeFavorite(id) {
