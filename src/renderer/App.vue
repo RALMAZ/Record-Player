@@ -171,7 +171,7 @@
         class="min"
       />
 
-      <div class="bodyPlayer"/>
+      <div class="bodyPlayer" />
 
       <div class="info">
 				<h4 v-text="currentVoicer"/>
@@ -218,7 +218,7 @@
             type="checkbox"
             title="Play"
           />
-          <label class="play" for="play"/>
+          <label class="play" for="play" />
         </td>
         <td>
           <input
@@ -226,7 +226,7 @@
             id="forward"
             type="checkbox"
           />
-          <label class="forward" for="forward"/>
+          <label class="forward" for="forward" />
         </td>
       </table>
         
@@ -248,31 +248,29 @@
       </table>
 
       <div class="current">
-        <h2 v-text="channelName"/>
+        <h2 v-text="channelName" />
       </div>
     </article>
   </div>
 </template>
 
 <script>
-  // Import rq
-  import axios from 'axios';
-  import Stations from './data/stations.json';
+  import axios from 'axios'
+  import Stations from './data/stations.json'
 
   // Storage
-  const os = require('os');
-  const storage = require('electron-json-storage');
-  storage.setDataPath(os.tmpdir());
+  const os = require('os')
+  const storage = require('electron-json-storage')
+  storage.setDataPath(os.tmpdir())
 
   // Mixins
-  import { windowInstanse } from './mixins/windowInstanse';
-  import { discord } from './mixins/discord';
-  import { selector } from './mixins/selector';
+  import { windowInstanse } from './mixins/windowInstanse'
+  import { discord } from './mixins/discord'
+  import { selector } from './mixins/selector'
 
   // Componenets
-  import SvgScroll from './components/helpers/SvgScroll';
+  import SvgScroll from './components/helpers/SvgScroll'
 
-  // Vue
   export default {
     name: 'Player',
     mixins: [
@@ -306,96 +304,96 @@
         favorite: [],
         history: [],
         source: [],
-        time: 0,
+        time: 0
       }
     },
 
     created() {
       storage.has('setVolume', (error, hasKey) => {
-        if (hasKey) storage.get('setVolume', (e, data) => this.setVolume(data));
-      });
+        if (hasKey) storage.get('setVolume', (e, data) => this.setVolume(data))
+      })
 
       storage.has('setFavorite', (error, hasKey) => {
         if (hasKey) {
-          storage.get('setFavorite', (e, data) => this.setFavorite(data));
+          storage.get('setFavorite', (e, data) => this.setFavorite(data))
         } else {
           this.source = Stations.sort((a, b) => {
-            if (a.name.charAt(0) > b.name.charAt(0)) return 1;
-            if (a.name.charAt(0) < b.name.charAt(0)) return -1;
-            return 0;
-          });
+            if (a.name.charAt(0) > b.name.charAt(0)) return 1
+            if (a.name.charAt(0) < b.name.charAt(0)) return -1
+            return 0
+          })
         }
       });
     },
 
     mounted() {
-      this.loadSong();
-      this.time = new Date();
+      this.loadSong()
+      this.time = new Date()
       // @TODO add if network error clearInterval and handle it
-      setInterval(() => this.loadSong(), 1000);
+      setInterval(() => this.loadSong(), 1000)
     },
 
     methods: {
       vol(e) {
-        this.volume = e.target.value;
-        this.selector('audio').volume = e.target.value / 100;
-        storage.set('setVolume', e.target.value);
+        this.volume = e.target.value
+        this.selector('audio').volume = e.target.value / 100
+        storage.set('setVolume', e.target.value)
       },
 
       setVolume(e) {
-        this.volume = e;
-        this.selector('audio').volume = e / 100;
+        this.volume = e
+        this.selector('audio').volume = e / 100
       },
 
       setFavorite(e) {
         this.source = e.sort((a, b) => {
-          if (a.name.charAt(0) > b.name.charAt(0)) return 1;
-          if (a.name.charAt(0) < b.name.charAt(0)) return -1;
-          return 0;
+          if (a.name.charAt(0) > b.name.charAt(0)) return 1
+          if (a.name.charAt(0) < b.name.charAt(0)) return -1
+          return 0
         });
       },
 
       refresh()  {
-        this.selector('audio').play;
-        this.selector('coverVideo').play();
-        this.selector('play').checked = true;
-        this.isPlay = true;
+        this.selector('audio').play
+        this.selector('coverVideo').play()
+        this.selector('play').checked = true
+        this.isPlay = true
       },
 
       play() {
-        let audio = this.selector('audio');
-        let cover = this.selector('coverVideo');
-        this.loadSong();
+        let audio = this.selector('audio')
+        let cover = this.selector('coverVideo')
+        this.loadSong()
 
         if(!this.isPlay) {
-          audio.play();
-          cover.play();
-          this.selector("play").checked = true;
-          this.isPlay = true;
+          audio.play()
+          cover.play()
+          this.selector("play").checked = true
+          this.isPlay = true
         } else {
-          audio.pause();
-          cover.pause();
-          this.selector("play").checked = false;
-          this.isPlay = false;
+          audio.pause()
+          cover.pause()
+          this.selector("play").checked = false
+          this.isPlay = false
         }
       },
 
       change(index) {
-        this.current = index.id;
-        this.channelGif = index.background;
-        this.refresh();
-        this.loadSong();
+        this.current = index.id
+        this.channelGif = index.background
+        this.refresh()
+        this.loadSong()
       },
 
       changelisting(listType) {
         if (this.modal && this.listing != listType) {
-          this.listing = listType;
+          this.listing = listType
         } else if (this.modal && this.listing == listType) {
-          this.listing = 'none';
-          this.modal = false;
+          this.listing = 'none'
+          this.modal = false
         } else if (!this.modal) {
-          this.listing = listType;
-          this.modal = true;
+          this.listing = listType
+          this.modal = true
         }
       },
 
@@ -403,69 +401,69 @@
         for (let i = 0; i < this.source.length; i++) {
           if (this.source[i].id == id) {
             if (moveTo) {
-              let res = Number(i) + 1;
+              let res = Number(i) + 1
               if (res > this.source.length - 1) {
-                this.current = this.source[0].id;
-                this.channelGif = this.source[0].background;
+                this.current = this.source[0].id
+                this.channelGif = this.source[0].background
 
-                let uiScroll = this.selector('ul-scroll');
-                let topPos = uiScroll.offsetTop;
-                this.selector('wrap-scroll').scrollTop = topPos;
+                let uiScroll = this.selector('ul-scroll')
+                let topPos = uiScroll.offsetTop
+                this.selector('wrap-scroll').scrollTop = topPos
               } else {
-                this.current = this.source[res].id;
-                this.channelGif = this.source[res].background;
+                this.current = this.source[res].id
+                this.channelGif = this.source[res].background
               }
             } else {
-              let res = Number(i) - 1;
+              let res = Number(i) - 1
               if (res < 0) {
-                this.current = this.source[Number(this.source.length) - 1].id;
-                this.channelGif = this.source[Number(this.source.length) - 1].background;
+                this.current = this.source[Number(this.source.length) - 1].id
+                this.channelGif = this.source[Number(this.source.length) - 1].background
                 
-                let uiScroll = this.selector('ul-scroll');
-                let topPos = uiScroll.offsetTop;
-                let wrapScroll = this.selector('wrap-scroll');
-                wrapScroll.scrollTop = wrapScroll.scrollHeight;
+                let uiScroll = this.selector('ul-scroll')
+                let topPos = uiScroll.offsetTop
+                let wrapScroll = this.selector('wrap-scroll')
+                wrapScroll.scrollTop = wrapScroll.scrollHeight
               } else {
-                this.current = this.source[res].id;
-                this.channelGif = this.source[res].background;
+                this.current = this.source[res].id
+                this.channelGif = this.source[res].background
               }
             }
-            this.refresh();
-            this.loadSong();
+            this.refresh()
+            this.loadSong()
           }
         }
 /*
-        let elmIndex;
-        let elm = this.source.find((element, index, array) => element.id == id);
+        let elmIndex
+        let elm = this.source.find((element, index, array) => element.id == id)
         if (moveTo) {
-          let res = Number(i) + 1;
+          let res = Number(i) + 1
           if (res > this.source.length - 1) {
-            this.current = this.source[0].id;
-            this.channelGif = this.source[0].background;
-            let uiScroll = this.selector('ul-scroll');
-            let topPos = uiScroll.offsetTop;
-            this.selector('wrap-scroll').scrollTop = topPos;
+            this.current = this.source[0].id
+            this.channelGif = this.source[0].background
+            let uiScroll = this.selector('ul-scroll')
+            let topPos = uiScroll.offsetTop
+            this.selector('wrap-scroll').scrollTop = topPos
           } else {
-            this.current = this.source[res].id;
-            this.channelGif = this.source[res].background;
+            this.current = this.source[res].id
+            this.channelGif = this.source[res].background
           }
         } else {
-          let res = Number(i) - 1;
+          let res = Number(i) - 1
           if (res < 0) {
-            this.current = this.source[Number(this.source.length) - 1].id;
-            this.channelGif = this.source[Number(this.source.length) - 1].background;
+            this.current = this.source[Number(this.source.length) - 1].id
+            this.channelGif = this.source[Number(this.source.length) - 1].background
             
-            let uiScroll = this.selector('ul-scroll');
-            let topPos = uiScroll.offsetTop;
-            let wrapScroll = this.selector('wrap-scroll');
-            wrapScroll.scrollTop = wrapScroll.scrollHeight;
+            let uiScroll = this.selector('ul-scroll')
+            let topPos = uiScroll.offsetTop
+            let wrapScroll = this.selector('wrap-scroll')
+            wrapScroll.scrollTop = wrapScroll.scrollHeight
           } else {
-            this.current = this.source[res].id;
-            this.channelGif = this.source[res].background;
+            this.current = this.source[res].id
+            this.channelGif = this.source[res].background
           }
         }
-        this.refresh();
-        this.loadSong();
+        this.refresh()
+        this.loadSong()
         */
       },
 
@@ -473,42 +471,42 @@
         this.source.find((element, index, array) => {
           if (this.source[index].id == id) {
             if (Boolean(this.source[index].favorite)) {
-              this.source[index].favorite = Boolean(false);
-              return true;
+              this.source[index].favorite = Boolean(false)
+              return true
             } else {
-              this.source[index].favorite = Boolean(true);
-              return true;
+              this.source[index].favorite = Boolean(true)
+              return true
             }
           }
-          return false;
-        });
+          return false
+        })
 
-        storage.set('setFavorite', this.source);
+        storage.set('setFavorite', this.source)
       },
 
       loadSong() {
-        let id = this.current;
-        let url = '';
-        let title = '';
+        let id = this.current
+        let url = ''
+        let title = ''
 
         this.source.find((element, index, array) => {
           if (this.source[index].id == id) {
-            url = this.source[index].song;
-            title = this.source[index].name;
-            this.channelName = this.source[index].name;
-            this.channelGif = this.source[index].background;
-            this.channelUrl = this.source[index].src;
-            return true;
+            url = this.source[index].song
+            title = this.source[index].name
+            this.channelName = this.source[index].name
+            this.channelGif = this.source[index].background
+            this.channelUrl = this.source[index].src
+            return true
           }
-          return false;
+          return false
         });
 
         axios.get(url)
           .then((response) => {
-            if (this.currentVoicer != response.data.artist) this.time = new Date();
-            this.currentVoicer = response.data.artist;
-            this.currentSong = response.data.title;
-            this.currentImg = response.data.image600;
+            if (this.currentVoicer != response.data.artist) this.time = new Date()
+            this.currentVoicer = response.data.artist
+            this.currentSong = response.data.title
+            this.currentImg = response.data.image600
           
             if (response.data.artist && response.data.title && this.isPlay) {
               let newHistory = {
@@ -519,15 +517,15 @@
               }
 
               let beacon = this.history.find((element, index, array) => {
-                if (this.history[index].title == newHistory.title) return true;
-                return false;
-              });
+                if (this.history[index].title == newHistory.title) return true
+                return false
+              })
 
-              if (!beacon) this.history.push(newHistory);
+              if (!beacon) this.history.push(newHistory)
             } else {
-              // this.$bug.notify('Axios have wrong response: ' + String(response.data));
+              // this.$bug.notify('Axios have wrong response: ' + String(response.data))
             }
-          });
+          })
 
         if(this.discord) {
           this.setActivity(
@@ -535,10 +533,10 @@
             this.currentSong,
             this.time,
             this.channelName
-          );
+          )
         }
       }
-    },
+    }
   }
 </script>
 
