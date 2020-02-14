@@ -256,23 +256,22 @@
 
 <script>
   import axios from 'axios'
-  import Stations from './data/stations.json'
+  import Stations from '@/data/stations.json'
 
   // Storage
-  const os = require('os')
-  const storage = require('electron-json-storage')
+  import os from 'os'
+  import storage from 'electron-json-storage'
   storage.setDataPath(os.tmpdir())
 
   // Mixins
-  import { windowInstanse } from './mixins/windowInstanse'
-  import { discord } from './mixins/discord'
-  import { selector } from './mixins/selector'
+  import { windowInstanse } from '@/mixins/windowInstanse'
+  import { discord } from '@/mixins/discord'
+  import { selector } from '@/mixins/selector'
 
   // Componenets
-  import SvgScroll from './components/helpers/SvgScroll'
+  import SvgScroll from '@/components/helpers/SvgScroll'
 
   export default {
-    name: 'Player',
     mixins: [
       windowInstanse,
       discord,
@@ -283,30 +282,27 @@
       SvgScroll
     },
 
-    data() {
-      return {
-        isPlay: false,
-        volume: 30,
+    data:() => ({
+      isPlay: false,
+      volume: 30,
+      current: 1,
+      search: '',
+      modal: false,
+      listing: 'none',
+      time: 0,
 
-        current: 1,
-        currentVoicer: '',
-        currentSong: '',
-        currentImg: '',
+      currentVoicer: '',
+      currentSong: '',
+      currentImg: '',
 
-        channelName: '',
-        channelGif: '',
-        channelUrl: '',
+      channelName: '',
+      channelGif: '',
+      channelUrl: '',
 
-        search: '',
-        modal: false,
-        listing: 'none',
-
-        favorite: [],
-        history: [],
-        source: [],
-        time: 0
-      }
-    },
+      favorite: [],
+      history: [],
+      source: []
+    }),
 
     created() {
       storage.has('setVolume', (error, hasKey) => {
@@ -323,7 +319,7 @@
             return 0
           })
         }
-      });
+      })
     },
 
     mounted() {
@@ -350,11 +346,11 @@
           if (a.name.charAt(0) > b.name.charAt(0)) return 1
           if (a.name.charAt(0) < b.name.charAt(0)) return -1
           return 0
-        });
+        })
       },
 
       refresh()  {
-        this.selector('audio').play
+        this.selector('audio').play()
         this.selector('coverVideo').play()
         this.selector('play').checked = true
         this.isPlay = true
@@ -401,7 +397,7 @@
         for (let i = 0; i < this.source.length; i++) {
           if (this.source[i].id == id) {
             if (moveTo) {
-              let res = Number(i) + 1
+              let res = +i + 1
               if (res > this.source.length - 1) {
                 this.current = this.source[0].id
                 this.channelGif = this.source[0].background
@@ -414,10 +410,10 @@
                 this.channelGif = this.source[res].background
               }
             } else {
-              let res = Number(i) - 1
+              let res = +i - 1
               if (res < 0) {
-                this.current = this.source[Number(this.source.length) - 1].id
-                this.channelGif = this.source[Number(this.source.length) - 1].background
+                this.current = this.source[+this.source.length - 1].id
+                this.channelGif = this.source[+this.source.length - 1].background
                 
                 let uiScroll = this.selector('ul-scroll')
                 let topPos = uiScroll.offsetTop
@@ -499,7 +495,7 @@
             return true
           }
           return false
-        });
+        })
 
         axios.get(url)
           .then((response) => {

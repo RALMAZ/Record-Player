@@ -47,6 +47,7 @@
         <ul v-if="listing == 'favorite'">
           <li
             v-for="(index, key) in source"
+            v-show="source"
             @click="change(index)"
             :key="key"
             :class="{
@@ -64,6 +65,15 @@
               class="fas fa-trash iconFavorite"
               style="font-size: 15px;"
             ></i>
+          </li>
+          <li
+            v-show="!source"
+            class="listing"
+          >
+            <span
+              v-text="'No favorite channels'"
+              class="item"
+            ></span>
           </li>
         </ul>
 
@@ -126,7 +136,6 @@
   import SvgScroll from './helpers/SvgScroll'
 
   export default {
-    name: 'Listing',
 
     components: {
       SvgScroll
