@@ -1,17 +1,15 @@
-const DiscordRPC = require('discord-rpc');
-const clientId = '499605504813826053';
-DiscordRPC.register(clientId);
-const rpc = new DiscordRPC.Client({ transport: 'ipc' });
+const DiscordRPC = require('discord-rpc')
+const clientId = '499605504813826053'
+DiscordRPC.register(clientId)
+const rpc = new DiscordRPC.Client({ transport: 'ipc' })
 
 export const discord = {
-  data() {
-    return {
-      discord: true
-    }
-  },
+  data: () => ({
+    discord: true
+  }),
 
   created() {
-    rpc.login({ clientId }).catch(() => this.discord = false);
+    rpc.login({ clientId }).catch(() => this.discord = false)
   },
 
   methods: {
@@ -22,10 +20,10 @@ export const discord = {
       channel
     ) {
       if (this.discord) {
-        details = details != '' ? details : 'Record Radio';
-        stateTest = stateTest != '' ? stateTest : 'Music';
-        time = time != '' ? time : new Date();
-        channel = channel != '' ? channel : 'Record Radio';
+        details = details != '' ? details : 'Record Radio'
+        stateTest = stateTest != '' ? stateTest : 'Music'
+        time = time != '' ? time : new Date()
+        channel = channel != '' ? channel : 'Record Radio'
 
         rpc.setActivity({
           details: details,
@@ -34,7 +32,7 @@ export const discord = {
           largeImageKey: 'record',
           largeImageText: channel,
           instance: false
-        });
+        })
       }
     }
   }
