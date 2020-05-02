@@ -1,0 +1,87 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Electron build
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+  linux:
+    name: Linux build
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - run: npm install
+    - run: npm run electron:build --if-present
+    - run: npm test
+    - run: git add dist_electron/*
+    - name: Commit files
+      run: |
+        git config --local user.email "ralmaz.vue@ya.ru"
+        git config --local user.name "RALMAZ"
+        git commit -m "Add Electron Build changes" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  macos:
+    name: Mac OS build
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - run: npm install
+    - run: npm run electron:build --if-present
+    - run: npm test
+    - run: git add dist_electron/*
+    - name: Commit files
+      run: |
+        git config --local user.email "ralmaz.vue@ya.ru"
+        git config --local user.name "RALMAZ"
+        git commit -m "Add Electron Build changes" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+      
+    # Here upload to somewhere
+
+  windows:
+    name: Windows build
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - run: npm install
+    - run: npm run electron:build --if-present
+    - run: npm test
+    - run: git add dist_electron/*
+    - name: Commit files
+      run: |
+        git config --local user.email "ralmaz.vue@ya.ru"
+        git config --local user.name "RALMAZ"
+        git commit -m "Add Electron Build changes" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+      
+    # Here upload to somewhere
